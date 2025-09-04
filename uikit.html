@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Website name</title>
+
+	<link rel="stylesheet" type="text/css" href="css/w3.css">
+	<link rel="stylesheet" type="text/css" href="css/fa-all.css">
+	<link rel="stylesheet" type="text/css" href="css/coryG_base.css">
+	<link rel="stylesheet" type="text/css" href="css/coryG_UIOps.css">
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<link rel="stylesheet" type="text/css" href="css/mediaoptima.css">
+
+	<script src="js/SuperScript.js"></script>
+	<script src="js/toappend.js"></script>
+	<script src="js/customalerter.js"></script>
+	<script src="js/coryG_UIOps.js"></script>
+	<script src="js/app.js"></script>
+</head>
+<body>
+	<nav class="" data-scroller data-scrollend="80%" data-classdata="w3-animate-opacity,scrolled">
+		<div class="navcon">
+			<div class="logo">
+				<a href="#" class="logo">Haosel</a>
+			</div>
+
+			<div class="navlinks" id="sitelinks" data-visibledata="0,0,1">
+				<a href="#about">About</a>
+				<a href="#services" class="active">Services</a>
+				<a href="#work">Work</a>
+				<a href="#pricing">Pricing</a>
+				<a href="#contact">Contact</a>
+			</div>
+
+			<div>
+				<a href="#contact" class="btn cta-btn">
+					<i class="fa fa-phone"></i>
+					Reach out
+				</a>
+			</div>
+
+			<div class="hamburger smallmenu w3-hide-large btn" data-toggler="#mobilemenu" id="hamburger" data-onshow="flex">
+				<a><i class="fa fa-bars"></i></a>
+			</div>
+		</div>
+	</nav>
+
+	<div class="overlay w3-animate-opacity" id="mobilemenu" style="display:none" data-shown="0" >
+		<button class="btn w3-display-topright closebtn w3-transparent w3-text-black" data-toggler="#mobilemenu" data-onshow="flex"><i class="fa fa-times"></i></button>
+		<div class="sidebar" data-copyme="#sitelinks" data-myparent="#mobilemenu">
+		</div>
+	</div>
+
+	<div class="banner w3-top flowline gap-sm" id="curbanner" data-scroller data-scrollend="70%" data-classdata="w3-animate-opacity,hidetop">
+		<div class="thetext">
+			🎉 New: Introducing our AI-powered data anylytics package.
+		</div>
+		<a href="#pricing">Learn more →</a>
+	</div>
+	
+	<div class="themetag w3-block w3-center">Hero section</div>
+
+	<section class="hero section" id="home">
+		<div class="container flow center fullheight gap-md">
+			<span class="hedtxt">We build <b>Systems</b><br> that <b>grow businesses</b></span>
+			<p>Enterprise-grade development with the transparency of a partner you can count on.</p>
+			<div class="btn-group">
+				<a href="#pricing" class="btn primary">View Plans</a>
+				<a href="#work" class="btn outline">Our Work</a>
+			</div>
+		</div>
+	</section>
+
+	<div class="themetag w3-block w3-center">50/50 grid</div>
+
+	<section class="section grid-50-50 container" id="about">
+		<div data-visibledata="1,1,0">
+			<!-- for mobile screens -->
+			<img loading="lazy" src="img/demos/demoimg1.jpg" alt="Team collaborating">
+		</div>
+		<div class="flow left">
+			<span class="hedtxt2"><b>Why</b> clients choose <b>Haosel</b></span>
+			<p>
+				from <b>startups</b> to <b>freelancers</b> to established businesses, we have all in one web soludions and automations for all types of businesses.
+			</p>
+			<i>Your Website Is Prime Real Estate, Let’s Build a Property Worth Visiting.</i>
+			<a href="#services" class="btn outline">Explore Services</a>
+		</div>
+		<div data-visibledata="0,0,1">
+			<!-- for large screens -->
+			<img loading="lazy" src="img/demos/demoimg2.jpg" alt="Team collaborating">
+		</div>
+	</section>
+
+	<div class="themetag w3-block w3-center">30/70 grid</div>
+	
+	<section class="section container" id="services">
+		<span class="hedtxt2 w3-center distance-lg">our <b>Services</b></span>
+		
+		<div class="grid-30-70 servicepanel">
+			<img loading="lazy" src="img/demos/demoimg1.jpg" alt="Code editor">
+			<div class="flow">
+				<span class="hedtxt3">Web Development</span>
+				<p>Full-stack development using TypeScript, React, Node.js, and Next.js with optimized CMS integration.</p>
+			</div>
+		</div>
+	</section>
+
+	<div class="themetag w3-block w3-center">card grid</div>
+
+	<!-- Portfolio Section -->
+	<section class="section container" id="work">
+		<div class="w3-center">
+			<span class="hedtxt2 distance-md">our <b>Work</b></span>
+			<p class="text-center" style="margin-bottom: 3rem;">Some of the websites we've built for forward-thinking brands.</p>
+		</div>
+		<div class="card-grid">
+			<div class="thecard">
+				<img loading="lazy" src="img/demos/demoimg1.jpg" alt="Project 1">
+				<div class="card-content">
+					<h3>NextGen SaaS Site</h3>
+					<p>Built with Next.js, Headless CMS & blazing speed optimization.</p>
+					<div class="btn-group">
+						<a href="https://example.com/project1" target="_blank" class="btn outline">Visit Site</a>
+						<button class="btn primary" onclick="openModal('modal1')">Details</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="thecard">
+				<img loading="lazy" src="img/demos/demoimg1.jpg" alt="Project 2">
+				<div class="card-content">
+					<h3>E-Commerce Redesign</h3>
+					<p>Modern Shopify storefront with clean UX and high conversions.</p>
+					<div class="btn-group">
+						<a href="https://example.com/project2" target="_blank" class="btn outline">Visit Site</a>
+						<button class="btn primary" onclick="openModal('modal2')">Details</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="thecard">
+				<img loading="lazy" src="img/demos/demoimg1.jpg" alt="Project 2">
+				<div class="card-content">
+					<h3>E-Commerce Redesign</h3>
+					<p>Modern Shopify storefront with clean UX and high conversions.</p>
+					<div class="btn-group">
+						<a href="https://example.com/project2" target="_blank" class="btn outline">Visit Site</a>
+						<button class="btn primary" onclick="openModal('modal2')">Details</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="themetag w3-block w3-center">modals</div>
+
+	<!-- modals expo Section -->
+	<section class="section container" id="xtra">
+		<div class="w3-center">
+			<span class="hedtxt2 distance-md">Extra <b>Info</b></span>
+			<p>curious heres some info</p>
+			<div class="btn-group">
+				<a href="#testmodal" class="btn outline" data-toggleme="#testmodal" data-displays="flex,none">View it</a>
+				<a href="#testmodal2" class="btn primary" data-toggleme="#testmodal2" data-displays="flex,none">View another</a>
+			</div>
+		</div>
+	</section>
+
+	<div class="themetag w3-block w3-center">testimonials</div>
+
+	<!-- Testimonials -->
+	<section class="section container centroid gap-md" id="testimonials">
+		<div class="w3-center">
+			<span class="hedtxt2">Trusted by <b>industry leaders</b></span>
+		</div>
+
+		<div class="testimonial grid-30-70 gap-lg">
+			<div class="picture">
+				<img loading="lazy" src="img/demos/demoimg1.jpg" class="person" alt="person's picture">
+			</div>
+			<div class="flow left gap-sm">
+				<div>“Haosel delivered a 40 % increase in conversions within two weeks of launch. Their QA processes are unmatched.”</div>
+				<cite>— Lisa Park, VP Product at FinTechInc</cite>
+			</div>
+		</div>
+
+		<div class="controls testimonial spacy-md">
+			<div class="progress">
+				<div class="bar"></div>
+			</div>
+		</div>
+	</section>
+
+	<div class="themetag w3-block w3-center">pricing section</div>
+
+	<section class="section container" id="pricing">
+		<div class="w3-center">
+			<span class="hedtxt2">Our <b>Packages</b></span>
+			<p>We have various packages for any kind of business</p>
+		</div>
+		<div class="pricing-grid">
+			<div class="card-pricing">
+				<span class="hedtxt3">Starter</span>
+				<div>
+					<li>Landing page</li>
+					<li>Hosting</li>
+					<li>1 week delivery</li>
+				</div>
+				<div class="cte-holder">
+					<a href="#contact" class="btn outline">Get Started</a>
+				</div>
+			</div>
+			<div class="card-pricing main">
+				<span class="hedtxt3 themetxt">Growth</span>
+				<!-- <p class="price">20k - 25k</p> -->
+				<div>
+					<li><i>all starter features</i></li>
+					<li>Multi-page site</li>
+					<li>Performance tuned</li>
+					<li>2 weeks delivery</li>
+				</div>
+				<div class="cte-holder">
+					<a href="#contact" class="btn primary">Get Started</a>
+				</div>
+			</div>
+			<div class="card-pricing">
+				<span class="hedtxt3">Corporate</span>
+				<div>
+					<li><i>all growth features</i></li>
+					<li>SEO</li>
+					<li>SLA & 24/7 support</li>
+					<li>1-2 month delivery</li>
+					<li>Dedicated dev team</li>
+					<li>Admin panel</li>
+				</div>
+				<div class="cte-holder">
+					<a href="#contact" class="btn outline">Contact Sales</a>
+				</div>
+			</div>
+
+			<div class="card-pricing w3-hide">
+				<span class="hedtxt3">Enterprise</span>
+				<div>
+					<li><i>all corporate features</i></li>
+					<li>Data processing backend</li>
+					<li>Unlimited scale</li>
+					<li>Perpetual fixes</li>
+					<li>custom features</li>
+					<li>payment gateways</li>
+					<li>and more</li>
+				</div>
+				<div class="cte-holder">
+					<a href="#contact" class="btn outline">Contact Sales</a>
+				</div>
+			</div>
+			<div class="card-pricing w3-hide">
+				<span class="hedtxt3">Custom</span>
+				<div>
+					<li><i>pick your features</i></li>
+				</div>
+				<div class="cte-holder">
+					<a href="#contact" class="btn outline">Contact Sales</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="w3-center spacy-md">
+			<button class="btn outline">view more</button>
+		</div>
+	</section>
+
+	<div class="themetag w3-block w3-center">contacts section</div>
+
+	<section class="section container" id="contact">
+		<div class="w3-center">
+			<span class="hedtxt2">Leave a <b>message</b></span>
+			<p>Whether it’s an <b>Inquiry</b> or <b>feedback</b>, we’d love to hear from you. Fill out the form and we’ll respond in due time.</p>
+		</div>
+		<div class="grid-50-50">
+			<div class="flow left">
+				<form action="submit.php" method="POST" class="flow left contact-form gap-md">
+					<input type="text" name="name" placeholder="Your Name" required>
+					<input type="email" name="email" placeholder="Your Email" required>
+					<textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+					<button class="btn primary" type="submit">Send Message <i class="fa fa-paper-plane"></i></button>
+				</form>
+			</div>
+			<img loading="lazy" src="img/demos/demoimg1.jpg" alt="Contact Us">
+		</div>
+	</section>
+
+	<div class="themetag w3-block w3-center">callouts and announcements section</div>
+
+	<section class="callout t1">
+		<div class="container">
+			<span class="hedtxt2">Invest in your business <b>Today</b></span>
+			<p>let us take your business to the next level</p>
+			<button class="btn outline">lets begin</button>
+		</div>
+	</section>
+
+	<div class="themetag w3-block w3-center">footer section</div>
+
+	<!-- Footer -->
+	<footer class="footer">
+		<div class="footer-grid container">
+			<div>
+				<h4>Haosel Kenya Ltd.</h4>
+				<p>
+					Upper hill<br>
+					Nairobi, Kenya
+				</p>
+			</div>
+			<div>
+				<h4>Services</h4>
+				<div>
+					<li><a href="#">Web Development</a></li>
+					<li><a href="#">Performance Audits</a></li>
+					<li><a href="#">UI/UX Design</a></li>
+				</div>
+			</div>
+			<div>
+				<h4>Resources</h4>
+				<div>
+					<li><a href="#">Case Studies</a></li>
+					<li><a href="#">Blog</a></li>
+					<li><a href="#">Support Docs</a></li>
+				</div>
+			</div>
+			<div>
+				<h4>Legal</h4>
+				<div>
+					<li><a href="#">Privacy Policy</a></li>
+					<li><a href="#">Terms of Service</a></li>
+				</div>
+			</div>
+		</div>
+		<p class="text-center" style="margin-top:2rem;font-size:.875rem;color:var(--clr-text-muted)">
+			© <span id="year"></span> Haosel ltd. All rights reserved.
+		</p>
+	</footer>
+
+	<!-- modals start here -->
+
+	<div class="mymodal w3-animate-opacity" id="testmodal" data-shown="0" style="display: none;">
+		<div class="modal-content">
+			<button class="closebtn" data-toggleme="#testmodal"><i class="fa fa-times"></i></button>
+
+			<div class="w3-center w3-animate-top">
+				<span class="hedtxt2 distance-md">The <b>Service</b></span>
+			</div>
+			<div class="grid-30-70 servicepanel">
+				<img loading="lazy" src="img/demos/demoimg1.jpg" alt="Code editor">
+				<div class="flow">
+					<span class="hedtxt3">Web Development</span>
+					<p>Full-stack development using TypeScript, React, Node.js, and Next.js with optimized CMS integration.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="mymodal w3-animate-opacity block" id="testmodal2" data-shown="0" style="display: none;">
+		<div class="modal-content">
+			<button class="closebtn" data-toggleme="#testmodal2"><i class="fa fa-times"></i></button>
+			<div class="w3-center w3-animate-top">
+				<span class="hedtxt2 distance-md">Our <b>projects</b></span>
+			</div>
+			<div class="card-grid">
+				<div class="thecard">
+					<img loading="lazy" src="img/demos/demoimg1.jpg" alt="Project 1">
+					<div class="card-content">
+						<h3>NextGen SaaS Site</h3>
+						<p>Built with Next.js, Headless CMS & blazing speed optimization.</p>
+						<div class="btn-group">
+							<a href="https://example.com/project1" target="_blank" class="btn outline">Visit Site</a>
+							<button class="btn primary" onclick="openModal('modal1')">Details</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="thecard">
+					<img loading="lazy" src="img/demos/demoimg1.jpg" alt="Project 2">
+					<div class="card-content">
+						<h3>E-Commerce Redesign</h3>
+						<p>Modern Shopify storefront with clean UX and high conversions.</p>
+						<div class="btn-group">
+							<a href="https://example.com/project2" target="_blank" class="btn outline">Visit Site</a>
+							<button class="btn primary" onclick="openModal('modal2')">Details</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="thecard">
+					<img loading="lazy" src="img/demos/demoimg1.jpg" alt="Project 2">
+					<div class="card-content">
+						<h3>E-Commerce Redesign</h3>
+						<p>Modern Shopify storefront with clean UX and high conversions.</p>
+						<div class="btn-group">
+							<a href="https://example.com/project2" target="_blank" class="btn outline">Visit Site</a>
+							<button class="btn primary" onclick="openModal('modal2')">Details</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
