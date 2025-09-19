@@ -2,8 +2,8 @@
 	* Author: Cornelius Shava
 	* Organisation: Haosel Kenya
 	* Date: 27/07/2025
-	* last modified: 15/08/2025
-	* Time: 13:12
+	* last modified: 19/09/2025
+	* Time: 8:05
 	* Email: corygprod@duck.com
 	* File: coryG_UIOps.css
 */
@@ -105,3 +105,6 @@
 	.hidetop{
 		pointer-events: none;
 	}
+
+/* script based */
+	[data-shown="0"]{display: none;}
