@@ -2,8 +2,8 @@
 	* Author: Cornelius Shava
 	* Organisation: Haosel Kenya
 	* Date: 27/07/2025
-	* last modified: 19/09/2025
-	* Time: 9:23
+	* last modified: 02/10/2025
+	* Time: 12:16
 	* Email: corygprod@duck.com
 	* File: coryG_UIOps.js
 */
@@ -28,8 +28,6 @@ let pageloaded = false;
 let scrollers = [];
 let togglers = [];
 let pageparts = [];
-let tg_btns = {};				// tab button groups
-let tg_contents = {};			// tab content groups
 let heightguy = undefined;
 let navbar = undefined;
 
@@ -139,11 +137,22 @@ let latest_ScrollEvent = undefined;
 		togglers = document.querySelectorAll('[data-toggler]');
 		togglers.forEach((el,id) => {
 			el.dataset.togglerid = id;
+			let _toggle = el.dataset.toggler;
+			let _onshow = el.dataset.onshow || "block";
+			let _onhide = el.dataset.onhide || "none";
+
 
 			el.addEventListener('click',() => {
-				let a = el.dataset.onshow || "block";
-				let b = el.dataset.onhide || "none";
-				toggleShowB(el.dataset.toggler,a,b);
+				let a = _onshow;
+				let b = _onhide;
+				let totoggle = _toggle.split(",");
+
+				toToggle.forEach((tog, n) => {
+					let _a = _onshow.split(",")[n] || a;
+					let _b = _onshow.split(",")[n] || b;
+
+					toggleShowB(tog,_a,_b);
+				})
 			})
 		})
 		items = togglers;
@@ -257,66 +266,6 @@ let latest_ScrollEvent = undefined;
 				},delay);	
 			});
 		});
-
-		// tab inits
-		const tabs = document.querySelectorAll('[data-role="tab-btn"]');
-		const contents = document.querySelectorAll('[data-role="tab-content"]');
-
-		let tg_dft = mekRandomString(4);
-
-		// group tab buttons
-		tabs.forEach((tab,id)=>{
-			tab.dataset.picker = "tab handler";
-			let tg = tab.dataset.tabgroup == undefined ? tg_dft : tab.dataset.tabgroup;
-			
-			if(tg_btns[tg] == undefined){
-				tg_btns[tg] = [];
-			}
-
-			tab.dataset.tabgroup = tg;
-			tg_btns[tg].push(tab);
-		});
-		
-		contents.forEach((con,id)=>{
-			con.dataset.picker = "tab handler";
-			let tg = con.dataset.tabgroup == undefined ? tg_dft : con.dataset.tabgroup;
-
-			if(tg_contents[tg] == undefined){
-				tg_contents[tg] = [];
-			}
-
-			con.dataset.tabgroup = tg;
-			tg_contents[tg].push(con);
-		});
-
-		console.log(tg_btns,tg_contents);
-
-		Object.keys(tg_btns).forEach((el,id) => {
-			if(tg_contents[el] == undefined){
-				alert_danger(`no tab contents found for group [${el}]`);
-				return;
-			} else {
-				alert_silent(`tab contents found for group [${el}]`);
-			}
-			
-			tg_contents[el].forEach((tgc,n) => {
-				if(tgc.dataset.myid == undefined){
-					tgc.dataset.myid = `${el}_${n}`;
-				}
-			})
-
-			tg_btns[el].forEach((tgb,n) => {
-				if(tgb.dataset.myid == undefined){
-					tgb.dataset.myid = `${el}_${n}`;
-				}
-
-				tgb.addEventListener('click',() => {
-					toggletab(el,n);
-				})
-			});
-		});
-
-		return;
 	}
 
 	function uis_afterfx() {
@@ -427,17 +376,35 @@ let latest_ScrollEvent = undefined;
 		})
 	}
 
+	function init_tabs() {
+		// tabs
+		const tabs = document.querySelectorAll('[data-role="tab"]');
+		const contents = document.querySelectorAll('[data-role="tab-content"]');
+
+		tabs.forEach(tab=>{
+			tab.addEventListener('click', ()=>{
+				tabs.forEach(t=>t.classList.remove('active'));
+				contents.forEach(c=>{
+					c.classList.remove('active');
+					c.classList.add("slide-in-bottom");
+				});
+				tab.classList.add('active');
+				document.getElementById(tab.dataset.tab).classList.add('active');
+			});
+		});
+	}
+
 // runtime events and helpers
 
 	// start the functions as soon as the page is loaded
 	window.addEventListener('load',() => {
 		createextras();
+		init_tabs();
 		uis_init();
 		setTimeout(() => {
 			uis_afterfx();
 		},afterfx_delay);
 
-		showfirsttab();
 		pageloaded = true;
 	})
 
@@ -453,6 +420,7 @@ let latest_ScrollEvent = undefined;
 	function refreshUI(){
 		uis_init();
 	}
+
 
 // reusables (add to toappend.js later)
 	function getval(tx,n) {
@@ -472,75 +440,6 @@ let latest_ScrollEvent = undefined;
 
 	function openlink(link) {
 		window.open(link,"_blank")
-	}
-
-	function toggletab(group,n,hideall = false) {
-		if(tg_contents[group] == undefined){
-			alert_danger(`tab group [${group}] has no contents`);
-			return;
-		}
-
-		if(tg_btns[group] == undefined){
-			alert_danger(`tab button for group [${group}] not found`);
-			return;
-		}
-
-		if(hideall){
-			hidetabs();
-			return;
-		}
-
-		let wg = `${group}_${n}`;
-
-		tg_contents[group].forEach(wh => {
-			wh.dataset.shown="0";
-			
-			if(wh.dataset.myid == wg){
-				wh.dataset.shown = "1";
-			}
-		});
-
-		// highlight the current button
-		tg_btns[group].forEach(wh => {
-			wh.classList.remove('active');
-		});
-
-		let btns = tg_btns[group];
-		let btn = [...btns].filter(el => {return el.dataset.myid == wg});
-
-		console.log(btns,btn);
-		btn[0].classList.add('active');
-	}
-
-	function hidetabs() {
-		Object.keys(tg_btns).forEach(el => {
-			if(tg_contents[el] != undefined){
-				tg_contents[el].forEach(it => {
-					it.dataset.shown = "0";
-				})
-				alert_silent(`hidetabs -> contents for [${el}] found`);
-			} else {
-				alert_danger(`hidetabs -> no corresponding contents for [${el}]`);
-			}
-		})
-	}
-
-	function showfirsttab(){
-		let wntd = [];
-
-		Object.keys(tg_btns).forEach(grup => {
-			tg_btns[grup].forEach((btn,m) => {
-				if(!wntd.includes(btn.dataset.tabgroup)){
-					wntd.push(btn.dataset.tabgroup);
-				}
-			});
-		})
-
-		hidetabs();
-
-		wntd.forEach(el => {
-			toggletab(el,0);
-		})
 	}
 
 /* TODO
