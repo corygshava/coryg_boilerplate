@@ -232,3 +232,7 @@ function responseHandler(w,callback,args = undefined,quiet = false,skip_prepro =
 		}, 3000);
 	}
 }
+
+function openModal(id){
+	toggleShow(`#${id}`);
+}

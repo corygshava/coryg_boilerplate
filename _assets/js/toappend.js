@@ -1,23 +1,28 @@
 // added from Faith project on 27/02/2025 same day as these ^
 
 function copytext1(txt) {
+	let has_error = true;
+
 	if(txt != "" || txt != undefined){
 		let b = document.createElement('textarea');
 		b.value = txt;
 		document.body.appendChild(b);
-		
+
 		b.select()
 		b.setSelectionRange(0,99000);
 
 		try{
 			let suc = document.execCommand('copy');
 			console.log(suc ? "text copied" : "copying error occured!")
+			has_error = false;
 		} catch {
 			alert("there was an error copying your text, please try again")
 		}
 
 		document.body.removeChild(b);
 	}
+
+	return !has_error;
 }
 
 // added from Maggy project on 27/02/2025 same day as these ^
@@ -42,6 +47,8 @@ function plural(wad,n) {
 		res = wad.slice(0, -2) + 'i';
 	} else if (wad.endsWith('s')) {
 		res = wad + 'es';
+	} else if (wad.endsWith('ay')) {
+		res = wad + 's';
 	} else if (wad.endsWith('y')) {
 		res = wad.slice(0,-1) + 'ies';
 	} else if (wad.endsWith('_')){
@@ -88,15 +95,20 @@ function startCountdown(targetDate,format,ifexpired,suffix) {
 	suffix = suffix == undefined ? '' : suffix;
 	format = format == undefined ? 0 : format;
 
-	const target = new Date(targetDate).setHours(0, 0, 0, 0);
+	let tdate = Number(targetDate);
 
-	function updateCountdown() {
+	const target = isNaN(tdate) ? new Date(targetDate) : new Date(tdate);
+
+	// console.log(`target time: ${targetDate} -> `, target);
+	// console.log(`new Date(${targetDate}) -> `, target);
+
+	let updateCountdown = () => {
 		const now = new Date().getTime();
 		const timeLeft = target - now;
 		let outxt = '';
 
 		if (timeLeft <= 0) {
-			return ifexpired;
+			return (typeof ifexpired == 'function') ? ifexpired() : ifexpired;
 		}
 
 		const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
@@ -105,13 +117,15 @@ function startCountdown(targetDate,format,ifexpired,suffix) {
 		const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
 		if(format == 0){
-			outxt = `${days} ${plural('day',days)}, ` +
+			outxt = days > 0 ? `${days} ${plural('day',days)}, ` : '';
+			outxt +=
 				`${String(hours).padStart(2, '0')} hours, ` +
 				`${String(minutes).padStart(2, '0')} min ` +
 				`${String(seconds).padStart(2, '0')} sec` +
 				suffix;
 		} else {
-			outxt = `${days}:` +
+			outxt = days > 0 ? `${days}:` : '';
+			outxt +=
 				`${String(hours).padStart(2, '0')}: ` +
 				`${String(minutes).padStart(2, '0')}:` +
 				`${String(seconds).padStart(2, '0')}` +
@@ -135,13 +149,15 @@ function typetext(sel,duration,word) {
 	if(item != null){
 		let myinter = setInterval(() => {
 			letr += 1;
-			wad = `${word.slice(0,letr)}_`;
+			wad = letr < word.length ? `${word.slice(0,letr)}_` : word;
 			item.innerHTML = `${wad}`;
 
 			if(letr >= word.length){
 				clearInterval(myinter);
 			}
 		},(duration * 1000) / (word.length))
+	} else {
+		alert_danger('invalid selector for typetext');
 	}
 }
 
@@ -162,6 +178,7 @@ function clamp01(n,min,max) {
 
 function openWhatsApp(number) {
 	const url = `https://wa.me/${number}`;
+	console.log('whatsapp url: ', url);
 	window.open(url, '_blank', 'noopener,noreferrer');
 }
 
@@ -324,3 +341,142 @@ function copycontent(start,destination,copyClasses,copytype,reqno){
 		}
 	},200);
 }
+
+// new from houseofjrm on 14/10/2025 around 229 days after these
+
+function shufflelist(arr) {
+	return arr
+		.map(item => ({ item, sort: Math.random() }))
+		.sort((a, b) => a.sort - b.sort)
+		.map(({ item }) => item);
+}
+
+function add_to_storage(key, newObject) {
+	try {
+		const existingData = localStorage.getItem(key);
+		const thelist = existingData ? JSON.parse(existingData) : [];
+
+		// Validate that we have an array
+		if (!Array.isArray(thelist)) {
+			console.warn(`LocalStorage key "${key}" exists but is not an array. Overwriting with new array.`);
+			thelist = [];
+		}
+
+		thelist.push(newObject);
+		localStorage.setItem(key, JSON.stringify(thelist));
+
+		return thelist;
+	} catch (error) {
+		console.error(`Error appending to localStorage key "${key}":`, error);
+		throw error; // Re-throw to allow caller to handle
+	}
+}
+
+function getpage(url) {
+	let link = url.split('://')[1];
+	let unquery = link.split('?')[0];
+	let nodes = unquery.split('/');
+	let anchors = nodes[nodes.length-1].split('#');
+	let thefile = anchors[0];
+
+	thefile = thefile == "" ? "index" : thefile;
+
+	return thefile;
+}
+
+window['objtoquery'] = (obj, prefix = '') => {
+	const pairs = [];
+
+	for (const key in obj) {
+		if (obj.hasOwnProperty(key)) {
+			const fullKey = prefix ? `${prefix}[${key}]` : key;
+			const value = obj[key];
+
+			if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
+				pairs.push(objtoquery(value, fullKey));
+			} else if (Array.isArray(value)) {
+				value.forEach(item => {
+					pairs.push(encodeURIComponent(fullKey + '[]') + '=' + encodeURIComponent(item));
+				});
+			} else {
+				pairs.push(encodeURIComponent(fullKey) + '=' + encodeURIComponent(value));
+			}
+		}
+	}
+
+	return pairs.join('&');
+}
+
+// new from Jaymatt [19/03/26]
+function reverseLerp(min,max,val) {
+	return (val - min) / (max - min);
+}
+function getDateDiff(date1, date2) {
+	console.log("date1: ",date1,typeof date1);
+	console.log("date2: ",date2,typeof date2);
+	const time1 = new Date(date1);
+	const time2 = new Date(date2);
+
+	// console.log('di')
+	const diffInMs = Math.abs(time2 - time1);
+	const diffInSecs = Math.floor(diffInMs / 1000);
+	const secs = diffInMs / 254879076.93333334;
+
+	console.log('oldtime: ',time1.getTime(),formatDate0(time1));
+	console.log('newtime: ',time2.getTime(),formatDate0(time2));
+	// return 0;
+	// alert_dark(`diff in ms: ${diffInMs}`,14);
+	// alert_dark(`diff in secs: ${diffInSecs}`,14);
+
+	return diffInSecs;
+}
+
+
+/**
+ * Generates a QR code data URL from an encoded string
+ *
+ * requires qrcode.min.js [https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js]
+ * activate the corian block to prevent errors if you dont have
+ *
+ * @param {string} encodedText - The text/URL to encode in the QR code
+ * @param {number} size - Size of the QR code (default: 100)
+ * @returns {Promise<string>} - Data URL of the QR code image
+ */
+
+/*
+function mekQRCode(encodedText, size = 100) {
+    return new Promise((resolve, reject) => {
+        try {
+            // Create temporary container
+            let tempDiv = document.createElement('div');
+            tempDiv.style.display = 'none';
+            document.body.appendChild(tempDiv);
+
+            // Generate QR code
+            let qrcode = new QRCode(tempDiv, {
+                text: encodedText,
+                width: size,
+                height: size,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            // Wait for QR code generation to complete
+            setTimeout(() => {
+                let canvas = tempDiv.querySelector('canvas');
+                if (canvas) {
+                    let dataUrl = canvas.toDataURL('image/png');
+                    document.body.removeChild(tempDiv);
+                    resolve(dataUrl);
+                } else {
+                    document.body.removeChild(tempDiv);
+                    reject(new Error('Failed to generate QR code'));
+                }
+            }, 100);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+// */

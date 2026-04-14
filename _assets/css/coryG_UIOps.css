@@ -2,8 +2,8 @@
 	* Author: Cornelius Shava
 	* Organisation: Haosel Kenya
 	* Date: 27/07/2025
-	* last modified: 19/09/2025
-	* Time: 8:05
+	* last modified: 02/10/2025
+	* Time: 12:22
 	* Email: corygprod@duck.com
 	* File: coryG_UIOps.css
 */
@@ -80,7 +80,7 @@
 		flex-direction: row;
 		justify-content: flex-end;
 		align-items: center;
-		overflow: hidden auto;
+		overflow: auto;
 	}
 	.overlay .closebtn{
 		font-size: 2rem;
@@ -89,7 +89,7 @@
 		background: var(--clr-panelbg);
 		padding: 48px 0;
 		width: 96%;
-		max-width: 450px;
+		max-width: 400px;
 		min-height: 100vh;
 		font-size: 1.7rem;
 		color: var(--clr-text);
@@ -106,5 +106,4 @@
 		pointer-events: none;
 	}
 
-/* script based */
-	[data-shown="0"]{display: none;}
+	[data-shown=0]{display: none;}
