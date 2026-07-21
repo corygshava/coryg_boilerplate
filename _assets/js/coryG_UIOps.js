@@ -2,8 +2,8 @@
 	* Author: Cornelius Shava
 	* Organisation: CoryG productions
 	* Date: 27/07/2025
-	* last modified: 04/03/2026
-	* Time: 11:38
+	* last modified: 16/07/2026
+	* Time: 20:40
 	* Email: corygprod@duck.com
 	* File: coryG_UIOps.js
 */
@@ -47,6 +47,8 @@ let tg_contents = {};
 
 var callOnLoad = [];
 var callOnDocLoad = [];
+var uiops_handle_loader = true;
+var uiops_handle_docloader = true;
 
 // Startup functions - these must run before everything else
 
@@ -102,7 +104,7 @@ var callOnDocLoad = [];
 				],
 				{duration: dur + 1}
 			);
-			
+
 			setTimeout(() => {
 				if(typeof clb == 'function'){
 					clb();
@@ -202,7 +204,7 @@ var callOnDocLoad = [];
 			let navlinks = naver != undefined ? naver.querySelectorAll('a') : undefined;
 
 			if(navlinks == undefined){
-				alert_danger('sitelinks not found');
+				alert_silent('sitelinks not found');
 				console.log('sitelinks not found');
 				return;
 			}
@@ -333,9 +335,9 @@ var callOnDocLoad = [];
 				let _onshow = el.dataset.onshow || "block";
 				let _onhide = el.dataset.onhide || "none";
 				let _special = el.dataset.special || 'no';
-				
+
 				// alert_success('addin toggler');
-				
+
 				el.addEventListener('click',() => {
 					let a = _onshow;
 					let b = _onhide;
@@ -404,7 +406,7 @@ var callOnDocLoad = [];
 		copyguys.forEach(el => {
 			if(el.dataset.picker == undefined || el.dataset.picker !== picker){
 				let tk = document.querySelector(el.dataset.copyme);
-				
+
 				if(tk != undefined){
 					if(!(el.dataset.ignorepicker == "yes" || el.dataset.ignorepicker == "true")){
 						el.dataset.picker = picker;
@@ -424,7 +426,7 @@ var callOnDocLoad = [];
 	function init_copyacts() {
 		const picker = 'copy acts';
 		let gotos = document.querySelectorAll('[data-copythis]');
-	
+
 		gotos.forEach(el => {
 			if(el.dataset.picker == undefined || el.dataset.picker !== picker){
 				if(!(el.dataset.ignorepicker == "yes" || el.dataset.ignorepicker == "true")){
@@ -515,7 +517,7 @@ var callOnDocLoad = [];
 		tabs.forEach((tab,id)=>{
 			tab.dataset.picker = "tab handler";
 			let tg = tab.dataset.tabgroup == undefined ? tg_dft : tab.dataset.tabgroup;
-			
+
 			if(tg_btns[tg] == undefined){
 				tg_btns[tg] = [];
 			}
@@ -523,7 +525,7 @@ var callOnDocLoad = [];
 			tab.dataset.tabgroup = tg;
 			tg_btns[tg].push(tab);
 		});
-		
+
 		contents.forEach((con,id)=>{
 			con.dataset.picker = "tab handler";
 			let tg = con.dataset.tabgroup == undefined ? tg_dft : con.dataset.tabgroup;
@@ -545,7 +547,7 @@ var callOnDocLoad = [];
 			} else {
 				alert_silent(`tab contents found for group [${el}]`);
 			}
-			
+
 			tg_contents[el].forEach((tgc,n) => {
 				if(tgc.dataset.myid == undefined){
 					tgc.dataset.myid = `${el}_${n}`;
@@ -605,7 +607,7 @@ var callOnDocLoad = [];
 						}
 					});
 				} else {
-					alert_warning(`form: ${sel}, doesnt exist`);
+					alert_silent(`[UIops] form: ${sel}, doesnt exist`);
 				}
 			}
 		})
@@ -627,7 +629,7 @@ var callOnDocLoad = [];
 
 				el.addEventListener('submit',(e) => {
 					// alert(`block: ${_block} -> ndft: ${nodefault ? 'yes' : 'no'}`);
-					
+
 					if(nodefault){
 						e.preventDefault();
 					}
@@ -819,7 +821,7 @@ var callOnDocLoad = [];
 
 					const endme = () => {
 						clearInterval(myinter);
-						
+
 						if(finalact !== undefined){
 							if(typeof window[finalact] == 'function'){
 								window[finalact](me);
@@ -846,7 +848,7 @@ var callOnDocLoad = [];
 		const alerters = document.querySelectorAll('[data-alertme]');
 
 		alerters.forEach((el,id) => {
-			if(el.dataset.picked == undefined || el.dataset.picked !== picker){
+			if(el.dataset.picked == undefined || el.dataset.picked !== picker || el.dataset.taker !== picker){
 				if(el.dataset.notme != undefined){
 					el.dataset.skipped = "yes";
 					return;
@@ -860,6 +862,9 @@ var callOnDocLoad = [];
 
 				// in case i ever implement an abbreviation dictionary
 				// aldata[0] = getlonger(aldata[0]);
+
+				el.dataset.picked = picker;
+				el.dataset.taker = picker;
 
 				el.addEventListener('click',() => {
 					// showAlert(toshow,dur,thetype);
@@ -1053,7 +1058,12 @@ var callOnDocLoad = [];
 	function getconstval(name) {
 		if(typeof name !== 'string'){return false;}
 		try{
-			let res = name in globalThis ? globalThis[name] : 'not found';
+			let res = window[name];
+
+			if(typeof res == 'undefined'){
+				res = name in globalThis ? globalThis[name] : null;
+			}
+
 			return res;
 		} catch {
 			return false;
@@ -1062,9 +1072,22 @@ var callOnDocLoad = [];
 
 	// initialisers
 	window.addEventListener('load',() => {
+		if(!uiops_handle_loader){
+			return;
+		}
+
+		// alert_info('running callOnLoad stack');
+
 		callOnLoad.forEach(f => {
 			if(typeof f['act'] == 'function'){
-				f['act'](f['args']);
+				try{
+					setTimeout(() => {
+						f['act'](f['args']);
+					},(f['delay'] == undefined ? 1 : f['delay']));
+				} catch(err) {
+					console.error(err);
+					alert_danger(err.message);
+				}
 				// alert_info('loading something');
 			} else {
 				alert_danger('invalid function assigned to loader');
@@ -1072,9 +1095,22 @@ var callOnDocLoad = [];
 		})
 	});
 	document.addEventListener('DOMContentLoaded',() => {
+		if(!uiops_handle_docloader){
+			return;
+		}
+
+		// alert_info('running callOnDocLoad stack');
+
 		callOnDocLoad.forEach(f => {
 			if(typeof f['act'] == 'function'){
-				f['act'](f['args']);
+				try{
+					setTimeout(() => {
+						f['act'](f['args']);
+					},(f['delay'] == undefined ? 1 : f['delay']));
+				} catch(err) {
+					console.error(err);
+					alert_danger(err.message);
+				}
 				// alert_info('loading something');
 			} else {
 				alert_danger('invalid function assigned to loader');
@@ -1082,10 +1118,10 @@ var callOnDocLoad = [];
 		})
 	});
 
-/** 
+/**
 	 * TODO
 	 * any shit to do goes here
 	 *
 	 * make the page parts thing in scrollers actually work
-	 * 
+	 *
 */

@@ -1,41 +1,51 @@
+/* copyright Cornelis G Shava, UIKIT starter pack: DO NOT resell */
+
 :root {
-    --themecolor: #36d015;
-    --seccolor: #12bf4d;
-    --lightcolor: #0081ff77;
-    --lightcolor2: #cffff452;
-    --darkcolor: #056636;
-    --clr-primary: var(--themecolor);
-    --clr-theme-dark: var(--darkcolor);
-    --clr-bg: #1c231f;
-    /* --clr-bg: red; */
-    --clr-bgglass: #aeaeae44;
-    --clr-border: #c0c0c0;
-    --clr-shadow: rgba(100,100,100,0.3);
-    --clr-panelbg: #2a2a2a;
-    --clr-darkglass: #000000aa;
-    --clr-whiteglass: #efefefaa;
-    --clr-alttext: #000000;
-    --clr-text: #e5e5e5;
-    --clr-text-muted: #a6a1a1;
-    --clr-fade: #f3f3f3;
-    --themeglow: 0 0 16px var(--themecolor);
-    --themeshadow: 0 0 16px var(--clr-shadow);
-    --overlaybg: rgba(0,0,0,0.8);
-    --size-tn: 8px;
-    --size-sm: 16px;
-    --size-nm: 24px;
-    --size-md: 32px;
-    --size-lg: 48px;
-    --size-mg: 64px;
-    --span-tn: 240px;
-    --span-sm: 400px;
-    --span-nm: 400px;
-    --span-md: 700px;
-    --span-lg: 800px;
-    --span-mg: 1280px;
-    --roundness: 12px;
-    --rounder: 20px;
-    --minspan: 800px;
+	--themecolor: #0081ff;
+	--seccolor: #01ad4e;
+	--lightcolor: #0081ff77;
+	--lightcolor2:#cffff452;
+	--darkcolor: #063bd0;
+	--clr-theme-dark: var(--darkcolor);
+	--clr-bg: #f7f7f7;
+	/* --clr-bg: red; */
+	--clr-bgglass: #aeaeae44;
+	--clr-border: #c0c0c0;
+	--clr-shadow: rgba(100,100,100,0.3);
+	--clr-panelbg: #fff;
+	--clr-darkglass: #000000aa;
+	--clr-whiteglass: #efefefaa;
+	--clr-alttext: #fff;
+	--clr-text: #292929;
+	--clr-text-muted: #787878;
+	--clr-fade: #f3f3f3;
+	--themeglow: 0 0 16px var(--themecolor);
+	--themeshadow: 0 0 16px var(--clr-shadow);
+	--overlaybg: rgba(0,0,0,0.8);
+	--size-tn: 8px;
+	--size-sm: 16px;
+	--size-nm: 24px;
+	--size-md: 32px;
+	--size-lg: 48px;
+	--size-mg: 64px;
+	--span-tn: 240px;
+	--span-sm: 400px;
+	--span-nm: 400px;
+	--span-md: 700px;
+	--span-lg: 800px;
+	--span-mg: 1280px;
+	--roundness: 12px;
+	--rounder: 20px;
+	--minspan: 800px;
+}
+
+[data-mode="light"]{
+	--clr-bg: #e7e7e7;
+	--clr-bgglass: #e7e7e7aa;
+	--clr-border: #e0e0e0;
+	/* --clr-shadow: #36d015aa; */
+	--clr-text: #222;
+	--clr-panelbg: #ffffff;
 }
 
 /* images */
@@ -49,20 +59,43 @@
 	box-sizing: border-box;
 	transition: 0.3s ease-out;
 }
-*:not(.fa){
-	font-family: "Inter_24pt",system-ui,sans-serif !important;
-}
+
+/**:not(.fa):not(.fas):not(.fab):not(.far)
+:not(h1):not(h2):not(h3):not(h4):not(.h1):not(.h2):not(.h3):not(.h4){}*/
+
 html{
-	scroll-behavior: smooth;
+	scroll-behavior: smooth !important;
 }
 body{
-	background:var(--clr-bg);
-	color:var(--clr-text);
-	line-height:1.6;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+	background: var(--clr-bg) !important;
+	color:var(--clr-text) !important;
+	line-height: 1.6 !important;
 	padding: 0;
 	margin: 0;
 	overflow-x: hidden;
 	min-height: 100vh;
+}
+body[data-mode="dark"] {
+    --clr-panelbg: #1b1b1b;
+    --clr-bg: #010101;
+    --clr-text: #fff;
+    --clr-alttext: #111;
+    --clr-fade: #333;
+    --clr-gray: #232323;
+    --clr-border: #888;
+    --input-bg: var(--clr-gray);
+    --dark-gray: #222;
+    --light-gray: #444;
+    --lighter-gray: #333;
+    --clr-modeglass: #99999977;
+}
+body.t1{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	overflow: hidden;
 }
 a{
 	text-decoration: none;
@@ -70,16 +103,15 @@ a{
 }
 
 /* UI KIT */
-
 	/* ---------- 0. resets ---------- */
 		a{color:var(--clr-primary);text-decoration:none}
-		img{display: block;width: 100%;border-radius: var(--roundness);background-image: linear-gradient(80deg,cyan,var(--themecolor));max-width: 96vw !important;}
+		img{display: block;width: 100%;/*border-radius: var(--roundness);background-image: linear-gradient(80deg,cyan,var(--themecolor));*/}
 		ul{list-style-type: none;}
 		li{list-style-type: none;}
 
-	/* ---------- 0b. headings ------- */
+	/* ---------- 1. headings -------- */
 		.hedtxt,.h1,.hedtxt2,.h2,.hedtxt3,.h3,.hedtxt4,.h4,.hedtxt5,.h5{
-			font-weight: 800;
+			font-weight: 800 !important;
 			display: block;
 			width: 100%;
 			text-transform: capitalize;
@@ -95,8 +127,59 @@ a{
 		}
 		.hedtxt b,.h1 b,.hedtxt2 b,.hedtxt3 b,.h2 b{color: var(--themecolor);}
 
+	/* ---------- 2. tootips --------- */
+		[data-tooltip]{
+			position: relative;
+			overflow: visible !important;
+		}
+		[data-tooltip]::before {
+			content: attr(data-tooltip);
+			position: absolute;
+			bottom: -100%;
+			padding: var(--size-tn);
+			left: 0;
+			background: var(--clr-panelbg);
+			border-radius: var(--rounder);
+			translate: 0 -20px;
+			opacity: 0;
+			pointer-events: none;
+			transition: 0.3s ease-out;
+		}
+		[data-tooltip]:hover::before {
+			opacity: 1;
+			translate: 0 0px;
+		}
+
+	/* ---------- 3. containers --------- */
+		.fullcon{width: 100vw;height: 100vh;}
+		.in_fullcon{width: 100%;height: 100%;}
+
+		.mycon:not(.except){box-shadow: var(--themeshadow);background-color: var(--clr-panelbg);width: 96%;}
+		.mycon.tn{max-width: var(--span-tn);}
+		.mycon.sm{max-width: var(--span-sm);}
+		.mycon.nm{max-width: var(--span-nm);}
+		.mycon.md{max-width: var(--span-md);}
+		.mycon.lg{max-width: var(--span-lg);}
+		.mycon.mg{max-width: var(--span-mg);}
+
+	/* ---------- 4. Banner ------------------ */
+		.banner{
+			background:linear-gradient(80deg,var(--themecolor) 0,var(--seccolor) 80%);
+			color:var(--clr-alttext) !important;
+			text-align:center;
+			padding:12px 1rem;
+			font-weight:600;
+			width: 100%;
+			display: flex;
+			justify-content: space-around;
+			z-index: 16 !important;
+		}
+		.banner a{
+			color: #fff;
+		}
+	
 	/* ---------- 1. Buttons ---------- */
-		.btn{
+		.mybtn{
 			display:inline-flex;
 			align-items:center;
 			justify-content:center;
@@ -107,10 +190,10 @@ a{
 			cursor:pointer;
 			border:none;
 		}
-		.btn.primary{background:var(--seccolor);color:#fff}
-		.btn.primary:hover{background:var(--clr-theme-dark);transform:translateY(-1px);box-shadow:var(--shadow-md)}
-		.btn.outline{background:transparent;color:var(--themecolor);border:1px solid var(--themecolor)}
-		.btn.outline:hover{background:var(--seccolor);color:#fff}
+		.mybtn.primary{background:var(--themecolor);color:#fff}
+		.mybtn.primary:hover{background:var(--clr-theme-dark);transform:translateY(-1px);box-shadow:var(--shadow-md)}
+		.mybtn.outline{background:transparent;color:var(--themecolor);border:1px solid var(--themecolor)}
+		.mybtn.outline:hover{background:var(--themecolor);color:#fff}
 
 	/* ---------- 2. navbar ---------- */
 		nav {
@@ -167,20 +250,6 @@ a{
 			opacity: 1;
 		}
 		nav .logo{font-size:1.5rem;font-weight:700;color:var(--themecolor)}
-	
-	/* ---------- 3. Banner ---------- */
-		.banner{
-			background:linear-gradient(80deg,var(--themecolor) 0,var(--seccolor) 80%);
-			color:var(--clr-bg);
-			text-align:center;
-			padding:.75rem 1rem;
-			font-weight:600;
-			width: 100%;
-			z-index: 16 !important;
-		}
-		.banner a{
-			color: #fff;
-		}
 
 	/* ---------- 4. Hero (large) ---------- */
 		.hero{
@@ -189,7 +258,8 @@ a{
 			position: relative;
 			background:linear-gradient(135deg,#0112447c 0%,#0a0e1aaa 100%);
 			text-align: center;
-			color: var(--clr-text);
+			color: #fff;
+			font-size: 1.37rem;
 		}
 		.hero::before{
 			content: '';
@@ -216,6 +286,7 @@ a{
 			font-size: min(var(--size-mg),9vw);
 			display: block;
 			width: 100%;
+			/* color: var(--clr-alttext); */
 		}
 		.hedtxt b{color: var(--themecolor);}
 
@@ -407,13 +478,15 @@ a{
 		.callout{
 			background-attachment: fixed;
 			background-size: cover;
+			color: var(--clr-alttext);
 		}
 		.callout.t1{background-image: var(--bgimg1);}
 		.callout.t2{background-image: var(--bgimg2);}
 		.callout .container{
 			margin: 0 !important;
 			font-size: 1.2rem;
-			color: var(--clr-text);
+			/* color: var(--clr-alttext); */
+			color: #fff;
 			padding: var(--size-lg) var(--size-md);
 			background-image: linear-gradient(80deg,#000,transparent);
 		}
@@ -425,10 +498,45 @@ a{
 		.footer a{color:var(--clr-text-muted)}
 		.footer a:hover{color:var(--themecolor)}
 
+	/* ----------- 11, forms --------- */
+		.form-group {
+			margin-bottom: 20px;
+		}
+		.form-group:has(input:focus) .form-label,
+		.form-group:has(select:focus) .form-label,
+		.form-group:has(textarea:focus) .form-label{
+			color: var(--themecolor);
+		}
+		.form-label {
+			display: block;
+			font-size: 13px;
+			font-weight: 700;
+			color: var(--clr-text);
+			margin-bottom: 8px;
+		}
+		.form-control-custom {
+			width: 100%;
+			padding: 8px 16px;
+			background: var(--input-bg);
+			color: var(--clr-text);
+			border: 1px solid var(--clr-border);
+			border-radius: var(--roundness);
+			font-size: 14px;
+			transition: all 0.3s;
+		}
+		.form-control-custom:focus {
+			outline: none;
+			border-color: var(--primary);
+			box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+		}
+		.form-control-custom[readonly="true"],.form-control-custom[readonly="true"] label{
+			opacity: 0.3;
+		}
+
 /* reusables x utilities */
-	.grid-30-70{display:grid;grid-template-columns:1fr 2fr;align-items:center}
-	.grid-70-30{display:grid;grid-template-columns:2fr 1fr;align-items:center}
-	.grid-50-50{display:grid;grid-template-columns:1fr 1fr;align-items:center}
+	.grid-30-70{display:grid;grid-template-columns:1fr 2fr;align-items:center;gap: var(--size-md)}
+	.grid-70-30{display:grid;grid-template-columns:2fr 1fr;align-items:center;gap: var(--size-md)}
+	.grid-50-50{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap: var(--size-md)}
 	.flex-50-50{display:flex;flex-wrap: wrap;flex-direction: row;}
 	.flex-50-50:not(.alt)>*{flex: 1 0 400px;}
 
