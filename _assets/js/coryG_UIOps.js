@@ -217,21 +217,19 @@ var uiops_handle_docloader = true;
 				curpage = `./${curpage}`;
 
 				navlinks.forEach((el,id) => {
-					href = `./${cpg(el.href)}`;
+					let href = `./${cpg(el.href)}`;
+					let ccx = href.toLowerCase() == curpage.toLowerCase();
+					let cnc = ccx ? 'yes' : 'fek no';
+
 					el.classList.remove("active");
 					// el.innerHTML += ' -> nvr'; // test if it works
-					el.dataset.curpage = `${el.href.toLowerCase()} | ${curpage} | ${id} | ${theid}`;
-
-					if(href.toLowerCase() === curpage.toLowerCase()){
-						// alert_dark("found one");
+					if(ccx){
 						theid = id;
+						el.classList.add('active');
 					}
-				})
 
-				if(theid >= 0){
-					navlinks[theid].classList.add('active');
-					// alert_dark(curpage);
-				}
+					el.dataset.curpage = `${el.href.toLowerCase()} | ${href} | ${curpage} | ${id} | ${theid} | ${cnc}`;
+				})
 			}
 		}
 	}
@@ -672,7 +670,6 @@ var uiops_handle_docloader = true;
 		runs.forEach((el,id) => {
 			if(el.dataset.picked == undefined || el.dataset.picked !== picker){
 				let who = el.dataset.runme;
-				const load_stats = 'alert_danger';
 
 				if(who.includes('defined:')){
 					// whatever follows MUST be defined by var
@@ -684,12 +681,19 @@ var uiops_handle_docloader = true;
 					// return;
 				}
 
-				el.dataset.picked = window[who] == undefined ? undefined : picker;
+				if(window[who] != undefined && typeof window[who] == 'function'){
+					el.dataset.picked = picker;
+				}
 
 				el.addEventListener('click', () => {
 					if(window[who] == undefined){
 						if(el.dataset.errorset == undefined){
-							alert_danger(`function not found`);
+							if(el.dataset.quieterrors == undefined || el.dataset.quieterrors == 'no' || el.dataset.quieterrors == 'false'){
+								let errtext = `function not found`;
+								el.dataset.error = errtext;
+								alert_danger(errtext);
+							}
+
 							el.dataset.errorset = true;
 						}
 					} else {
@@ -985,14 +989,17 @@ var uiops_handle_docloader = true;
 // runtime events and utilities
 	// start the functions as soon as the page is loaded
 	window.addEventListener('load',() => {
+		alert_silent('coryG_UIOps is initialising');
 		createextras();
 		uis_init();
 
 		setTimeout(() => {
 			uis_afterfx();
+			alert_silent('coryG_UIOps after effects complete');
 		},afterfx_delay);
 
 		pageloaded = true;
+		alert_silent('coryG_UIOps has initialized');
 	})
 
 	// run the scroll handler whenever there is a scroll event on the document
