@@ -33,43 +33,43 @@ function mekstyles() {
 			bottom: 0;
 			right: 0;
 			width: 100%;
-    		max-width: fit-content;
+			max-width: fit-content;
 			height: auto;
 			pointer-events: none;
 			padding: 20px 30px 80px 30px;
 			z-index: ${zindex};
 			font-family: 'calibri', sans-serif !important;
-    		--c: #fff;
-    		--altc: #000;
+			--c: #fff;
+			--altc: #000;
 		}
 
 		#alertContainer button {
 			border:none;
 		}
 
-		.alert {
+		.alert:not(.except) {
 			position: relative;
 			padding: 8px 16px;
 			margin-bottom: 20px;
 			color: var(--c);
 			border-radius: var(--roundness,12px) !important;
 			width: fit-content;
-    		min-width: 300px;
+			min-width: 300px;
 			max-width: 400px;
 			pointer-events: ${intertxt};
     		// font-weight: 700;
 		}
 
-		.alert.success{background-color: mediumseagreen;box-shadow: 0 0 12px mediumseagreen;}
-		.alert.info{background-color: dodgerblue;box-shadow: 0 0 12px dodgerblue;}
-		.alert.warning{background-color: rgb(255, 166, 0);box-shadow: 0 0 12px rgb(255, 166, 0);color:var(--altc)}
-		.alert.danger,.alert.error{background-color: red;box-shadow: 0 0 12px red;}
-		.alert.primary{background-color: #007bff;box-shadow: 0 0 12px #007bff;}
-		.alert.theme{background-color: var(--themecolor);box-shadow: 0 0 12px var(--themecolor);}
-		.alert.secondary{background-color: #343a40;box-shadow: 0 0 12px #343a40;}
-		.alert.light{background-color: #fff;box-shadow: 0 0 12px #fff;color:var(--altc) !important;}
-		.alert.dark{background-color: #343a40;box-shadow: 0 0 12px #343a40;}
-		.alert b,.alert strong{
+		.alert:not(.except).success{background-color: mediumseagreen;box-shadow: 0 0 12px mediumseagreen;}
+		.alert:not(.except).info{background-color: dodgerblue;box-shadow: 0 0 12px dodgerblue;}
+		.alert:not(.except).warning{background-color: rgb(255, 166, 0);box-shadow: 0 0 12px rgb(255, 166, 0);color:var(--altc)}
+		.alert:not(.except).danger,.alert.error{background-color: red;box-shadow: 0 0 12px red;}
+		.alert:not(.except).primary{background-color: #007bff;box-shadow: 0 0 12px #007bff;}
+		.alert:not(.except).theme{background-color: var(--themecolor);box-shadow: 0 0 12px var(--themecolor);}
+		.alert:not(.except).secondary{background-color: #343a40;box-shadow: 0 0 12px #343a40;}
+		.alert:not(.except).light{background-color: #fff;box-shadow: 0 0 12px #fff;color:var(--altc) !important;}
+		.alert:not(.except).dark{background-color: #343a40;box-shadow: 0 0 12px #343a40;}
+		.alert:not(.except) b,.alert:not(.except) strong{
 			display: inline-block;
 			border-radius: calc(var(--roundness) / 2);
 			background-color: var(--alttextcolor);
@@ -165,6 +165,11 @@ function alert_light(message,time) {showAlert(message,time,"light");}
 function alert_dark(message,time) {showAlert(message,time,"dark");}
 function alert_quiet(message,time) {showAlert(message,time,"quiet");}
 function alert_silent(message,time) {showAlert(message,time,"quiet");}
+
+function clear_alerts() {
+	let alertContainer = document.getElementById('alertContainer');
+	alertContainer.innerHTML = '';
+}
 
 window.addEventListener('keydown',(e) => {
 	if(e.key != undefined && e.key.toLowerCase() == 'tab' && e.shiftKey){
