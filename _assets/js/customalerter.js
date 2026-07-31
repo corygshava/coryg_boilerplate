@@ -21,6 +21,7 @@ const icons = {
 	"dark": "fa fa-caret-right",
 };
 const mekicon = (what) => {return `<i class="${what}"></i>`;}
+const alert_class = "c_" + mekRandomString(3);
 
 function mekstyles() {
 	let zindex = 1056;
@@ -47,7 +48,7 @@ function mekstyles() {
 			border:none;
 		}
 
-		.alert:not(.except) {
+		.${alert_class}:not(.except) {
 			position: relative;
 			padding: 8px 16px;
 			margin-bottom: 20px;
@@ -60,16 +61,16 @@ function mekstyles() {
     		// font-weight: 700;
 		}
 
-		.alert:not(.except).success{background-color: mediumseagreen;box-shadow: 0 0 12px mediumseagreen;}
-		.alert:not(.except).info{background-color: dodgerblue;box-shadow: 0 0 12px dodgerblue;}
-		.alert:not(.except).warning{background-color: rgb(255, 166, 0);box-shadow: 0 0 12px rgb(255, 166, 0);color:var(--altc)}
-		.alert:not(.except).danger,.alert.error{background-color: red;box-shadow: 0 0 12px red;}
-		.alert:not(.except).primary{background-color: #007bff;box-shadow: 0 0 12px #007bff;}
-		.alert:not(.except).theme{background-color: var(--themecolor);box-shadow: 0 0 12px var(--themecolor);}
-		.alert:not(.except).secondary{background-color: #343a40;box-shadow: 0 0 12px #343a40;}
-		.alert:not(.except).light{background-color: #fff;box-shadow: 0 0 12px #fff;color:var(--altc) !important;}
-		.alert:not(.except).dark{background-color: #343a40;box-shadow: 0 0 12px #343a40;}
-		.alert:not(.except) b,.alert:not(.except) strong{
+		.${alert_class}:not(.except).success{background-color: mediumseagreen;box-shadow: 0 0 12px mediumseagreen;}
+		.${alert_class}:not(.except).info{background-color: dodgerblue;box-shadow: 0 0 12px dodgerblue;}
+		.${alert_class}:not(.except).warning{background-color: rgb(255, 166, 0);box-shadow: 0 0 12px rgb(255, 166, 0);color:var(--altc)}
+		.${alert_class}:not(.except).danger,.${alert_class}.error{background-color: red;box-shadow: 0 0 12px red;}
+		.${alert_class}:not(.except).primary{background-color: #007bff;box-shadow: 0 0 12px #007bff;}
+		.${alert_class}:not(.except).theme{background-color: var(--themecolor);box-shadow: 0 0 12px var(--themecolor);}
+		.${alert_class}:not(.except).secondary{background-color: #343a40;box-shadow: 0 0 12px #343a40;}
+		.${alert_class}:not(.except).light{background-color: #fff;box-shadow: 0 0 12px #fff;color:var(--altc) !important;}
+		.${alert_class}:not(.except).dark{background-color: #343a40;box-shadow: 0 0 12px #343a40;}
+		.${alert_class}:not(.except) b,.${alert_class}:not(.except) strong{
 			display: inline-block;
 			border-radius: calc(var(--roundness) / 2);
 			background-color: var(--alttextcolor);
@@ -90,6 +91,14 @@ function mekstyles() {
     console.log("made styles");
 }
 
+function mekContainer() {
+	let div = document.createElement('div');
+	div.dataset.is_backup = "yes";
+	div.id = 'alertContainer';
+
+	document.body.appendChild(div);
+}
+
 function showAlert(alertMessage, alertTime, alertType) {
 	alertMessage = alertMessage == undefined ? 'test message' : alertMessage;
 	alertTime = alertTime == undefined ? 2 : alertTime;
@@ -106,9 +115,18 @@ function showAlert(alertMessage, alertTime, alertType) {
 		// Create alert container if it doesn't exist
 		let alertContainer = document.getElementById('alertContainer');
 
+		if(alertContainer == undefined){
+			mekContainer();
+
+			setTimeout(() => {
+				showAlert(alertMessage, alertTime, alertType);
+			}, 700);
+			return;
+		}
+
 		// Create alert element
 		const alertElement = document.createElement('div');
-		alertElement.className = `alert ${alertType} alert-dismissible fade show`;
+		alertElement.className = `${alert_class} ${alertType} alert-dismissible fade show`;
 		alertElement.role = 'alert';
 		alertElement.innerHTML = `
 			${alertMessage}
@@ -148,7 +166,7 @@ function showAlert(alertMessage, alertTime, alertType) {
 				}
 			}, alertTime * 1000);
 		}
-		console.log(`i will die in ${alertTime} seconds`);
+		// console.log(`i will die in ${alertTime} seconds`);
 	}
 
 	let timestamp = (new Date()).getTime();
