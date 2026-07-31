@@ -45,8 +45,14 @@ let c_inters = [];
 let tg_btns = {};
 let tg_contents = {};
 
+/*
+// loader operations
+	format {act,delay,type: 'post', 'pre', 'both' (for callOnRefreshUI only)}
+*/
 var callOnLoad = [];
 var callOnDocLoad = [];
+var callOnRefreshUI = [];
+
 var uiops_handle_loader = true;
 var uiops_handle_docloader = true;
 
@@ -117,8 +123,49 @@ var uiops_handle_docloader = true;
 	}
 
 // Ops - these do stuff
+	function runops(ops,errmsg = undefined) {
+		let id = mekRandomString(3);
+
+		if(typeof ops != 'object'){
+			alert_danger('Invalid operations array in runops');
+			return;
+		}
+
+		ops.forEach((f,n) => {
+			if(typeof f['act'] == 'function'){
+				setTimeout(() => {
+					try{
+						f['act'](f['args']);
+					} catch(err) {
+						console.error(err);
+						alert_danger(`[${id}][${n}] -> ${err.message}`);
+					}
+				}, (f['delay'] == undefined ? 1 : f['delay']));
+			} else {
+				alert_danger(errmsg == undefined ? `[${id}] invalid function assigned to ops[${n}]` : `[${id}] ${errmsg}`);
+			}
+		})
+	}
+
+	function ui_ops(type) {
+		let ops = [];
+		ops = [...callOnRefreshUI];
+
+		if(ops.length == 0){
+			return;
+		}
+
+		if(type != 'all'){
+			ops.filter(r => {return r.type == type || r.type == 'both'});
+		}
+
+		runops(ops);
+	}
+
 	// function poolers
 	function uis_init() {
+		ui_ops('pre');
+
 		console.log("running initialiser");
 		alert_silent("running initialiser");
 		// alert_info("running initialiser");
@@ -181,6 +228,8 @@ var uiops_handle_docloader = true;
 
 		// livecountdown
 		init_countdowns();
+
+		ui_ops('post');
 	}
 
 	function uis_afterfx() {
