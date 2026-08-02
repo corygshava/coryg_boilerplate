@@ -236,3 +236,51 @@ function responseHandler(w,callback,args = undefined,quiet = false,skip_prepro =
 function openModal(id){
 	toggleShow(`#${id}`);
 }
+
+// systems and tools
+	// dark / light mode switch setup
+		let cur_ui_mode = "dark";
+		let mode_timeout = undefined;
+
+		window['setup_uimode'] = () => {
+			let now = new Date();
+			let hr = now.getHours();
+			let mode = hr >= 19 ? "dark" : "light";
+
+			if(cur_ui_mode.toLowerCase() != mode){
+				alert_info(`changing to ${mode} mode`);
+			}
+
+			cur_ui_mode = mode;
+			set_ui_mode();
+
+			if(mode_timeout !== undefined){
+				clearTimeout(mode_timeout);
+			}
+			mode_timeout = setTimeout(() => {
+				setup_uimode();
+			},20000);
+		}
+		window['toggle_ui_mode'] = () => {
+			if(mode_timeout !== undefined){
+				clearTimeout(mode_timeout);
+			}
+
+			let curmode = cur_ui_mode;
+			let newmode = curmode == "dark" ? "light" : "dark";
+			cur_ui_mode = newmode;
+			set_ui_mode();
+		}
+		window['set_ui_mode'] = () => {
+			let cls = cur_ui_mode == 'dark' ? 'fa fa-sun' : 'fa fa-moon';
+			let cls2 = cur_ui_mode == 'dark' ? 'light' : 'dark';
+
+			mode_indicator = document.querySelector('#mode_indicator');
+			if(mode_indicator != undefined){
+				mode_indicator.innerHTML = `<i class="${cls}"></i>`;
+				mode_indicator.className = `btn btn-${cls2.toLowerCase()} themeround`;
+			}
+
+			document.body.dataset.mode = cur_ui_mode;
+		}
+
