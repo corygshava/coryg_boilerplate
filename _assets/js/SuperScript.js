@@ -2,6 +2,7 @@
 	*	Hi there, Cory here, this is a script full of functions to make your work  easier
 	*	Go check out www.nebulaworks.42web.io/res/ to find out how to use it or download the latest version
 	*	last modified on 12/nov/24 at 11:49
+	*	small mod on 3rd August 2026
 	*	enjoy
 */
 
@@ -487,7 +488,7 @@ function startCountdown(targetDate,format,ifexpired,suffix) {
 				suffix;
 		} else {
 			outxt = `${days}:` +
-				`${String(hours).padStart(2, '0')}: ` +
+				`${String(hours).padStart(2, '0')}:` +
 				`${String(minutes).padStart(2, '0')}:` +
 				`${String(seconds).padStart(2, '0')}` +
 				suffix;

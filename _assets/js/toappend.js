@@ -126,7 +126,7 @@ function startCountdown(targetDate,format,ifexpired,suffix) {
 		} else {
 			outxt = days > 0 ? `${days}:` : '';
 			outxt +=
-				`${String(hours).padStart(2, '0')}: ` +
+				`${String(hours).padStart(2, '0')}:` +
 				`${String(minutes).padStart(2, '0')}:` +
 				`${String(seconds).padStart(2, '0')}` +
 				suffix;
@@ -411,9 +411,9 @@ window['objtoquery'] = (obj, prefix = '') => {
 function reverseLerp(min,max,val) {
 	return (val - min) / (max - min);
 }
-function getDateDiff(date1, date2) {
-	console.log("date1: ",date1,typeof date1);
-	console.log("date2: ",date2,typeof date2);
+function getDateDiff(date1, date2, use_sec = true) {
+	// console.log("date1: ",date1,typeof date1);
+	// console.log("date2: ",date2,typeof date2);
 	const time1 = new Date(date1);
 	const time2 = new Date(date2);
 
@@ -422,13 +422,13 @@ function getDateDiff(date1, date2) {
 	const diffInSecs = Math.floor(diffInMs / 1000);
 	const secs = diffInMs / 254879076.93333334;
 
-	console.log('oldtime: ',time1.getTime(),formatDate0(time1));
-	console.log('newtime: ',time2.getTime(),formatDate0(time2));
+	// console.log('oldtime: ',time1.getTime(),formatDate0(time1));
+	// console.log('newtime: ',time2.getTime(),formatDate0(time2));
 	// return 0;
 	// alert_dark(`diff in ms: ${diffInMs}`,14);
 	// alert_dark(`diff in secs: ${diffInSecs}`,14);
 
-	return diffInSecs;
+	return use_sec ? diffInSecs : diffInMs;
 }
 
 
@@ -480,3 +480,66 @@ function mekQRCode(encodedText, size = 100) {
     });
 }
 // */
+
+
+// added from the timer project on [04/08/26] around 138 days after those
+function formatDate(date) {
+	if(!date){return '--';}
+
+	return date.toLocaleDateString('en-US', {
+		month: 'short',
+		day: 'numeric',
+		year: 'numeric'
+	});
+}
+function formatDate0(date) {
+	if(!date){return '--';}
+
+	const d = new Date(date); // Ensures input is a Date object
+	const day = String(d.getDate()).padStart(2, '0');
+	const month = String(d.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+	const year = d.getFullYear();
+	const hours = String(d.getHours()).padStart(2, '0');
+	const minutes = String(d.getMinutes()).padStart(2, '0');
+	const seconds = String(d.getSeconds()).padStart(2, '0');
+
+	return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+}
+function formatNumber(n,dp = 0,locale = true) {
+	if(Number(n) == NaN){
+		alert_danger('invalid number passed for formatting');
+		return 'NaN';
+	} else {
+		n = Number(n);
+	}
+
+	let parts = n.toString().split('.');
+	let p1 = locale ? Number(parts[0]).toLocaleString() : Number(parts[0]);
+	let p2 = parts[1] || '00';
+
+	p2 = p2.slice(0,dp);
+	res = dp == 0 || !(n.toString().includes('.')) ? p1 : `${p1}.${p2}`;
+
+	return res;
+}
+function killghost(who) {
+	// kills ghost processes and functions
+	// NOTE: this shit is OP as fukari so use it sparingly
+	if(window[who] !== undefined){
+		delete(window[who]);
+	} else {
+		// alert_danger('invalid killghost pass');
+	}
+}
+
+function killghosts(stuff = []) {
+	if(typeof stuff == 'object'){
+		if(stuff.forEach === undefined){
+			alert_silent('invalid killghosts pass')
+			return;
+		}
+		stuff.forEach(s => {killghost(s);})
+	} else {
+		alert_silent('invalid killghosts pass');
+	}
+}
