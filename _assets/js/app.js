@@ -5,6 +5,8 @@ const simple_fetch = "simple_fetch_bypass_" + mekRandomString(5);
 const session_CSRF_token = "rnvar_" + mekRandomString(12);
 const fetch_identifier = "viaFetch";
 let curfun = "rnvar_" + mekRandomString(3);
+
+// for the confirm mech
 const confirm_callback = "rnvar_" + mekRandomString(12);
 const confirm_canceller = "rnvar_" + mekRandomString(10);
 
