@@ -505,6 +505,22 @@ function formatDate0(date) {
 
 	return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
+function formatDate1(date,hastime = false,onlytime = false) {
+	let now = new Date(date);
+	let datepart = now.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+	let timepart = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+	let out = [datepart, timepart];
+
+	if(hastime && !onlytime){
+		return out.join(" , ");
+	} else {
+		if(!hastime){
+			return datepart;
+		} else {
+			return timepart;
+		}
+	}
+}
 function formatNumber(n,dp = 0,locale = true) {
 	if(Number(n) == NaN){
 		alert_danger('invalid number passed for formatting');
@@ -522,6 +538,26 @@ function formatNumber(n,dp = 0,locale = true) {
 
 	return res;
 }
+
+// fileops
+window['readTextFile'] = (toread,callback,isjson=false) => {
+	let fr = new FileReader();
+	fr.onload = (e) => {
+		try{
+			console.log('trying to read the file');
+			console.log('reader input', e);
+			if(isjson){
+				callback(JSON.parse(e.target.result),e);
+			} else {
+				callback(e.target.result,e);
+			}
+		} catch(err){
+			console.error(err);
+		}
+	};
+	fr.readAsText(toread);
+}
+
 function killghost(who) {
 	// kills ghost processes and functions
 	// NOTE: this shit is OP as fukari so use it sparingly

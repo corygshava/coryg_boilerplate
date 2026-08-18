@@ -1,12 +1,16 @@
-
-const fetch_bypass = "fetch_bypass_" + mekRandomString(5);
-const fetch_bypass_fyls = "fetch_bypass_fyls_" + mekRandomString(5);
-const simple_fetch = "simple_fetch_bypass_" + mekRandomString(5);
-const session_CSRF_token = "rnvar_" + mekRandomString(12);
+const fetch_bypass = "f_bps_" + mekRandomString(5);
+const fetch_bypass_fyls = "f_bps_f_" + mekRandomString(5);
+const fetch_ui = "f_ui_" + mekRandomString(5);
+const simple_fetch = "s_fetch_" + mekRandomString(5);
+const session_CSRF_token = "csrf_" + mekRandomString(12);
 const fetch_identifier = "viaFetch";
 let curfun = "rnvar_" + mekRandomString(3);
 
-// for the confirm mech
+// localstorage stuff
+let app_prefix = 'coryg_app';
+let pref_auth = `${app_prefix}_authorizer_key`;
+
+// for the confirmer mech
 const confirm_callback = "rnvar_" + mekRandomString(12);
 const confirm_canceller = "rnvar_" + mekRandomString(10);
 
@@ -206,6 +210,141 @@ var confirm_toggler = undefined;
 		}
 	}
 
+	curfun = fetch_ui;
+	if(window[curfun] == undefined){
+		window[curfun] = async (p,dta = {},mt = 'POST',skipappend = false,use_as_is=false) => {
+			try{
+				let now = new Date();
+				let mkey = `${pref_prefix}[${p}]`;
+				let pkey = `${pref_prefix}mypermissions`;
+				let local_cache_version = localStorage.getItem(mkey);
+				let saved_perms = localStorage.getItem(pkey);
+
+				let cache_saved = local_cache_version !== undefined && local_cache_version !== null;
+				let perms_saved = saved_perms !== undefined && saved_perms !== null;
+
+				// perms_saved = true;
+
+				if(cache_saved && perms_saved && enableCache){
+					let local_cache = JSON.parse(local_cache_version);
+					let myperms = getitempermissions(p);
+
+					if(mypermissions.includes(myperms) || myperms == undefined){
+						let cache_age = getDateDiff(now, local_cache.saved_at);
+						let usecache = (cache_age <= cache_lifetime_in_secs);
+						let isvalid = saved_perms.toLowerCase() == JSON.stringify(mypermissions).toLowerCase();
+
+						if(usecache && isvalid){
+							alert_dark('loading from cache');
+							return local_cache.html;
+						} else {
+							if(!usecache){
+								// alert_dark(`cache is old [${cache_age} / ${cache_lifetime_in_secs}s old], disposing`,12);
+								localStorage.removeItem(mkey);
+							} else {
+								// alert_dark('cache is invalid');
+							}
+						}
+					} else {
+						// alert_dark('cache found but you dont have permissions');
+						// alert_dark(`permissions required: ${myperms}`);
+					}
+				} else {
+					// alert_dark('no cache found');
+				}
+
+				alert_silent({to: p,data: dta,method: mt});
+				alert_info('loading from server, please wait');
+
+				const prff = JSON.parse(localStorage.getItem(pref_auth));
+
+				let headers = {
+					'X-Requested-With' : 'XMLHttpRequest',
+					'X-CSRF-TOKEN' : session_CSRF_token,
+					'Accept' : 'application/json',
+					'Content-Type' : 'application/json',
+				};
+
+				// alert(prff);
+
+				if (prff !== null) {
+					headers['Authorization'] = `Bearer ${prff.value}`
+				}
+
+				let s_data = {
+					method: mt.toUpperCase(),
+					headers: headers,
+					// credentials: 'same-origin',
+				};
+
+				let req = await fetch(p,s_data);
+				let final = await req.text();
+				let cache = {
+					saved_at: (new Date()).toISOString(),
+					html: final
+				};
+				let cache_data = JSON.stringify(cache);
+
+				// save cache for fast loading later
+				localStorage.setItem(mkey,cache_data);
+				localStorage.setItem(pkey,JSON.stringify(mypermissions));
+
+				return final;
+			} catch (error){
+				alert_danger(error);
+				throw new Error(error);
+			}
+		}
+	}
+
+	curfun = "loadUI";
+	if(window[curfun] == undefined){
+		window[curfun] = async ({p='/',mt='get',holder=undefined,prerun = () => {alert_info('loading...')},postrun=() => {alert_info('loaded')}}) => {
+			if(holder === undefined){
+				holder = dft_holder;
+			}
+
+			if(typeof prerun == "function"){
+				prerun();
+			}
+
+			showloader();
+
+			window[fetch_ui](p,{},mt).then(d => {
+				hideloader();
+				holder.innerHTML = d;
+				refreshUI(300)
+
+				if(typeof postrun == "function"){
+					postrun();
+				}
+			})
+		}
+	}
+
+	curfun = "log_visit";
+	if(window[curfun] == undefined){
+		window[curfun] = async (p,dta = {},mt = 'POST') => {
+			let mypage = undefined;
+			let base = document.querySelector('base');
+			let c_page = cpg(window.location.href);
+
+			if(base != undefined){
+				// alert_info(base.href);
+				c_page = window.location.href.replace(base.href,'');
+			}
+
+			// alert_info(c_page);
+			window['simple_fetcher'](`${mainhost}/api/log_visit`,{where: c_page}).then(w => {
+				if(w){
+					alert_silent('wirked');
+				} else {
+					alert_silent('not wirked');
+				}
+			});
+		}
+	}
+
 	function getFormdata(formElement) {
 		if (!(formElement instanceof HTMLFormElement)) {
 			throw new Error('Input must be a <form> element');
@@ -253,6 +392,24 @@ var confirm_toggler = undefined;
 		toggleShow(`#${id}`);
 	}
 
+	// fetch partner functions
+		function clear_view_cache() {
+			let tokill = [];
+
+			for(let c = 0;c < localStorage.length;c++){
+				let key = localStorage.key(c);
+				if(key.includes(app_prefix)){
+					tokill.push(key);
+				}
+			}
+
+			tokill.forEach(tk => {
+				localStorage.removeItem(tk);
+			})
+
+			alert_dark('all view cache cleared');
+		}
+
 // initialisers
 	curfun = "mekXtras";
 	if(window[curfun] == undefined){
@@ -277,7 +434,7 @@ var confirm_toggler = undefined;
 				b.dataset.shown = "0";
 				b.innerHTML = `
 					<div class="modal-dialog modal-lg" role="document">
-						<div class="modal-content themeround borderless panelbg">
+						<div class="modal-content themeround borderless panelbg w3-animate-zoom">
 							<div class="modal-header">
 								<span class="h3 modal-title" id="password_confo_title">Confirm your Password</span>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close" data-runme="password_confo_clearghost"><span aria-hidden="true">&times;</span></button>
@@ -373,6 +530,165 @@ var confirm_toggler = undefined;
 	callOnDocLoad.push({act: window[curfun]});
 
 // html generators
+	function mekstagger(delay,count) {
+		let del = count * delay;
+		return `animation-delay: ${del}ms;animation-fill-mode: forwards;opacity: 0;`;
+	}
+	function mekdisplay(what,startclasses = '',template='[val]') {
+		let out = '';
+		let trydate = new Date(what);
+
+		if(what == null ) return 'null';
+		if(what == undefined ) return 'undefined';
+		if(trydate != 'Invalid Date' && (typeof what != 'object') && (("" + what).includes('-') || ("" + what).includes('/'))){
+			return trydate.toLocaleDateString('en-US', {
+						year: 'numeric',
+						month: 'numeric',
+						day: 'numeric',
+						hour: 'numeric',
+						minute: 'numeric'
+					});
+		}
+
+		if(typeof what == 'object'){
+			out += `<div class="${startclasses}">`;
+			Object.keys(what).forEach(k => {
+				val = `<b>${k}</b> : ${mekdisplay(what[k])}<br>`;
+				out += template.replaceAll('[val]',val);
+			})
+			out += '</div>';
+		} else if(typeof what == "array"){
+			what.forEach(k => {
+				out += `<div>${k}</div>`;
+			})
+		} else if(typeof what == 'string'){
+			if(what.includes('http:') || what.includes('https:')){
+				out += `<a href="${what}">${what.substr(0,50)}</a>`;
+			} else {
+				out += what;
+			}
+		} else {
+			out += template.replaceAll('[val]',what);
+		}
+
+		return out;
+	}
+
+	function mekError(hed= 'Error',demo='an error happened',serious = false){
+		let sertxt = serious ? `<button class="mybtn primary sm" onclick="window.location.reload()">reload page</button>` : '';
+
+		return `
+			<div class="spacy-mg w3-center slide-up flow gap-sm">
+				${mekHeading(hed,'h4')}
+				<b><i class="w3-text-red">${demo}</i></b>
+				<div>
+					${sertxt}
+				</div>
+			</div>
+		`;
+	}
+	function mekUiAlert(msg,typ='danger',icon='fa fa-info') {
+		return `
+			<article class="spacy-sm border-${typ} uialert alert-${typ} text-${typ} slide-up" style="border-left: 3px solid;">
+				<i class="${icon} mr-2"></i><b>${msg}</b>
+			</article>
+		`;
+	}
+	function mekStandin(demo='an error happened',class_ovr = 'w3-text-black',cta_link = undefined,cta_text = undefined){
+		let cta = '';
+
+		cta = cta_link != undefined ?
+			`<a href="${cta_link}" class="btn outline"><i class="fa fa-plus"></i> ${cta_text || 'go now'}</a>` :
+			'';
+
+		return `
+			<div class="spacy-mg w3-center slide-up">
+				<b><i class="${class_ovr}">${demo}</i></b>
+				${cta}
+			</div>
+		`;
+	}
+	function mekSection(heading = "heading",demo='an error happened',class_ovr = 'w3-text-black',cta_link = undefined,cta_text = undefined){
+		let cta = '';
+
+		cta = cta_link != undefined ?
+			`<a href="${cta_link}" class="btn outline"><i class="fa fa-plus"></i> ${cta_text || 'go now'}</a>` :
+			'';
+
+		return `
+			<div class="spacy-mg w3-center slide-up">
+				<span class="h3">${heading}</span>
+				<p class="${class_ovr}">${demo}</p>
+				${cta}
+			</div>
+		`;
+	}
+	function mekArticle(pr) {
+		let dft = {heading: "Content",sub: "",content: "<i>no content defined</i>",_props: "",c_props: "",c_class: "formguy",_class: "spacy-md"};
+		pr = {...dft,...pr};
+
+		alert_silent('loading article');
+		alert_silent(pr);
+		console.log("mekArticle argument: ",pr);
+
+		let heading = pr.heading || "";
+		let sub = pr.sub || "testing article";
+		let content = pr.content || "<hr>";
+		let props = pr._props || "";
+		let content_props = pr.c_props || "";
+		let c_class = pr.c_class || "formguy";
+		let className = pr._class || "spacy-md";
+
+		return `
+			<article class="slide-up ${className}" ${props}>
+				<div>
+					<span class="h2">${heading}</span>
+					<span>${sub}</span>
+				</div>
+				<div class="${c_class}" ${content_props}>
+					${content}
+				</div>
+			</article>
+		`;
+	}
+	function mekCenteredDiv(m) {
+		const dftm = {
+			maxwidth: 400,
+			props: '',
+			content: '',
+		}
+
+		m = {...dftm,...m};
+
+		let outht = `
+			<div class="flow centroid" ${m.props}>
+				<div class="in_fullwidth_" style="width:100%;max-width: ${m.maxwidth}px;">${m.content}</div>
+			</div>
+		`;
+
+		return outht;
+	}
+	function mekLoader(t) {
+		return `
+			<div class="spacy-lg w3-center flow centroid gap-md slide-up">
+				<div>${t || "loading..."}</div>
+				<div class="loader"></div>
+			</div>
+		`;
+	}
+	function mekHeading(content,type){
+		return `<span class="${type || 'h2'}">${content || 'heading'}</span>`;
+	}
+	function mekSpan(w) {
+		return `<span>${w}</span>`;
+	}
+	function mekStrong(w) {
+		return `<strong>${w}</strong>`;
+	}
+	function mekBold(w) {
+		return mekStrong(w);
+	}
+
 	function mekButton(pr = {caption: "",type: "button",icon:"",_props: "",_class:"",btype: "primary",act: undefined}) {
 		pr = {caption: "",type: "button",icon:"",_props: "",_class:"",btype: "x",act: undefined,...pr};
 
@@ -713,12 +1029,11 @@ var confirm_toggler = undefined;
 
 			refreshUI(100);
 		}
-
 		window['get_input_callback'] = (el) => {
 			let cl_btn = the_modal_toggler;
 
 			if(cl_btn == undefined){
-				alert_danger('close button not found')
+				alert_danger('close button not found');
 				return;
 			} else {
 				// console.log('button: ',cl_btn);
@@ -728,12 +1043,22 @@ var confirm_toggler = undefined;
 			cl_btn.click();
 
 			let fdata = get_text_fields(el);
-			alert_silent('gotten input info');
-			console.log('data from get_input: ',fdata);
+			alert_info('gotten input info');
+
+			const fileInputs = el.querySelectorAll('input[type="file"]');
+			fileInputs.forEach(input => {
+				if (input.name) {
+					// convert the FileList into a standard Jayza array
+					const blobs = Array.from(input.files);
+					fdata[input.name] = blobs;
+				}
+			});
+
+			console.log('data from get_input: ', fdata);
 
 			window[variableAtlas['get_input_inter']](fdata);
 		}
-	
+
 	// confirm action mech
 		function confirmAction(title=undefined,msg=undefined,callback=() => {alert_warning('testing dialog confirmation')},keepopen = false,canceller=()=>{}) {
 			if(typeof callback != 'function'){
