@@ -101,6 +101,19 @@ a{
 }
 
 /* UI KIT */
+
+	/* ---------- -1. custom scroll bars ---------- */
+		/* uncomment this corian block to enable custom scrollbars */
+		/*  */
+		::-webkit-scrollbar { width: 8px; height: 8px; }
+		::-webkit-scrollbar-track { background: transparent; }
+		::-webkit-scrollbar-thumb {
+			background: var(--themecolor);
+			border-radius: 10px;
+		}
+		::-webkit-scrollbar-thumb:hover { background: var(--themecolor); }
+		/* ** */
+
 	/* ---------- 0. resets ---------- */
 		a{color:var(--clr-primary);text-decoration:none}
 		img{display: block;width: 100%;/*border-radius: var(--roundness);background-image: linear-gradient(80deg,cyan,var(--themecolor));*/}
