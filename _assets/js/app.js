@@ -6,6 +6,9 @@ const session_CSRF_token = "csrf_" + mekRandomString(12);
 const fetch_identifier = "viaFetch";
 let curfun = "rnvar_" + mekRandomString(3);
 
+let enableCache = true;
+let cache_lifetime_in_secs = 1200
+
 // localstorage stuff
 let app_prefix = 'coryg_app';
 let pref_auth = `${app_prefix}_authorizer_key`;
@@ -31,6 +34,8 @@ var confirm_toggler = undefined;
 			try{
 				alert_silent({to: p,data: dta,method: mt});
 
+				mt = mt.toUpperCase();
+
 				if(!skipappend && !use_as_is){
 					dta[fetch_identifier] = 'yes';
 					dta['source'] = 'makwldnnalwkndajkdnajwdn_testenviron';
@@ -54,15 +59,24 @@ var confirm_toggler = undefined;
 
 				let body = mt == "GET" || mt == 'HEAD' ? null : (use_as_is ? dta : JSON.stringify(dta));
 
-				// alert_info(JSON.stringify(headers));
-				// console.log(`${fetch_bypass}: `,dta);
+				// await alert_dark('sending info');
 
-				let req = await fetch(p,{
+				// alert_info(JSON.stringify(headers));
+				// console.log(`[${fetch_bypass}] passed_data: `,dta);
+				// console.log(`[${fetch_bypass}] headers: `,headers);
+				// console.log(`[${fetch_bypass}] request body: `,body);
+
+				let s_data = {
 					method: mt.toUpperCase(),
 					headers: headers,
 					// credentials: 'same-origin',
-					body: body,
-				});
+				};
+
+				if(!(mt == "GET" || mt == 'HEAD')){
+					s_data.body = body;
+				}
+
+				let req = await fetch(p,s_data);
 
 				if(!req.ok){
 					if(req.status == 422){
@@ -77,6 +91,7 @@ var confirm_toggler = undefined;
 				return await req.json();
 			} catch (error){
 				alert_danger(error);
+				console.error(error);
 				throw new Error(error);
 			}
 		}
