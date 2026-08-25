@@ -2,6 +2,7 @@ const fetch_bypass = "f_bps_" + mekRandomString(5);
 const fetch_bypass_fyls = "f_bps_f_" + mekRandomString(5);
 const fetch_ui = "f_ui_" + mekRandomString(5);
 const simple_fetch = "s_fetch_" + mekRandomString(5);
+const fetch_bypass_blob = "fbp_blob_" + mekRandomString(16);
 const session_CSRF_token = "csrf_" + mekRandomString(12);
 const fetch_identifier = "viaFetch";
 let curfun = "rnvar_" + mekRandomString(3);
@@ -307,6 +308,59 @@ var confirm_toggler = undefined;
 				return final;
 			} catch (error){
 				alert_danger(error);
+				throw new Error(error);
+			}
+		}
+	}
+
+	curfun = fetch_bypass_blob;
+	if(window[curfun] == undefined){
+		window[curfun] = async (p,dta = {},mt = 'POST',skipappend = false,use_as_is=false) => {
+			try{
+				alert_silent(`fetching blob from [${p}]`);
+
+				if(!skipappend && !use_as_is){
+					dta[fetch_identifier] = 'yes';
+				}
+				// alert_dark(JSON.stringify(dta));
+
+				let headers = {
+					'X-Requested-With' : 'XMLHttpRequest',
+					'X-CSRF-TOKEN' : session_CSRF_token,
+					'Accept' : 'application/json',
+					// 'Content-Type' : 'multipart/form-data',
+				};
+				const prff = JSON.parse(localStorage.getItem(pref_auth));
+				if (prff !== null) {
+					headers['Authorization'] = `Bearer ${prff.value}`
+				}
+
+				let body = mt == "GET" || mt == 'HEAD' ? null : (use_as_is ? dta : JSON.stringify(dta));
+
+				// alert_info(JSON.stringify(headers));
+				// console.log(`${fetch_bypass}: `,dta);
+
+				let req = await fetch(p,{
+					method: mt.toUpperCase(),
+					headers: headers,
+					// credentials: 'same-origin',
+					body: body,
+				});
+
+				if(!req.ok){
+					if(req.status == 422){
+						throw new Error(`[${req.status}] -> some required fields are missing`);
+					} else if(req.status == 419){
+						throw new Error(`[${req.status}] -> Your session has expired, reload the page to continue`);
+					}
+
+					throw new Error(`[${req.status}] -> ${req.statusText}`);
+				}
+
+				return req.blob();
+			} catch(error){
+				console.error(error);
+				alert_danger('error fetching blob: ' + error.message);
 				throw new Error(error);
 			}
 		}
