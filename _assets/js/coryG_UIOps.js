@@ -73,16 +73,23 @@ var uiops_handle_docloader = true;
 		console.log("created height reference",m);
 
 		// back to top guy
+		let d = '';
+		/*
+		// uncomment to hide scroll listener UI
+		d = `<div class="w3-black spacy-tn themeround" data-role="scroll_logger"></div>`;
+		// */
 		m = undefined;
 		m = document.createElement('div');
-		m.className = 'upbtn';
+		m.className = 'upbtn flowline gap-tn';
 		// data-scrollstart="0%" data-scrollend="100%" data-classtoggle="showme" data-scroller
 		m.dataset.scrollstart = '0';
-		m.dataset.scrollend = '90%';
-		m.dataset.classtoggle = 'showme';
+		m.dataset.scrollend = '40%';
+		m.dataset.classdata = 'hideme,showme';
 		m.dataset.scroller = '';
-		m.innerHTML = `<div class="cap w3-black w3-btn">Go to top</div>
-			<button class="w3-btn w3-black w3-text-white themehover" onclick="window.location.assign('#')"><i class="fa fa-arrow-up"></i></button>
+		m.innerHTML = `
+			<div class="cap w3-black w3-btn themeround">Go to top</div>
+			<button class="w3-btn w3-black w3-text-white themehover themeround" onclick="window.location.assign('#')"><i class="fa fa-arrow-up"></i></button>
+			${d}
 		`;
 		container.appendChild(m);
 		console.log("created the back to top anchor");
@@ -955,6 +962,10 @@ var uiops_handle_docloader = true;
 // runtime functions
 	// handles scroller and pageparts functionality
 	function handle_scrollers(e) {
+		if(!pageloaded){
+			console.log('page not fully loaded, aborting scroll ops');
+			return;
+		}
 		// the idea is to run through all scrollers find out what to do once they are chosen and do it
 
 		// get current window scroll
@@ -989,9 +1000,11 @@ var uiops_handle_docloader = true;
 			}
 		});
 
+		
 		// for the scrollbys
 		scrollers.forEach(el => {
-			let logger = el.querySelector('.logger');
+			let logger = el.querySelector(`[data-role="scroll_logger"]`);
+			// console.log('logger html', logger);
 
 			let s_start = Number(el.dataset.scrollstart);
 			let s_end = Number(el.dataset.scrollend);
@@ -1007,30 +1020,33 @@ var uiops_handle_docloader = true;
 			}
 
 			if(el.dataset.classtoggle != undefined && isvalid){
-				// el.classList.add(el.dataset.classtoggle);
+				el.classList.add(el.dataset.classtoggle);
 			}
 
 			if(s_classes != undefined){
 				let theid = isvalid ? 0 : 1;
 				let otherid = (theid + 1) % 2;
 				let tmpcls = s_classes.includes(",") ? s_classes.split(",") : [s_classes,""];
-				theclass = tmpcls[theid];
-				otherclass = tmpcls[otherid];
+				theclass = tmpcls[theid].trim();
+				otherclass = tmpcls[otherid].trim();
 
 				if(el.className.includes(otherclass)){
 					el.classList.remove(otherclass);
 				}
+
 				if(!el.className.includes(theclass)){
+					el.classList.add(theclass);
+					// /*
 					if(el.className == ""){
 						el.className = theclass;
 					} else {
-						el.classList.add(theclass);
 					}
+					// */
 				}
 			}
 
-			if(logger){
-				logger.innerHTML = `[${isvalid}] ${s_prg * 100}% | ${s_classes} -> ${theclass} / ${otherclass} [${el.className}]`;
+			if(logger instanceof HTMLElement){
+				logger.innerHTML = `[${isvalid}] ${formatNumber(s_prg * 100,2)}% | ${s_classes} -> ${theclass} / ${otherclass} [${el.className}]`;
 			}
 		})
 	}
@@ -1095,10 +1111,10 @@ var uiops_handle_docloader = true;
 		// basically tx% of n
 		let res = 0;
 		// let amt = Number(tx.substr(0,tx.length - 1));
-		let amt = Number(tx.split("%")[0]);
-
+		
 		// basically tx% of n
 		if(tx.includes('%')){
+			let amt = Number(tx.split("%")[0]);
 			res = n * (amt / 100);
 		}
 
@@ -1132,6 +1148,7 @@ var uiops_handle_docloader = true;
 			return;
 		}
 
+		pageloaded = true;
 		// alert_info('running callOnLoad stack');
 
 		callOnLoad.forEach(f => {
@@ -1155,6 +1172,7 @@ var uiops_handle_docloader = true;
 			return;
 		}
 
+		pageloaded = true;
 		// alert_info('running callOnDocLoad stack');
 
 		callOnDocLoad.forEach(f => {
