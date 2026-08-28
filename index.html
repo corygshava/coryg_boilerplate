@@ -36,10 +36,362 @@
 	<script src="_assets/js/app.js"></script>
 
 	<style>
+		a:hover{
+			text-decoration: none;
+		}
 		/* additional styles */
+
+		.section {
+			position: relative;
+			z-index: 2;
+			padding: 4rem 2rem;
+			/*border: 1px solid red;*/
+		}
+		.section .section-inner {
+			/*border: 1px solid blue;*/
+			max-width: var(--maxwidth);
+			margin: 0 auto;
+		}
+
+		.section-inner .section-label {
+			font-size: 0.75rem;
+			color: var(--themecolor);
+			text-transform: uppercase;
+			letter-spacing: 2px;
+			margin-bottom: 12px;
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+		}
+		.section-inner .section-label::before {
+			content: '';
+			display: block;
+			width: 24px;
+			height: 7px;
+			transform: skew(-30deg);
+			background: var(--themecolor);
+			animation: blink 1s ease-out infinite;
+		}
+		.section-inner .section-title {
+			font-family: var(--logofont);
+			font-size: clamp(2rem, 5vw, 3.5rem);
+			font-weight: 700;
+			letter-spacing: -0.02em;
+			line-height: 1.15;
+			margin-bottom: 1.25rem;
+		}
+		.section-inner .section-desc {
+			font-size: 1.07rem;
+			color: var(--clr-text);
+			max-width: 600px;
+			line-height: 1.7;
+		}
+
+		.divider {
+			width: 100%;
+			height: 1px;
+			background: linear-gradient(to right, transparent, var(--clr-text), transparent);
+			margin: 0 auto;
+		}
+
+	</style>
+
+	<style>
+		/* vibeslop */
+		:root {
+			--accent-bg: #0a0a0f;
+			--accent-secondaty: #111118;
+			--color-bg-card: rgba(20, 20, 30, 0.6);
+			--color-bg-card-hover: rgba(30, 30, 50, 0.8);
+			--color-accent-purple: #b44dff;
+			--color-accent-pink: #ff4da6;
+			--color-accent-cyan: #4dd9ff;
+			
+			--color-text-primary: #ffffff;
+			--color-text-secondary: rgba(255, 255, 255, 0.7);
+			--color-text-muted: rgba(255, 255, 255, 0.4);
+			--color-border: rgba(255, 255, 255, 0.08);
+			--color-border-hover: rgba(180, 77, 255, 0.3);
+			--font-display: 'Space Grotesk', sans-serif;
+			--font-body: 'Inter', sans-serif;
+			--font-mono: 'JetBrains Mono', monospace;
+			--transition-fast: 0.2s ease;
+			--transition-normal: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+			--transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+			/*--themeglow: 0 0 40px rgba(180, 77, 255, 0.3);*/
+			--glow-pink: 0 0 40px rgba(255, 77, 166, 0.3);
+		}
+
+		/* ============================================
+		   ANIMATED BACKGROUND CANVAS
+		   ============================================ */
+			#cosmic-bg {
+				position: fixed;
+				top: 0; left: 0;
+				width: 100%; height: 100%;
+				z-index: 0;
+				pointer-events: none;
+				/*background: red;*/
+			}
+
+			.noise-overlay {
+				position: fixed;
+				top: 0; left: 0;
+				width: 100%; height: 100%;
+				z-index: 1;
+				pointer-events: none;
+				opacity: 0.03;
+				background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+				background-repeat: repeat;
+				background-size: 256px 256px;
+			}
+
+			.mobile-toggle {
+				display: none;
+				background: none;
+				border: none;
+				color: var(--color-text-primary);
+				font-size: 1.5rem;
+				cursor: pointer;
+			}
+
+		/* ============================================
+		   ABOUT / MANIFESTO SECTION
+		   ============================================ */
+			.about { background: linear-gradient(180deg, transparent 0%, rgba(180, 77, 255, 0.03) 50%, transparent 100%); }
+
+			.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 3rem; }
+
+			.about-text h3 { font-family: var(--font-display); font-size: 1.75rem; font-weight: 600; margin-bottom: 1.25rem; line-height: 1.3; }
+			.about-text p { color: var(--color-text-secondary); line-height: 1.8; margin-bottom: 1rem; }
+
+			.about-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+
+			.stat-item {
+				text-align: center;
+				padding: 1.5rem;
+				border-radius: 16px;
+				background: var(--color-bg-card);
+				border: 1px solid var(--color-border);
+				backdrop-filter: blur(10px);
+				transition: var(--transition-normal);
+			}
+
+			.stat-item:hover { border-color: var(--color-border-hover); transform: translateY(-4px); }
+
+			.stat-number {
+				font-family: var(--font-display);
+				font-size: 2rem;
+				font-weight: 700;
+				background: var(--color-accent-gradient);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+			}
+
+			.stat-label { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 0.25rem; }
+
+			.about-visual {
+				position: relative;
+				aspect-ratio: 4/5;
+				border-radius: 24px;
+				overflow: hidden;
+				background: var(--color-bg-card);
+				border: 1px solid var(--color-border);
+			}
+
+			.about-visual-inner {
+				width: 100%; height: 100%;
+				background:
+					radial-gradient(circle at 30% 40%, rgba(180, 77, 255, 0.3) 0%, transparent 50%),
+					radial-gradient(circle at 70% 60%, rgba(255, 77, 166, 0.2) 0%, transparent 50%),
+					radial-gradient(circle at 50% 80%, rgba(77, 217, 255, 0.15) 0%, transparent 50%),
+					var(--accent-secondaty);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				position: relative;
+			}
+
+			.about-visual-code { font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-text-muted); padding: 2rem; line-height: 1.8; }
+			.about-visual-code .keyword { color: var(--color-accent-purple); }
+			.about-visual-code .string { color: var(--color-accent-pink); }
+			.about-visual-code .func { color: var(--color-accent-cyan); }
+			.about-visual-code .comment { color: var(--color-text-muted); font-style: italic; }
+
+			.floating-badge {
+				position: absolute;
+				padding: 0.75rem 1.25rem;
+				border-radius: 12px;
+				background: rgba(20, 20, 30, 0.9);
+				border: 1px solid var(--color-border);
+				backdrop-filter: blur(20px);
+				font-size: 0.8125rem;
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				animation: floatBadge 4s ease-in-out infinite;
+			}
+
+			.floating-badge:nth-child(2) { top: 15%; right: -10%; animation-delay: 0s; }
+			.floating-badge:nth-child(3) { bottom: 20%; left: -10%; animation-delay: 2s; }
+
+			@keyframes floatBadge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 	</style>
 </head>
-<body>
-	<!-- make something beautiful over here -->
+<body data-mode="light">
+	<!-- helpers -->
+	<div class="w3-bottom spacy-md flow right" style="z-index: 3;">
+		<button class="circle_btn" data-myclass="circle_btn" data-runme="toggle_ui_mode" id="mode_indicator"><i class="fa fa-plus"></i></button>
+	</div>
+	<!-- vetted elements -->
+	<nav class="topnav" data-scroller data-scrollstart="0%" data-scrollend="80%" data-classdata="w3-animate-opacity, scrolled">
+		<div class="navitems">
+			<div class="logopart">
+				<a href="#" class="nav-logo" aria-label="_hyperworks home">
+					<span>hyperworks</span>
+				</a>
+			</div>
+			<div class="gap-sm slide-l" id="sitelinks" data-visibledata="0,0,1">
+				<li><a href="#about">About</a></li>
+				<li><a href="#projects">Projects</a></li>
+				<li><a href="#tech">Tech Stack</a></li>
+				<li><a href="#process">Process</a></li>
+				<li><a href="#contact" class="nav-cta">Reach out</a></li>
+			</div>
+			<div class="cta-guy w3-hide">
+				<li><a href="#contact" class="nav-cta">Talk</a></li>
+			</div>
+			<div class="mobile-toggle" data-visibledata="1,1,0">
+				<a class="mybtn"><i class="fa fa-bars"></i></a>
+			</div>
+		</div>
+	</nav>
+
+	<header class="hero" id="hero">
+		<div class="hero-glow mainglow" aria-hidden="true"></div>
+		<div class="hero-stuff">
+			<h1 class="mytitle">
+				<span class="line">Where creativity</span>
+				<span class="line">meets <span class="gradient-text">excellence</span></span>
+			</h1>
+			<p class="subtitle">
+				a collection of some of my most usefull project pieces.
+			</p>
+			<div class="hero-actions gap-sm flowline overflow">
+				<a href="#projects" class="mybtn2 primary">
+					<i class="fas fa-rocket"></i> Explore Projects
+				</a>
+				<a href="#about" class="mybtn2 secondary">
+					<i class="fas fa-play"></i> Learn More
+				</a>
+			</div>
+		</div>
+		<div class="scrollguy" aria-hidden="true">
+			<span>theres more down here</span>
+			<div class="the-line"></div>
+		</div>
+	</header>
+
+	<div class="divider" aria-hidden="true"></div>
+
+
+	<section class="section" aria-labelledby="about-heading">
+		<div class="section-inner">
+			<div class="section-label reveal">Where am I</div>
+			<h2 class="section-title reveal" id="about-heading">So What is <br><span class="gradtxt">Hyperworks</span></h2>
+			<p class="section-desc reveal">
+				This is a collection of projects that do one very specific thing and do it better than any generalized tool.<br>
+				so basically a portfolio full of things you can actually use.
+				<!-- Most of them are free to use and comandeer while the more demanding ones are avaiable in the <b>Pro</b> plan. -->
+			</p>
+		</div>
+	</section>
+
+	<!-- start of vibeslop -->
+	<!-- Cosmic Background Canvas -->
+	<canvas id="cosmic-bg" aria-hidden="true"></canvas>
+	<div class="noise-overlay" aria-hidden="true"></div>
+	<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+	<div class="divider" aria-hidden="true"></div>
+
+	<!-- About / Manifesto Section -->
+	<section class="section about" id="about" aria-labelledby="about-heading">
+		<div class="section-inner">
+			<div class="section-label reveal">Who We Are</div>
+			<h2 class="section-title reveal" id="about-heading">We Believe Beauty<br>Knows No Boundaries.</h2>
+			<p class="section-desc reveal">
+				_hyperworks is more than a portfolio — it's a living archive of curiosity-driven development,
+				where every project starts with a question and ends with an experience.
+			</p>
+
+			<div class="about-grid">
+				<div class="about-text reveal">
+					<h3>Redefining what side projects can be</h3>
+					<p>
+						Every experiment here begins with a simple idea that refuses to stay small.
+						From generative art installations to full-stack applications, each project
+						represents a deep dive into uncharted territory.
+					</p>
+					<p>
+						I build things that challenge conventions, push browser capabilities,
+						and occasionally break things in beautiful ways. This is where imagination
+						meets execution.
+					</p>
+
+					<div class="about-stats">
+						<div class="stat-item">
+							<div class="stat-number" data-count="24">0</div>
+							<div class="stat-label">Projects Built</div>
+						</div>
+						<div class="stat-item">
+							<div class="stat-number" data-count="12">0</div>
+							<div class="stat-label">Open Source</div>
+						</div>
+						<div class="stat-item">
+							<div class="stat-number" data-count="3">0</div>
+							<div class="stat-label">Years Active</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="about-visual reveal reveal-delay-2">
+					<div class="about-visual-inner">
+						<div class="about-visual-code">
+							<span class="comment">// _hyperworks manifest</span><br>
+							<span class="keyword">const</span> <span class="func">create</span> = (<span class="string">idea</span>) =&gt; {<br>
+							&nbsp;&nbsp;<span class="keyword">const</span> passion = <span class="string">"∞"</span>;<br>
+							&nbsp;&nbsp;<span class="keyword">const</span> coffee = <span class="string">"☕".repeat(99)</span>;<br>
+							&nbsp;&nbsp;<span class="keyword">return</span> {<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;build: <span class="func">experiment</span>,<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;ship: <span class="func">iterate</span>,<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;repeat: <span class="keyword">true</span><br>
+							&nbsp;&nbsp;};<br>
+							};<br><br>
+							<span class="func">create</span>(<span class="string">"something cool"</span>);
+						</div>
+
+						<div class="floating-badge">
+							<i class="fas fa-bolt" style="color: #ffc14d;"></i>
+							<span>Always shipping</span>
+						</div>
+						<div class="floating-badge">
+							<i class="fas fa-code" style="color: var(--color-accent-cyan);"></i>
+							<span>Clean architecture</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="divider" aria-hidden="true"></div>
+
+
+	<!-- page codes -->
+	<script>
+		callOnLoad.push({act: setup_uimode})
+	</script>
 </body>
 </html>

@@ -1,50 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Cory G boilerplate UI kit</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Cory G Boilerplate</title>
 
-	<link rel="stylesheet" type="text/css" href="_assets/css/w3.css">
-	<link rel="stylesheet" type="text/css" href="_assets/css/fa-all.css">
-	<link rel="stylesheet" type="text/css" href="_assets/css/coryG_base.css">
-	<link rel="stylesheet" type="text/css" href="_assets/css/coryG_UIOps.css">
-	<link rel="stylesheet" type="text/css" href="_assets/css/mediaoptima.css">
-	<link rel="stylesheet" type="text/css" href="_assets/css/styles.css">
-	<link rel="stylesheet" type="text/css" href="_assets/css/fonts.css">
+	<meta name="csrf-token" content="7_dcHR4sLNPGTmia2WCSOxvDOBIHCOMo2djgMVovF3">
 
+	<link rel="stylesheet" href="_assets/_vendor/BS4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="_assets/css/fa-all.css">
+	<link rel="stylesheet" href="_assets/css/w3.css">
+	<link rel="stylesheet" href="_assets/css/coryG_UIOps.css">
+	<link rel="stylesheet" href="_assets/css/coryG_base.css">
+	<link rel="stylesheet" href="_assets/css/fonts.css">
+	<link rel="stylesheet" href="_assets/css/animate.css">
+	<link rel="stylesheet" href="_assets/css/mediaoptima.css">
+
+	<link rel="stylesheet" type="text/css" href="_assets/css/inter_slop.css">
+	<!-- <link rel="stylesheet" type="text/css" href="_assets/css/kimi_slop.css"> -->
+
+	<script src="_assets/_vendor/misc/jquery-3.6.0.min.js"></script>
+	<script src="_assets/_vendor/misc/popper.min.js"></script>
+	<script src="_assets/_vendor/misc/html2canvas.min.js"></script>
+	<script src="_assets/_vendor/misc/jspdf.umd.min.js"></script>
+	<script src="_assets/_vendor/misc/qrcode.min.js"></script>
+	<script src="_assets/js/chart.js"></script>
 	<script src="_assets/js/SuperScript.js"></script>
 	<script src="_assets/js/toappend.js"></script>
-	<script src="_assets/js/customalerter.js"></script>
+	<script src="_assets/_vendor/BS4/js/bootstrap.bundle.min.js"></script>
+
+	<script src="_assets/js/anims.js"></script>
 	<script src="_assets/js/coryG_UIOps.js"></script>
+	<script src="_assets/js/customalerter.js"></script>
+	<script src="_assets/js/super_encryptor.js"></script>
 	<script src="_assets/js/app.js"></script>
 </head>
-<body data-mode="dark">
+<body>
+	<!-- helpers -->
+	<div class="w3-bottom spacy-md flow right" style="z-index: 3;">
+		<button class="circle_btn" data-myclass="circle_btn" data-runme="toggle_ui_mode" id="mode_indicator"><i class="fa fa-plus"></i></button>
+	</div>
+
 	<!-- navbar -->
-	<nav class="" data-scroller data-scrollend="80%" data-classdata="w3-animate-opacity,scrolled">
-		<div class="navcon">
-			<div class="logo">
-				<a href="#" class="logo">Haosel</a>
-			</div>
-
-			<div class="navlinks" id="sitelinks" data-visibledata="0,0,1">
-				<a href="#about">About</a>
-				<a href="#services" class="active">Services</a>
-				<a href="#work">Work</a>
-				<a href="#pricing">Pricing</a>
-				<a href="#contact">Contact</a>
-			</div>
-
-			<div>
-				<a href="#contact" class="mybtn cta-btn">
-					<i class="fa fa-phone"></i>
-					Reach out
+	<nav class="topnav scrolled" data-scroller data-scrollend="80%" data-classdata="w3-animate-opacity,scrolled">
+		<div class="navitems">
+			<div class="logopart">
+				<a href="#" class="nav-logo" aria-label="_hyperworks home">
+					<span>hyperworks</span>
 				</a>
 			</div>
-
-			<div class="hamburger smallmenu w3-hide-large btn" data-toggler="#mobilemenu" id="hamburger" data-onshow="flex">
-				<a><i class="fa fa-bars"></i></a>
+			<div class="gap-sm" id="sitelinks" data-visibledata="0,0,1">
+				<li><a href="#about">About</a></li>
+				<li><a href="#projects">Projects</a></li>
+				<li><a href="#tech">Tech Stack</a></li>
+				<li><a href="#process">Process</a></li>
+				<li><a href="#contact" class="nav-cta">Reach out</a></li>
 			</div>
+			<div class="cta-guy w3-hide">
+				<li><a href="#contact" class="nav-cta">Talk</a></li>
+			</div>
+			<div class="mobile-toggle" data-visibledata="1,1,0"></div>
 		</div>
 	</nav>
 
@@ -56,237 +71,52 @@
 	</div>
 
 	<!-- banner -->
-	<div class="banner w3-top flowline gap-sm" id="curbanner" data-scroller data-scrollend="70%" data-classdata="w3-animate-opacity,hidetop">
+	<div class="banner w3-top flowline gap-sm w3-hide" id="curbanner" data-scroller data-scrollend="70%" data-classdata="hidetop,w3-animate-opacity">
 		<div class="thetext">
 			New: Introducing our AI-powered data anylytics package.
 		</div>
 		<a href="#pricing">Learn more →</a>
 	</div>
-	
+
+	<div class="themetag w3-block w3-center w3-hide">Hero section</div>
+
+	<header class="hero" id="hero">
+		<div class="hero-glow mainglow" aria-hidden="true"></div>
+		<div class="hero-stuff">
+			<h1 class="mytitle">
+				<span class="line">Where creativity</span>
+				<span class="line">meets <span class="gradient-text">excellence</span></span>
+			</h1>
+			<p class="subtitle">
+				a collection of some of my best and most usefull project pieces.
+			</p>
+			<div class="hero-actions gap-sm flowline">
+				<a href="#projects" class="mybtn2 primary">
+					<i class="fas fa-rocket"></i> Explore Projects
+				</a>
+				<a href="#about" class="mybtn2 secondary">
+					<i class="fas fa-play"></i> Learn More
+				</a>
+			</div>
+		</div>
+		<div class="scrollguy">
+			<span>theres more down here</span>
+			<div class="the-line"></div>
+		</div>
+	</header>
+
+	<div class="banner w3-top flowline gap-sm w3-hide" id="curbanner" data-scroller data-scrollend="70%" data-classdata="hidetop,w3-animate-opacity">
+		<div class="thetext">
+			New: Introducing our AI-powered data anylytics package.
+		</div>
+		<a href="#pricing">Learn more →</a>
+	</div>
+
 	<div class="themetag w3-block w3-center">Hero section</div>
 
-	<div class="themetag w3-block w3-center">50/50 grid</div>
-
-	<div class="themetag w3-block w3-center">30/70 grid</div>
-
-	<div class="themetag w3-block w3-center">card grid</div>
-
-	<div class="themetag w3-block w3-center">modals</div>
-
-	<div class="themetag w3-block w3-center">testimonials</div>
-
-	<div class="themetag w3-block w3-center">pricing section</div>
-
-	<section class="section container" id="pricing">
-		<div class="w3-center">
-			<span class="hedtxt2">Our <b>Packages</b></span>
-			<p>We have various packages for any kind of business</p>
-		</div>
-		<div class="pricing-grid">
-			<div class="card-pricing">
-				<span class="hedtxt3">Starter</span>
-				<div>
-					<li>Landing page</li>
-					<li>Hosting</li>
-					<li>1 week delivery</li>
-				</div>
-				<div class="cte-holder">
-					<a href="#contact" class="mybtn outline">Get Started</a>
-				</div>
-			</div>
-			<div class="card-pricing main">
-				<span class="hedtxt3 themetxt">Growth</span>
-				<!-- <p class="price">20k - 25k</p> -->
-				<div>
-					<li><i>all starter features</i></li>
-					<li>Multi-page site</li>
-					<li>Performance tuned</li>
-					<li>2 weeks delivery</li>
-				</div>
-				<div class="cte-holder">
-					<a href="#contact" class="mybtn primary">Get Started</a>
-				</div>
-			</div>
-			<div class="card-pricing">
-				<span class="hedtxt3">Corporate</span>
-				<div>
-					<li><i>all growth features</i></li>
-					<li>SEO</li>
-					<li>SLA & 24/7 support</li>
-					<li>1-2 month delivery</li>
-					<li>Dedicated dev team</li>
-					<li>Admin panel</li>
-				</div>
-				<div class="cte-holder">
-					<a href="#contact" class="mybtn outline">Contact Sales</a>
-				</div>
-			</div>
-
-			<div class="card-pricing w3-hide">
-				<span class="hedtxt3">Enterprise</span>
-				<div>
-					<li><i>all corporate features</i></li>
-					<li>Data processing backend</li>
-					<li>Unlimited scale</li>
-					<li>Perpetual fixes</li>
-					<li>custom features</li>
-					<li>payment gateways</li>
-					<li>and more</li>
-				</div>
-				<div class="cte-holder">
-					<a href="#contact" class="mybtn outline">Contact Sales</a>
-				</div>
-			</div>
-			<div class="card-pricing w3-hide">
-				<span class="hedtxt3">Custom</span>
-				<div>
-					<li><i>pick your features</i></li>
-				</div>
-				<div class="cte-holder">
-					<a href="#contact" class="mybtn outline">Contact Sales</a>
-				</div>
-			</div>
-		</div>
-
-		<div class="w3-center spacy-md">
-			<button class="mybtn outline">view more</button>
-		</div>
-	</section>
-
-	<div class="themetag w3-block w3-center">contacts section</div>
-
-	<section class="section container" id="contact">
-		<div class="w3-center">
-			<span class="hedtxt2">Leave a <b>message</b></span>
-			<p>Whether it’s an <b>Inquiry</b> or <b>feedback</b>, we’d love to hear from you. Fill out the form and we’ll respond in due time.</p>
-		</div>
-		<div class="grid-50-50 gap-sm">
-			<div class="flow left">
-				<form action="submit.php" method="POST" class="flow left contact-form gap-md">
-					<input type="text" name="name" placeholder="Your Name" required>
-					<input type="email" name="email" placeholder="Your Email" required>
-					<textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-					<button class="mybtn primary" type="submit">Send Message <i class="fa fa-paper-plane"></i></button>
-				</form>
-			</div>
-			<img loading="lazy" src="_assets/img/demos/contact_pic.jpg" alt="Contact Us">
-		</div>
-	</section>
-
-	<div class="themetag w3-block w3-center">callouts and announcements section</div>
-
-	<section class="callout t1">
-		<div class="container">
-			<span class="hedtxt2">Invest in your business <b>Today</b></span>
-			<p>let us take your business to the next level</p>
-			<button class="mybtn outline">lets begin</button>
-		</div>
-	</section>
-
-	<div class="themetag w3-block w3-center">footer section</div>
-
-	<!-- Footer -->
-	<footer class="footer">
-		<div class="footer-grid container">
-			<div>
-				<h4>Haosel Kenya Ltd.</h4>
-				<p>
-					Upper hill<br>
-					Nairobi, Kenya
-				</p>
-			</div>
-			<div>
-				<h4>Services</h4>
-				<div>
-					<li><a href="#">Web Development</a></li>
-					<li><a href="#">Performance Audits</a></li>
-					<li><a href="#">UI/UX Design</a></li>
-				</div>
-			</div>
-			<div>
-				<h4>Resources</h4>
-				<div>
-					<li><a href="#">Case Studies</a></li>
-					<li><a href="#">Blog</a></li>
-					<li><a href="#">Support Docs</a></li>
-				</div>
-			</div>
-			<div>
-				<h4>Legal</h4>
-				<div>
-					<li><a href="#">Privacy Policy</a></li>
-					<li><a href="#">Terms of Service</a></li>
-				</div>
-			</div>
-		</div>
-		<p class="text-center" style="margin-top:2rem;font-size:.875rem;color:var(--clr-text-muted)">
-			© <span id="year"></span> Haosel ltd. All rights reserved.
-		</p>
-	</footer>
-
-	<!-- modals start here -->
-
-	<div class="mymodal w3-animate-opacity" id="testmodal" data-shown="0" style="display: none;">
-		<div class="modal-content">
-			<button class="closebtn" data-toggleme="#testmodal"><i class="fa fa-times"></i></button>
-
-			<div class="w3-center w3-animate-top">
-				<span class="hedtxt2 distance-md">The <b>Service</b></span>
-			</div>
-			<div class="grid-30-70 servicepanel gap-sm">
-				<img loading="lazy" src="img/demos/demoimg1.jpg" alt="Code editor">
-				<div class="flow">
-					<span class="hedtxt3">Web Development</span>
-					<p>Full-stack development using TypeScript, React, Node.js, and Next.js with optimized CMS integration.</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="mymodal w3-animate-opacity block" id="testmodal2" data-shown="0" style="display: none;">
-		<div class="modal-content">
-			<button class="closebtn" data-toggleme="#testmodal2"><i class="fa fa-times"></i></button>
-			<div class="w3-center w3-animate-top">
-				<span class="hedtxt2 distance-md">Our <b>projects</b></span>
-			</div>
-			<div class="card-grid">
-				<div class="thecard">
-					<img loading="lazy" src="img/demos/demoimg1.jpg" alt="Project 1">
-					<div class="card-content">
-						<h3>NextGen SaaS Site</h3>
-						<p>Built with Next.js, Headless CMS & blazing speed optimization.</p>
-						<div class="btn-group">
-							<a href="https://example.com/project1" target="_blank" class="mybtn outline">Visit Site</a>
-							<button class="mybtn primary" onclick="openModal('modal1')">Details</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="thecard">
-					<img loading="lazy" src="img/demos/demoimg1.jpg" alt="Project 2">
-					<div class="card-content">
-						<h3>E-Commerce Redesign</h3>
-						<p>Modern Shopify storefront with clean UX and high conversions.</p>
-						<div class="btn-group">
-							<a href="https://example.com/project2" target="_blank" class="mybtn outline">Visit Site</a>
-							<button class="mybtn primary" onclick="openModal('modal2')">Details</button>
-						</div>
-					</div>
-				</div>
-
-				<div class="thecard">
-					<img loading="lazy" src="img/demos/demoimg1.jpg" alt="Project 2">
-					<div class="card-content">
-						<h3>E-Commerce Redesign</h3>
-						<p>Modern Shopify storefront with clean UX and high conversions.</p>
-						<div class="btn-group">
-							<a href="https://example.com/project2" target="_blank" class="mybtn outline">Visit Site</a>
-							<button class="mybtn primary" onclick="openModal('modal2')">Details</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	<!-- page codes -->
+	<script>
+		callOnLoad.push({act: setup_uimode})
+	</script>
 </body>
 </html>
