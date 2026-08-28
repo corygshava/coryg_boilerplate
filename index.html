@@ -41,52 +41,6 @@
 		}
 		/* additional styles */
 
-		.section {
-			position: relative;
-			z-index: 2;
-			padding: 4rem 2rem;
-			/*border: 1px solid red;*/
-		}
-		.section .section-inner {
-			/*border: 1px solid blue;*/
-			max-width: var(--maxwidth);
-			margin: 0 auto;
-		}
-
-		.section-inner .section-label {
-			font-size: 0.75rem;
-			color: var(--themecolor);
-			text-transform: uppercase;
-			letter-spacing: 2px;
-			margin-bottom: 12px;
-			display: flex;
-			align-items: center;
-			gap: 0.75rem;
-		}
-		.section-inner .section-label::before {
-			content: '';
-			display: block;
-			width: 24px;
-			height: 7px;
-			transform: skew(-30deg);
-			background: var(--themecolor);
-			animation: blink 1s ease-out infinite;
-		}
-		.section-inner .section-title {
-			font-family: var(--logofont);
-			font-size: clamp(2rem, 5vw, 3.5rem);
-			font-weight: 700;
-			letter-spacing: -0.02em;
-			line-height: 1.15;
-			margin-bottom: 1.25rem;
-		}
-		.section-inner .section-desc {
-			font-size: 1.07rem;
-			color: var(--clr-text);
-			max-width: 600px;
-			line-height: 1.7;
-		}
-
 		.divider {
 			width: 100%;
 			height: 1px;
@@ -154,94 +108,11 @@
 				font-size: 1.5rem;
 				cursor: pointer;
 			}
-
-		/* ============================================
-		   ABOUT / MANIFESTO SECTION
-		   ============================================ */
-			.about { background: linear-gradient(180deg, transparent 0%, rgba(180, 77, 255, 0.03) 50%, transparent 100%); }
-
-			.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 3rem; }
-
-			.about-text h3 { font-family: var(--font-display); font-size: 1.75rem; font-weight: 600; margin-bottom: 1.25rem; line-height: 1.3; }
-			.about-text p { color: var(--color-text-secondary); line-height: 1.8; margin-bottom: 1rem; }
-
-			.about-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
-
-			.stat-item {
-				text-align: center;
-				padding: 1.5rem;
-				border-radius: 16px;
-				background: var(--color-bg-card);
-				border: 1px solid var(--color-border);
-				backdrop-filter: blur(10px);
-				transition: var(--transition-normal);
-			}
-
-			.stat-item:hover { border-color: var(--color-border-hover); transform: translateY(-4px); }
-
-			.stat-number {
-				font-family: var(--font-display);
-				font-size: 2rem;
-				font-weight: 700;
-				background: var(--color-accent-gradient);
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;
-				background-clip: text;
-			}
-
-			.stat-label { font-size: 0.8125rem; color: var(--color-text-muted); margin-top: 0.25rem; }
-
-			.about-visual {
-				position: relative;
-				aspect-ratio: 4/5;
-				border-radius: 24px;
-				overflow: hidden;
-				background: var(--color-bg-card);
-				border: 1px solid var(--color-border);
-			}
-
-			.about-visual-inner {
-				width: 100%; height: 100%;
-				background:
-					radial-gradient(circle at 30% 40%, rgba(180, 77, 255, 0.3) 0%, transparent 50%),
-					radial-gradient(circle at 70% 60%, rgba(255, 77, 166, 0.2) 0%, transparent 50%),
-					radial-gradient(circle at 50% 80%, rgba(77, 217, 255, 0.15) 0%, transparent 50%),
-					var(--accent-secondaty);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				position: relative;
-			}
-
-			.about-visual-code { font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-text-muted); padding: 2rem; line-height: 1.8; }
-			.about-visual-code .keyword { color: var(--color-accent-purple); }
-			.about-visual-code .string { color: var(--color-accent-pink); }
-			.about-visual-code .func { color: var(--color-accent-cyan); }
-			.about-visual-code .comment { color: var(--color-text-muted); font-style: italic; }
-
-			.floating-badge {
-				position: absolute;
-				padding: 0.75rem 1.25rem;
-				border-radius: 12px;
-				background: rgba(20, 20, 30, 0.9);
-				border: 1px solid var(--color-border);
-				backdrop-filter: blur(20px);
-				font-size: 0.8125rem;
-				display: flex;
-				align-items: center;
-				gap: 0.5rem;
-				animation: floatBadge 4s ease-in-out infinite;
-			}
-
-			.floating-badge:nth-child(2) { top: 15%; right: -10%; animation-delay: 0s; }
-			.floating-badge:nth-child(3) { bottom: 20%; left: -10%; animation-delay: 2s; }
-
-			@keyframes floatBadge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 	</style>
 </head>
 <body data-mode="light">
 	<!-- helpers -->
-	<div class="w3-bottom spacy-md flow right" style="z-index: 3;">
+	<div class="w3-bottom spacy-md flowline gap-sm left" style="z-index: 3;">
 		<button class="circle_btn" data-myclass="circle_btn" data-runme="toggle_ui_mode" id="mode_indicator"><i class="fa fa-plus"></i></button>
 	</div>
 	<!-- vetted elements -->
@@ -295,7 +166,6 @@
 
 	<div class="divider" aria-hidden="true"></div>
 
-
 	<section class="section" aria-labelledby="about-heading">
 		<div class="section-inner">
 			<div class="section-label reveal">Where am I</div>
@@ -308,6 +178,39 @@
 		</div>
 	</section>
 
+	<div class="divider" aria-hidden="true"></div>
+
+	<section class="section" aria-labelledby="stats-heading">
+		<div class="section-inner">
+			<!-- <div class="section-label reveal">heading</div> -->
+			<div class="section-title reveal w3-center" id="stats-heading">our <span class="gradtxt">stats</span></div>
+			<div class="spacy-md reveal stats">
+				<div class="stat t2">
+					<div class="number">5</div>
+					<div class="label">projects</div>
+				</div>
+				<div class="stat t2">
+					<div class="number">5</div>
+					<div class="label">projects</div>
+				</div>
+				<div class="stat t2">
+					<div class="number">5</div>
+					<div class="label">projects</div>
+				</div>
+				<div class="stat t2">
+					<div class="number">5</div>
+					<div class="label">projects</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="divider" aria-hidden="true"></div>
+
+	<div class="spacy-mg w3-center">
+		<h1>more is coming</h1>
+	</div>
+
 	<!-- start of vibeslop -->
 	<!-- Cosmic Background Canvas -->
 	<canvas id="cosmic-bg" aria-hidden="true"></canvas>
@@ -317,77 +220,7 @@
 	<div class="divider" aria-hidden="true"></div>
 
 	<!-- About / Manifesto Section -->
-	<section class="section about" id="about" aria-labelledby="about-heading">
-		<div class="section-inner">
-			<div class="section-label reveal">Who We Are</div>
-			<h2 class="section-title reveal" id="about-heading">We Believe Beauty<br>Knows No Boundaries.</h2>
-			<p class="section-desc reveal">
-				_hyperworks is more than a portfolio — it's a living archive of curiosity-driven development,
-				where every project starts with a question and ends with an experience.
-			</p>
-
-			<div class="about-grid">
-				<div class="about-text reveal">
-					<h3>Redefining what side projects can be</h3>
-					<p>
-						Every experiment here begins with a simple idea that refuses to stay small.
-						From generative art installations to full-stack applications, each project
-						represents a deep dive into uncharted territory.
-					</p>
-					<p>
-						I build things that challenge conventions, push browser capabilities,
-						and occasionally break things in beautiful ways. This is where imagination
-						meets execution.
-					</p>
-
-					<div class="about-stats">
-						<div class="stat-item">
-							<div class="stat-number" data-count="24">0</div>
-							<div class="stat-label">Projects Built</div>
-						</div>
-						<div class="stat-item">
-							<div class="stat-number" data-count="12">0</div>
-							<div class="stat-label">Open Source</div>
-						</div>
-						<div class="stat-item">
-							<div class="stat-number" data-count="3">0</div>
-							<div class="stat-label">Years Active</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="about-visual reveal reveal-delay-2">
-					<div class="about-visual-inner">
-						<div class="about-visual-code">
-							<span class="comment">// _hyperworks manifest</span><br>
-							<span class="keyword">const</span> <span class="func">create</span> = (<span class="string">idea</span>) =&gt; {<br>
-							&nbsp;&nbsp;<span class="keyword">const</span> passion = <span class="string">"∞"</span>;<br>
-							&nbsp;&nbsp;<span class="keyword">const</span> coffee = <span class="string">"☕".repeat(99)</span>;<br>
-							&nbsp;&nbsp;<span class="keyword">return</span> {<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;build: <span class="func">experiment</span>,<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;ship: <span class="func">iterate</span>,<br>
-							&nbsp;&nbsp;&nbsp;&nbsp;repeat: <span class="keyword">true</span><br>
-							&nbsp;&nbsp;};<br>
-							};<br><br>
-							<span class="func">create</span>(<span class="string">"something cool"</span>);
-						</div>
-
-						<div class="floating-badge">
-							<i class="fas fa-bolt" style="color: #ffc14d;"></i>
-							<span>Always shipping</span>
-						</div>
-						<div class="floating-badge">
-							<i class="fas fa-code" style="color: var(--color-accent-cyan);"></i>
-							<span>Clean architecture</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
 	<div class="divider" aria-hidden="true"></div>
-
 
 	<!-- page codes -->
 	<script>
