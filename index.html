@@ -39,20 +39,12 @@
 		a:hover{
 			text-decoration: none;
 		}
-		/* additional styles */
-
-		.divider {
-			width: 100%;
-			height: 1px;
-			background: linear-gradient(to right, transparent, var(--clr-text), transparent);
-			margin: 0 auto;
-		}
-
+		/* ----------- new styles --------- */
 	</style>
 
 	<style>
 		/* vibeslop */
-		:root {
+			:root {
 			--accent-bg: #0a0a0f;
 			--accent-secondaty: #111118;
 			--color-bg-card: rgba(20, 20, 30, 0.6);
@@ -100,115 +92,396 @@
 				background-size: 256px 256px;
 			}
 
-			.mobile-toggle {
-				display: none;
-				background: none;
-				border: none;
-				color: var(--color-text-primary);
-				font-size: 1.5rem;
-				cursor: pointer;
-			}
 	</style>
 </head>
 <body data-mode="light">
 	<!-- helpers -->
-	<div class="w3-bottom spacy-md flowline gap-sm left" style="z-index: 3;">
+	<div class="w3-bottom spacy-md flowline gap-sm left" style="z-index: 3;width: auto;">
 		<button class="circle_btn" data-myclass="circle_btn" data-runme="toggle_ui_mode" id="mode_indicator"><i class="fa fa-plus"></i></button>
 	</div>
+
 	<!-- vetted elements -->
-	<nav class="topnav" data-scroller data-scrollstart="0%" data-scrollend="80%" data-classdata="w3-animate-opacity, scrolled">
-		<div class="navitems">
-			<div class="logopart">
-				<a href="#" class="nav-logo" aria-label="_hyperworks home">
-					<span>hyperworks</span>
-				</a>
-			</div>
-			<div class="gap-sm slide-l" id="sitelinks" data-visibledata="0,0,1">
-				<li><a href="#about">About</a></li>
-				<li><a href="#projects">Projects</a></li>
-				<li><a href="#tech">Tech Stack</a></li>
-				<li><a href="#process">Process</a></li>
-				<li><a href="#contact" class="nav-cta">Reach out</a></li>
-			</div>
-			<div class="cta-guy w3-hide">
-				<li><a href="#contact" class="nav-cta">Talk</a></li>
-			</div>
-			<div class="mobile-toggle" data-visibledata="1,1,0">
-				<a class="mybtn"><i class="fa fa-bars"></i></a>
-			</div>
-		</div>
-	</nav>
-
-	<header class="hero" id="hero">
-		<div class="hero-glow mainglow" aria-hidden="true"></div>
-		<div class="hero-stuff">
-			<h1 class="mytitle">
-				<span class="line">Where creativity</span>
-				<span class="line">meets <span class="gradient-text">excellence</span></span>
-			</h1>
-			<p class="subtitle">
-				a collection of some of my most usefull project pieces.
-			</p>
-			<div class="hero-actions gap-sm flowline overflow">
-				<a href="#projects" class="mybtn2 primary">
-					<i class="fas fa-rocket"></i> Explore Projects
-				</a>
-				<a href="#about" class="mybtn2 secondary">
-					<i class="fas fa-play"></i> Learn More
-				</a>
-			</div>
-		</div>
-		<div class="scrollguy" aria-hidden="true">
-			<span>theres more down here</span>
-			<div class="the-line"></div>
-		</div>
-	</header>
-
-	<div class="divider" aria-hidden="true"></div>
-
-	<section class="section" aria-labelledby="about-heading">
-		<div class="section-inner">
-			<div class="section-label reveal">Where am I</div>
-			<h2 class="section-title reveal" id="about-heading">So What is <br><span class="gradtxt">Hyperworks</span></h2>
-			<p class="section-desc reveal">
-				This is a collection of projects that do one very specific thing and do it better than any generalized tool.<br>
-				so basically a portfolio full of things you can actually use.
-				<!-- Most of them are free to use and comandeer while the more demanding ones are avaiable in the <b>Pro</b> plan. -->
-			</p>
-		</div>
-	</section>
-
-	<div class="divider" aria-hidden="true"></div>
-
-	<section class="section" aria-labelledby="stats-heading">
-		<div class="section-inner">
-			<!-- <div class="section-label reveal">heading</div> -->
-			<div class="section-title reveal w3-center" id="stats-heading">our <span class="gradtxt">stats</span></div>
-			<div class="spacy-md reveal stats">
-				<div class="stat t2">
-					<div class="number">5</div>
-					<div class="label">projects</div>
+		<nav class="topnav" data-scroller data-scrollstart="0%" data-scrollend="80%" data-classdata="w3-animate-opacity, scrolled">
+			<div class="navitems">
+				<div class="logopart">
+					<a href="#" class="nav-logo" aria-label="_hyperworks home">
+						<span>hyperworks</span>
+					</a>
 				</div>
-				<div class="stat t2">
-					<div class="number">5</div>
-					<div class="label">projects</div>
+				<div class="gap-sm slide-l" id="sitelinks" data-visibledata="0,0,1">
+					<li><a href="#about">About</a></li>
+					<li><a href="#projects">Projects</a></li>
+					<li><a href="#tech">Tech Stack</a></li>
+					<li><a href="#process">Process</a></li>
+					<li><a href="#contact" class="nav-cta">Reach out</a></li>
 				</div>
-				<div class="stat t2">
-					<div class="number">5</div>
-					<div class="label">projects</div>
+				<div class="cta-guy w3-hide">
+					<li><a href="#contact" class="nav-cta">Talk</a></li>
 				</div>
-				<div class="stat t2">
-					<div class="number">5</div>
-					<div class="label">projects</div>
+				<div class="mobile-toggle" data-visibledata="1,1,0">
+					<a class="mybtn"><i class="fa fa-bars"></i></a>
 				</div>
 			</div>
-		</div>
-	</section>
+		</nav>
+
+		<header class="hero" id="hero">
+			<div class="hero-glow mainglow" aria-hidden="true"></div>
+			<div class="hero-stuff">
+				<h1 class="mytitle">
+					<span class="line">Where creativity</span>
+					<span class="line">meets <span class="gradient-text">excellence</span></span>
+				</h1>
+				<p class="subtitle">
+					a collection of some of my most usefull project pieces.
+				</p>
+				<div class="hero-actions gap-sm flowline overflow">
+					<a href="#projects" class="mybtn2 primary">
+						<i class="fas fa-rocket"></i> Explore Projects
+					</a>
+					<a href="#about" class="mybtn2 secondary">
+						<i class="fas fa-play"></i> Learn More
+					</a>
+				</div>
+			</div>
+			<div class="scrollguy" aria-hidden="true">
+				<span>theres more down here</span>
+				<div class="the-line"></div>
+			</div>
+		</header>
+
+		<div class="divider" aria-hidden="true"></div>
+
+		<section class="section" aria-labelledby="about-heading">
+			<div class="section-inner">
+				<div class="section-label reveal">Where am I</div>
+				<h2 class="section-title reveal" id="about-heading">So What is <br><span class="gradtxt">Hyperworks</span></h2>
+				<p class="section-desc reveal">
+					This is a collection of projects that do one very specific thing and do it better than any generalized tool.<br>
+					so basically a portfolio full of things you can actually use.
+					<!-- Most of them are free to use and comandeer while the more demanding ones are avaiable in the <b>Pro</b> plan. -->
+				</p>
+			</div>
+		</section>
+
+		<div class="divider" aria-hidden="true"></div>
+
+		<section class="section" aria-labelledby="stats-heading">
+			<div class="section-inner">
+				<!-- <div class="section-label reveal">heading</div> -->
+				<div class="section-title reveal w3-center" id="stats-heading">our <span class="gradtxt">stats</span></div>
+				<div class="spacy-md reveal stats">
+					<div class="stat t2">
+						<div class="number">5</div>
+						<div class="label">projects</div>
+					</div>
+					<div class="stat t2">
+						<div class="number">5</div>
+						<div class="label">projects</div>
+					</div>
+					<div class="stat t2">
+						<div class="number">5</div>
+						<div class="label">projects</div>
+					</div>
+					<div class="stat t2">
+						<div class="number">5</div>
+						<div class="label">projects</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="divider" aria-hidden="true"></div>
+
+		<section class="section" id="projects" aria-labelledby="projects-heading">
+			<div class="section-inner">
+				<div class="mb-4">
+					<div>
+						<div class="section-label reveal">Star attractions</div>
+						<h2 class="section-title reveal" id="projects-heading">Not just Another <br>dashboard.</h2>
+						<p class="section-desc reveal">
+							Each item here is a tool that fixes a real painpoint or just tests out a simple concept.
+							Some are simple, some polished, some wild but all are intentional expressions of my own creativity and problem solving abilities.
+						</p>
+						<p>
+							<i class="text-muted">Oh yeah, and they all work, no vibeslop enters production in these parts</i>
+						</p>
+					</div>
+
+					<div class="projects-nav reveal">
+						<button class="filter-btn mybtn roundest outline active" data-filter="all">All</button>
+						<button class="filter-btn mybtn roundest outline" data-filter="web">Web Apps</button>
+						<button class="filter-btn mybtn roundest outline" data-filter="experiment">Experiments</button>
+						<button class="filter-btn mybtn roundest outline" data-filter="creative">Creative</button>
+						<button class="filter-btn mybtn roundest outline" data-filter="tools">Tools</button>
+						<button class="filter-btn mybtn roundest outline" data-filter="ai">AI / ML</button>
+					</div>
+				</div>
+
+				<div class="projects-holder">
+					<article class="project-card featured reveal" data-category="experiment">
+						<div class="theimage">
+							<div class="featured_star w3-display-topright spacy-sm">
+								<i class="fas fa-star w3-text-yellow"></i>
+							</div>
+							<img src="./_assets/img/demos/demo (1).jpeg" alt="Constellation - a representation of connected ideas" loading="lazy">
+
+							<div class="w3-display-topleft spacy-sm">
+								<span class="status-badge bad">Dropped</span>
+							</div>
+
+							<div class="theoptions w3-display-bottomright spacy-sm slide-up">
+								<a href="#" class="mybtn roundest w3-hover-text-yellow w3-text-white" aria-label="View NebulaOS project">
+									<i class="fab fa-github"></i>
+								</a>
+								<a href="#" class="mybtn roundest w3-hover-text-yellow w3-text-white" aria-label="View NebulaOS project">
+									<i class="fas fa-external-link-alt"></i>
+								</a>
+							</div>
+						</div>
+						<div class="thecontents">
+							<div class="flowline overflow gap-tn left">
+								<span class="mytag">Canvas API</span>
+								<span class="mytag">TypeScript</span>
+							</div>
+							<h3 class="_title">ChromaFlow</h3>
+							<p class="_desc">
+								Real-time generative art engine that creates mesmerizing fluid simulations
+								driven by audio input and mouse interaction.
+							</p>
+							<div class="themeta flowline spread centerline">
+								<div class="thetech">
+									<i class="fab fa-js" title="JavaScript"></i>
+									<i class="fab fa-github" title="GitHub"></i>
+								</div>
+								<div class="accolades">
+									<div>
+										<i class="fas fa-heart w3-text-red"></i> <span>23,455</span>
+									</div>
+									<div>
+										<i class="fas fa-star w3-text-orange"></i> <span>423</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+
+					<article class="project-card featured reveal" data-category="experiment">
+						<div class="theimage">
+							<div class="featured_star w3-display-topright spacy-sm">
+								<i class="fas fa-star w3-text-yellow"></i>
+							</div>
+							<img src="./_assets/img/demos/demo (1).jpg" alt="Constellation - a representation of connected ideas" loading="lazy">
+
+							<div class="w3-display-topleft spacy-sm">
+								<span class="status-badge good">Live</span>
+							</div>
+
+							<div class="theoptions w3-display-bottomright spacy-sm slide-up">
+								<a href="#" class="mybtn roundest w3-hover-text-yellow w3-text-white" aria-label="View NebulaOS project">
+									<i class="fab fa-github"></i>
+								</a>
+								<a href="#" class="mybtn roundest w3-hover-text-yellow w3-text-white" aria-label="View NebulaOS project">
+									<i class="fas fa-external-link-alt"></i>
+								</a>
+							</div>
+						</div>
+						<div class="thecontents">
+							<div class="flowline overflow gap-tn left">
+								<span class="mytag">Canvas API</span>
+								<span class="mytag">TypeScript</span>
+							</div>
+							<h3 class="_title">ChromaFlow V2</h3>
+							<p class="_desc">
+								Real-time generative art engine that creates mesmerizing fluid simulations
+								driven by audio input and mouse interaction.
+							</p>
+							<div class="themeta flowline spread centerline">
+								<div class="thetech">
+									<i class="fab fa-js" title="JavaScript"></i>
+									<i class="fab fa-github" title="GitHub"></i>
+								</div>
+								<div class="accolades">
+									<div>
+										<i class="fas fa-heart w3-text-red"></i> <span>23,455</span>
+									</div>
+									<div>
+										<i class="fas fa-star w3-text-orange"></i> <span>423</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+
+					<article class="project-card reveal" data-category="experiment">
+						<div class="theimage">
+							<div class="featured_star w3-display-topright spacy-sm">
+								<i class="fas fa-star w3-text-yellow"></i>
+							</div>
+							<img src="./_assets/img/demos/demo (2).jpg" alt="Constellation - a representation of connected ideas" loading="lazy">
+
+							<div class="w3-display-topleft spacy-sm">
+								<span class="status-badge warning">cooking</span>
+							</div>
+
+							<div class="theoptions w3-display-bottomright spacy-sm slide-up">
+								<a href="#" class="mybtn roundest w3-hover-text-yellow w3-text-white" aria-label="View NebulaOS project">
+									<i class="fab fa-github"></i>
+								</a>
+								<a href="#" class="mybtn roundest w3-hover-text-yellow w3-text-white" aria-label="View NebulaOS project">
+									<i class="fas fa-external-link-alt"></i>
+								</a>
+							</div>
+						</div>
+						<div class="thecontents">
+							<div class="flowline overflow gap-tn left">
+								<span class="mytag">Next.js</span>
+								<span class="mytag">Prisma</span>
+								<span class="mytag">PostgreSQL</span>
+							</div>
+							<h3 class="_title">DevPulse</h3>
+							<p class="_desc">
+								Analytics dashboard for developers tracking GitHub activity, commit patterns,
+								and productivity metrics with beautiful visualizations.
+							</p>
+							<div class="themeta flowline spread centerline">
+								<div class="thetech">
+									<i class="fab fa-react" title="React"></i>
+									<i class="fas fa-database" title="Database"></i>
+									<i class="fab fa-github" title="GitHub"></i>
+									<i class="fas fa-plug" title="Websockets"></i>
+								</div>
+								<div class="accolades">
+									<div>
+										<i class="fas fa-heart w3-text-red"></i> <span>23,455</span>
+									</div>
+									<div>
+										<i class="fas fa-star w3-text-orange"></i> <span>423</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+
+					<article class="project-card reveal" data-category="experiment">
+						<div class="theimage">
+							<div class="featured_star w3-display-topright spacy-sm">
+								<i class="fas fa-star w3-text-yellow"></i>
+							</div>
+							<img src="./_assets/img/demos/demo (3).jpg" alt="Constellation - a representation of connected ideas" loading="lazy">
+
+							<div class="w3-display-topleft spacy-sm">
+								<span class="status-badge warning">cooking</span>
+							</div>
+
+							<div class="theoptions w3-display-bottomright spacy-sm slide-up">
+								<a href="#" class="mybtn roundest w3-hover-text-yellow w3-text-white" aria-label="View NebulaOS project">
+									<i class="fab fa-github"></i>
+								</a>
+								<a href="#" class="mybtn roundest w3-hover-text-yellow w3-text-white" aria-label="View NebulaOS project">
+									<i class="fas fa-external-link-alt"></i>
+								</a>
+							</div>
+						</div>
+						<div class="thecontents">
+							<div class="flowline overflow gap-tn left">
+								<span class="mytag">Next.js</span>
+								<span class="mytag">Prisma</span>
+								<span class="mytag">PostgreSQL</span>
+							</div>
+							<h3 class="_title">Fintech Prototype</h3>
+							<p class="_desc">
+								A fully working prototype of a card only auth web app.
+							</p>
+							<div class="themeta flowline spread centerline">
+								<div class="thetech">
+									<i class="fab fa-react" title="React"></i>
+									<i class="fas fa-database" title="Database"></i>
+									<i class="fab fa-github" title="GitHub"></i>
+									<i class="fas fa-plug" title="Websockets"></i>
+								</div>
+								<div class="accolades">
+									<div>
+										<i class="fas fa-heart w3-text-red"></i> <span>23,455</span>
+									</div>
+									<div>
+										<i class="fas fa-star w3-text-orange"></i> <span>423</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+
+					<article class="project-card reveal" data-category="experiment">
+						<div class="theimage">
+							<div class="featured_star w3-display-topright spacy-sm">
+								<i class="fas fa-star w3-text-yellow"></i>
+							</div>
+							<img src="./_assets/img/demos/demo (4).jpg" alt="Constellation - a representation of connected ideas" loading="lazy">
+
+							<div class="w3-display-topleft spacy-sm">
+								<span class="status-badge good">live</span>
+							</div>
+
+							<div class="theoptions w3-display-bottomright spacy-sm slide-up">
+								<a href="#" class="mybtn roundest w3-hover-text-yellow w3-text-white" aria-label="View NebulaOS project">
+									<i class="fab fa-github"></i>
+								</a>
+								<a href="#" class="mybtn roundest w3-hover-text-yellow w3-text-white" aria-label="View NebulaOS project">
+									<i class="fas fa-external-link-alt"></i>
+								</a>
+							</div>
+						</div>
+						<div class="thecontents">
+							<div class="flowline overflow gap-tn left">
+								<span class="mytag">Laravel</span>
+								<span class="mytag">Social</span>
+								<span class="mytag">Live</span>
+							</div>
+							<h3 class="_title">Hypernote</h3>
+							<p class="_desc">
+								A fully working note sharing platform web app.
+							</p>
+							<div class="themeta flowline spread centerline">
+								<div class="thetech">
+									<i class="fab fa-laravel" title="React"></i>
+									<i class="fas fa-database" title="Database"></i>
+									<i class="fab fa-github" title="GitHub"></i>
+									<i class="fas fa-users" title="Authentication"></i>
+								</div>
+								<div class="accolades">
+									<div>
+										<i class="fas fa-heart w3-text-red"></i> <span>23,455</span>
+									</div>
+									<div>
+										<i class="fas fa-star w3-text-orange"></i> <span>423</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<div class="divider" aria-hidden="true"></div>
+
+		<section class="section" aria-labelledby="about-heading">
+			<div class="section-inner">
+				<div class="section-label reveal">the arsenal</div>
+				<h2 class="section-title reveal" id="about-heading">the million dollar<br><span class="gradtxt">Tech stack</span></h2>
+				<p class="section-desc reveal">
+					Heres a collection of tools I use to make my projects.
+				</p>
+				<p>
+					Each stack is suited for a specific kind of project so theres no one size fits all situation.
+				</p>
+			</div>
+		</section>
 
 	<div class="divider" aria-hidden="true"></div>
 
 	<div class="spacy-mg w3-center">
-		<h1>more is coming</h1>
+		<span class="h4 titletxt">more is coming</span>
 	</div>
 
 	<!-- start of vibeslop -->
