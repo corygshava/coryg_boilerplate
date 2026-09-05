@@ -58,6 +58,15 @@ var confirm_toggler = undefined;
 					headers['Authorization'] = `Bearer ${prff.value}`
 				}
 
+				if(mt == 'GET'){
+					let pl = objtoquery(dta);
+					if(p.includes('?')){
+						p += pl;
+					} else {
+						p += `?${pl}`;
+					}
+				}
+
 				let body = mt == "GET" || mt == 'HEAD' ? null : (use_as_is ? dta : JSON.stringify(dta));
 
 				// await alert_dark('sending info');
@@ -663,7 +672,7 @@ var confirm_toggler = undefined;
 			</article>
 		`;
 	}
-	function mekStandin(demo='an error happened',class_ovr = 'w3-text-black',cta_link = undefined,cta_text = undefined){
+	function mekStandin(demo='an error happened',class_ovr = 'modetxt',cta_link = undefined,cta_text = undefined){
 		let cta = '';
 
 		cta = cta_link != undefined ?
@@ -748,14 +757,14 @@ var confirm_toggler = undefined;
 	function mekHeading(content,type){
 		return `<span class="${type || 'h2'}">${content || 'heading'}</span>`;
 	}
-	function mekSpan(w) {
-		return `<span>${w}</span>`;
+	function mekSpan(w, classes='',props='') {
+		return `<span class="${classes}" ${props}>${w}</span>`;
 	}
-	function mekStrong(w) {
-		return `<strong>${w}</strong>`;
+	function mekStrong(w, classes='',props='') {
+		return `<strong class="${classes}" ${props}>${w}</strong>`;
 	}
-	function mekBold(w) {
-		return mekStrong(w);
+	function mekBold(w, classes='',props='') {
+		return mekStrong(w,classes,props);
 	}
 
 	function mekButton(pr = {caption: "",type: "button",icon:"",_props: "",_class:"",btype: "primary",act: undefined}) {
@@ -894,17 +903,40 @@ var confirm_toggler = undefined;
 
 		return outht;
 	}
-
-	const mekModal = (d) => {
+	function mekIcon(iconcode = "fas fa-question"){
+		return `<i class="${iconcode}"></i>`;
+	}
+	function mekDiv(contents = "",classes="",props=""){
+		return `<div class="${classes}" ${props}>${contents}</div>`;
+	}
+	function mekModal(d){
 		alert_dark('making the modal');
-		const dft = {title: 'modal',sub: '<i>blank modal</i>',content: 'modal content appears here',has_cancel: true, has_continue: true,extra_footer: ''};
+		const dft = {
+			title: 'modal',
+			sub: '<i>blank modal</i>',
+			content: 'modal content appears here',
+			has_cancel: true,
+			has_continue: true,
+			extra_footer: '',
+			size: 'md',
+		};
 		d = {...dft,...d};
 
+		console.log('mekmodal payload',d);
+
 		let mdl = the_modal;
+		let sizes = ['sm','md','lg','xl','mg'];
 
 		const title = mdl.querySelector('.modal-title');
 		const subtitle = mdl.querySelector('.modal-subtitle');
 		const con = mdl.querySelector('.modal-body');
+
+		sizes.forEach(s => {
+			mdl.querySelector('.modal-content').classList.remove(`modal-${s}`);
+			console.log(`removing .modal-${s}`);
+		});
+
+		mdl.querySelector('.modal-content').classList.add(`modal-${d.size}`);
 
 		// modal content
 		title.innerHTML = d.title;
