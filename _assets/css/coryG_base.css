@@ -983,6 +983,9 @@ a:hover{
 	.lightshadow{
 		box-shadow: 0 0 12px #dddddd77;
 	}
+	.themeshadow{
+		box-shadow: 0 0 12px var(--clr-shadow);
+	}
 
 	.divider {
 		width: 100%;
@@ -994,4 +997,3 @@ a:hover{
 		text-transform: uppercase;
 		letter-spacing: 2px;
 	}
-
