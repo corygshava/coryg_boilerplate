@@ -443,7 +443,7 @@ function getDateDiff(date1, date2, use_sec = true) {
  * @returns {Promise<string>} - Data URL of the QR code image
  */
 
-/*
+// /*
 function mekQRCode(encodedText, size = 100) {
     return new Promise((resolve, reject) => {
         try {
