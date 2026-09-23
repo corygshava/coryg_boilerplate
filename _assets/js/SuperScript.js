@@ -105,19 +105,36 @@ function GetElement(me) {
 	return me;
 }
 
-function tabSwitch(no,series,norm,select) {
+function tabSwitch(no,series,norm,select,mode = 'classswitch') {
 	var items = document.querySelectorAll(series);
+	console.log('tabswitch items ',items);
+	window['globaldebug'] = items;
 
-	--no;
-	for (var i = 0; i < items.length; i++) {
-		items[i].className = norm;
+	norm = norm != '' ? norm : mekRandomString(3);
+	select = select != '' ? select : mekRandomString(3);
+
+	if(no > items.length){
+		no = no % items.length;
 	}
-	items[no].className += ' ' + select;
+
+	items.forEach((item,id) => {
+		if(item == undefined){
+			alert_danger('invalid item');
+			return;
+		}
+
+		globaldebug = item;
+
+		let cl = id != no ? 'add' : 'remove';
+		let cl2 = id == no ? 'add' : 'remove';
+
+		item.classList[cl](norm);
+		item.classList[cl2](select);
+	})
 }
 
 function tabSwitch2(no,series,norm,select) {
 	var items = document.querySelectorAll(series);
-	// no -= 1;
 
 	if(no > items.length){
 		no = no % items.length;
