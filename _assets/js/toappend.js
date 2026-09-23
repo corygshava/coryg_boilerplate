@@ -579,3 +579,16 @@ function killghosts(stuff = []) {
 		alert_silent('invalid killghosts pass');
 	}
 }
+
+// added from a clanker on [07/09/26] around 34 days after those
+// gets public ip address the world sees
+async function getPublicIP() {
+	try {
+		const response = await fetch('https://api.ipify.org?format=json');
+		const data = await response.json();
+		return data.ip;
+	} catch (error) {
+		console.error('Failed to fetch public IP:', error);
+		return 'Unknown';
+	}
+}

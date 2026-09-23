@@ -31,7 +31,7 @@ var confirm_toggler = undefined;
 // fetch utils
 	curfun = fetch_bypass;
 	if(window[curfun] == undefined){
-		window[curfun] = async (p,dta = {},mt = 'POST',skipappend = false,use_as_is=false) => {
+		window[curfun] = async (p,dta = {},mt = 'POST',skipappend = false,use_as_is=false,is_quiet = false) => {
 			try{
 				alert_silent({to: p,data: dta,method: mt});
 
@@ -61,7 +61,7 @@ var confirm_toggler = undefined;
 				if(mt == 'GET'){
 					let pl = objtoquery(dta);
 					if(p.includes('?')){
-						p += pl;
+						p += `&${pl}`;
 					} else {
 						p += `?${pl}`;
 					}
@@ -100,7 +100,10 @@ var confirm_toggler = undefined;
 
 				return await req.json();
 			} catch (error){
-				alert_danger(error);
+				if(!is_quiet){
+					alert_danger(error);
+				}
+
 				console.error(error);
 				throw new Error(error);
 			}
@@ -511,7 +514,7 @@ var confirm_toggler = undefined;
 				b.id = conid;
 				b.dataset.shown = "0";
 				b.innerHTML = `
-					<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-dialog modal-sm" role="document">
 						<div class="modal-content themeround borderless panelbg w3-animate-zoom">
 							<div class="modal-header">
 								<span class="h3 modal-title" id="password_confo_title">Confirm your Password</span>
@@ -854,6 +857,8 @@ var confirm_toggler = undefined;
 			`;
 		} else if(typ == "textarea"){
 			inputht = `<textarea class="form-control-custom ${_inp_classes}" rows="3" name="${field}" id="${field}" placeholder="${placeholder}" ${_inp_props} ${_inp_req}>${val}</textarea>`
+		} else if(typ == "hidden"){
+			return inputht;
 		}
 
 		return `
@@ -903,14 +908,14 @@ var confirm_toggler = undefined;
 
 		return outht;
 	}
-	function mekIcon(iconcode = "fas fa-question"){
-		return `<i class="${iconcode}"></i>`;
+	function mekIcon(iconcode = "fas fa-question",classes="",props=""){
+		return `<i class="${iconcode} ${classes}" ${props}></i>`;
 	}
 	function mekDiv(contents = "",classes="",props=""){
 		return `<div class="${classes}" ${props}>${contents}</div>`;
 	}
 	function mekModal(d){
-		alert_dark('making the modal');
+		alert_silent('making the modal');
 		const dft = {
 			title: 'modal',
 			sub: '<i>blank modal</i>',
@@ -975,7 +980,6 @@ var confirm_toggler = undefined;
 		refreshUI(200);
 	}
 
-
 // mechanisms and tools
 	// dark / light mode switch setup
 		let cur_ui_mode = "dark";
@@ -984,7 +988,7 @@ var confirm_toggler = undefined;
 		window['setup_uimode'] = () => {
 			let now = new Date();
 			let hr = now.getHours();
-			let mode = hr >= 19 ? "dark" : "light";
+			let mode = hr >= 19 || hr <= 7 ? "dark" : "light";
 
 			if(cur_ui_mode.toLowerCase() != mode){
 				alert_info(`changing to ${mode} mode`);
@@ -1032,7 +1036,7 @@ var confirm_toggler = undefined;
 
 			document.body.dataset.mode = cur_ui_mode;
 		}
-	
+
 	// get input mech
 		window['get_text_fields'] = (el) => {
 			if(!(el instanceof HTMLFormElement)){
@@ -1068,8 +1072,9 @@ var confirm_toggler = undefined;
 
 			return _json;
 		}
-		window['get_input'] = (title,fields = [],callback) => {
-			alert_dark('getting input');
+		window['get_input'] = (title = "Get input",fields = [],callback) => {
+			alert_silent('getting input');
+
 			let modalBtn = the_modal_toggler;
 			let dashmodal = the_modal;
 			let d_content = dashmodal.querySelector('.modal-content');
@@ -1087,10 +1092,14 @@ var confirm_toggler = undefined;
 				showbutton: false,
 			});
 
+			if(fields.length == 0){
+				mod_ht = mekStandin('no fields defined');
+			}
+
 			setTimeout(() => {
 				mekModal({
 					title: title,
-					sub: 'enter the required value to continue',
+					sub: `enter the required ${plural('value',fields.length)} to continue`,
 					content: mod_ht,
 					has_cancel: false,
 					has_continue: false,
@@ -1226,3 +1235,115 @@ var confirm_toggler = undefined;
 			killghost('confirmPasswordCallback');
 		}
 
+	// feedback collector setup
+		let fbk_delay = 4000;
+		let fbk_savetime = 1000 * 60 * 60 * 48;
+		let fbk_app_alias = 'hyperworks_home';
+		let fbk_pref = undefined;
+		let fbk_hide_pref = undefined;
+		let fbk_info = undefined;
+		let fbk_hide = undefined;
+		let ui_fbk_verdict = undefined;
+		let ui_fbk = undefined;
+
+		function fbk_handle_reactpanel() {
+			const setup_ui = () => {
+				ui_fbk = document.querySelector(`[data-role="like_box"]`);
+				ui_fbk_verdict = ui_fbk.querySelector('[data-role="verdict"]');
+
+				fbk_pref = fbk_app_alias + '_fbk_info';
+				fbk_hide_pref = fbk_app_alias + '_fbk_hideit';
+				fbk_info = localStorage.getItem(fbk_pref);
+				fbk_hide = localStorage.getItem(fbk_hide_pref);
+
+				fbk_hide = fbk_hide == undefined ? false : JSON.parse(fbk_hide);
+			};
+			const handle_show = () => {
+				if(ui_fbk == undefined){
+					alert_silent('like box not found');
+					return;
+				}
+
+				if(fbk_hide === true){
+					alert_silent('like box hidden forever');
+					return;
+				}
+
+				if(fbk_info != undefined){
+					if((new Date(fbk_info.expiry_date)) > (new Date())){
+						alert_silent('feedback info recorded');
+						let typ = fbk_pref.last_reaction;
+						fbk_save_react(typ);
+						return;
+					} else {
+						localStorage.removeItem(fbk_pref)
+						setup_ui();
+					}
+				}
+
+				ui_fbk.classList.remove('w3-hide');
+			};
+
+			setup_ui();
+
+			setTimeout(() => {
+				handle_show();
+			}, fbk_delay)
+		}
+
+		function fbk_hide_likebox() {
+			const last_step = () => {
+				ui_fbk.animate([...slidein].reverse(), timing);
+
+				setTimeout(() => {
+					ui_fbk.classList.add('w3-hide');
+				}, timing.duration + 20);
+			}
+
+			const ban_like_box = () => {
+				localStorage.setItem(fbk_hide_pref, "true");
+				last_step();
+				alert_info('hiding forever');
+			}
+
+			if(fbk_info == undefined){
+				confirmAction('Dont show again','do you want the react panel to never show again?',() => {
+					ban_like_box();
+				});
+			}
+			last_step();
+		}
+		function fbk_like_project(el) {
+			let typ = el.dataset.mything;
+			let dta = {
+				type: typ,
+				loc: fbk_app_alias,
+			}
+
+			const finalizer = (b) => {
+				let ts = (new Date()).getTime();
+				let expiry_date = (new Date(ts + fbk_savetime)).toISOString();
+				let react_date = (new Date()).toISOString();
+				let data = {
+					react_date,
+					expiry_date,
+					last_reaction: typ,
+				};
+				let tosave = JSON.stringify(data);
+
+				localStorage.setItem(fbk_pref,tosave);
+				fbk_save_react(typ);
+			}
+
+			alert_info('saving reaction');
+
+			window[fetch_bypass]('./op/add_reaction',dta,'POST').then(d => {
+				responseHandler(d,finalizer,d);
+			}).catch(err => {
+				alert_silent(err.message);
+			})
+		}
+		const fbk_save_react = (t) => {
+			ui_fbk.classList.add('liked');
+			ui_fbk_verdict.innerHTML = `you ${t}d this, try again tomorrow`;
+		}

@@ -91,7 +91,6 @@
 				background-repeat: repeat;
 				background-size: 256px 256px;
 			}
-
 	</style>
 </head>
 <body data-mode="light">
@@ -207,7 +206,7 @@
 						</p>
 					</div>
 
-					<div class="projects-nav reveal">
+					<div class="projects-nav overflow reveal">
 						<button class="filter-btn mybtn roundest outline active" data-filter="all">All</button>
 						<button class="filter-btn mybtn roundest outline" data-filter="web">Web Apps</button>
 						<button class="filter-btn mybtn roundest outline" data-filter="experiment">Experiments</button>
@@ -221,7 +220,7 @@
 					<article class="project-card featured reveal" data-category="experiment">
 						<div class="theimage">
 							<div class="featured_star w3-display-topright spacy-sm">
-								<i class="fas fa-star w3-text-yellow"></i>
+								<i class="fas fa-comment w3-text-yellow"></i>
 							</div>
 							<img src="./_assets/img/demos/demo (1).jpeg" alt="Constellation - a representation of connected ideas" loading="lazy">
 
@@ -258,7 +257,7 @@
 										<i class="fas fa-heart w3-text-red"></i> <span>23,455</span>
 									</div>
 									<div>
-										<i class="fas fa-star w3-text-orange"></i> <span>423</span>
+										<i class="fas fa-comment w3-text-orange"></i> <span>423</span>
 									</div>
 								</div>
 							</div>
@@ -268,7 +267,7 @@
 					<article class="project-card featured reveal" data-category="experiment">
 						<div class="theimage">
 							<div class="featured_star w3-display-topright spacy-sm">
-								<i class="fas fa-star w3-text-yellow"></i>
+								<i class="fas fa-comment w3-text-yellow"></i>
 							</div>
 							<img src="./_assets/img/demos/demo (1).jpg" alt="Constellation - a representation of connected ideas" loading="lazy">
 
@@ -305,7 +304,7 @@
 										<i class="fas fa-heart w3-text-red"></i> <span>23,455</span>
 									</div>
 									<div>
-										<i class="fas fa-star w3-text-orange"></i> <span>423</span>
+										<i class="fas fa-comment w3-text-orange"></i> <span>423</span>
 									</div>
 								</div>
 							</div>
@@ -315,7 +314,7 @@
 					<article class="project-card reveal" data-category="experiment">
 						<div class="theimage">
 							<div class="featured_star w3-display-topright spacy-sm">
-								<i class="fas fa-star w3-text-yellow"></i>
+								<i class="fas fa-comment w3-text-yellow"></i>
 							</div>
 							<img src="./_assets/img/demos/demo (2).jpg" alt="Constellation - a representation of connected ideas" loading="lazy">
 
@@ -355,7 +354,7 @@
 										<i class="fas fa-heart w3-text-red"></i> <span>23,455</span>
 									</div>
 									<div>
-										<i class="fas fa-star w3-text-orange"></i> <span>423</span>
+										<i class="fas fa-comment w3-text-orange"></i> <span>423</span>
 									</div>
 								</div>
 							</div>
@@ -365,7 +364,7 @@
 					<article class="project-card reveal" data-category="experiment">
 						<div class="theimage">
 							<div class="featured_star w3-display-topright spacy-sm">
-								<i class="fas fa-star w3-text-yellow"></i>
+								<i class="fas fa-comment w3-text-yellow"></i>
 							</div>
 							<img src="./_assets/img/demos/demo (3).jpg" alt="Constellation - a representation of connected ideas" loading="lazy">
 
@@ -404,7 +403,7 @@
 										<i class="fas fa-heart w3-text-red"></i> <span>23,455</span>
 									</div>
 									<div>
-										<i class="fas fa-star w3-text-orange"></i> <span>423</span>
+										<i class="fas fa-comment w3-text-orange"></i> <span>423</span>
 									</div>
 								</div>
 							</div>
@@ -414,7 +413,7 @@
 					<article class="project-card reveal" data-category="experiment">
 						<div class="theimage">
 							<div class="featured_star w3-display-topright spacy-sm">
-								<i class="fas fa-star w3-text-yellow"></i>
+								<i class="fas fa-comment w3-text-yellow"></i>
 							</div>
 							<img src="./_assets/img/demos/demo (4).jpg" alt="Constellation - a representation of connected ideas" loading="lazy">
 
@@ -453,7 +452,7 @@
 										<i class="fas fa-heart w3-text-red"></i> <span>23,455</span>
 									</div>
 									<div>
-										<i class="fas fa-star w3-text-orange"></i> <span>423</span>
+										<i class="fas fa-comment w3-text-orange"></i> <span>423</span>
 									</div>
 								</div>
 							</div>
@@ -478,6 +477,26 @@
 			</div>
 		</section>
 
+		<div class="like_box spacy-sm w3-hide" data-role="like_box">
+			<div class="inner spacy-sm slide-l">
+				<div class="w3-display-topright spacy-sm_">
+					<button class="mybtn trans" data-runme="fbk_hide_likebox"><i class="fas fa-times"></i></button>
+				</div>
+				<div class="border-bottom pb-3">
+					<span class="h4">Like this project</span>
+					<span>
+						did this project <b>help you</b>, <b>impress you</b> or annoy you or fill you with hope for the future, if it did let me know, I love hearing from my fans and haters alike.
+					</span>
+				</div>
+				<div class="flowline overflow gap-tn left pt-3">
+					<button class="mybtn2 tn secondary w3-hide_ liker" data-runme="fbk_like_project" data-mything="like"><i class="fas fa-thumbs-up"></i> like project</button>
+					<button class="mybtn2 tn secondary w3-hide_ liker" data-runme="fbk_like_project" data-mything="dislike"><i class="fas fa-thumbs-down"></i> dislike project</button>
+					<span class="text-muted liketxt" data-role="verdict"><b>you liked this, try again tomorrow</b></span>
+					<button class="mybtn2 tn primary themegrad" data-runme="fbk_leave_comment"><i class="fas fa-comment"></i> comment</button>
+				</div>
+			</div>
+		</div>
+
 	<div class="divider" aria-hidden="true"></div>
 
 	<div class="spacy-mg w3-center">
@@ -497,7 +516,8 @@
 
 	<!-- page codes -->
 	<script>
-		callOnLoad.push({act: setup_uimode})
+		callOnLoad.push({act: setup_uimode});
+		// callOnLoad.push({act: fbk_handle_reactpanel});
 	</script>
 </body>
 </html>

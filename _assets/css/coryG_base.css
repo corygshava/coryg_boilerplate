@@ -14,7 +14,7 @@
 	--clr-bgglass: #aeaeae44;
 	--clr-border: #c0c0c0;
 	--clr-shadow: rgba(100,100,100,0.3);
-	--clr-modeglass: #99999977;
+	--clr-modeglass: #d7d7d777;
 	--clr-panelbg: #fff;
 	--clr-darkglass: #000000aa;
 	--clr-whiteglass: #efefef55;
@@ -229,6 +229,28 @@ a:hover{
 		.mybtn.roundest {
 			border-radius: 100px;
 		}
+		.mybtn.sm {
+			padding: 8px 16px;
+		}
+
+		.mybtn.trans {
+		    background: none;
+		    color: var(--clr-text);
+		}
+		.mybtn.trans:hover {
+			color: var(--themecolor);
+		}
+
+		.mybtn.danger{
+			color: #fff;
+			background: var(--danger);
+		}
+		.mybtn.danger:hover{
+			background: var(--red);
+			color: white;
+			/*box-shadow: var(--themeshadow);*/
+			text-decoration: none;
+		}
 
 		.mybtn2 {
 			display: inline-flex;
@@ -259,6 +281,15 @@ a:hover{
 			border-color: var(--clr-text);
 			color: var(--clr-text);
 			transform: translateY(-3px);
+		}
+
+		.mybtn2.sm{
+			padding: 8px 12px;
+			font-size: 0.8rem;
+		}
+		.mybtn2.tn{
+			padding: 4px 8px;
+			font-size: 0.6rem;
 		}
 
 		.circle_btn{
@@ -608,7 +639,7 @@ a:hover{
 		.projects-nav{
 			display: flex;
 			gap: 12px;
-			flex-wrap: nowrap;
+			flex-wrap: wrap;
 			overflow: hidden;
 			padding: 12px 0;
 		}
@@ -630,7 +661,7 @@ a:hover{
 			padding-bottom: 16px;
 		}
 		.projects-holder .project-card {
-			--w: 380px;
+			--w: 332px;
 			flex: 1 1 var(--w);
 			max-width: var(--w);
 			border-radius: var(--roundness);
@@ -796,9 +827,29 @@ a:hover{
 			border: 1px solid rgba(180, 77, 255, 0.3);
 		}
 
+	/* ---------- 0.like_box ---------- */
+		.like_box{
+			position: fixed;
+			bottom: 85px;
+			right: 0;
+			max-width: 300px;
+			z-index: 7;
+		}
+		.like_box .inner{
+			border: 1px solid var(--clr-border);
+			border-radius: var(--roundness);
+			background-color: var(--clr-modeglass);
+			backdrop-filter: blur(8px);
+			position: relative;
+		}
+		.like_box .liketxt{display: none;}
+		.like_box.liked .liker{display: none;}
+		.like_box.liked .liketxt{display: block;}
+
 /* BS4 fixes */
 	.border{border: 1px solid var(--clr-border) !important;}
-	.border-bottom,.modal-content .modal-header{border-bottom: 1px solid var(--clr-border) !important;}
+	.modal-header{border: none;}
+	.border-bottom,.modal-content{border-bottom: 1px solid var(--clr-border) !important;}
 	.border-top,.modal-content .modal-footer{border-top: 1px solid var(--clr-border) !important;}
 	/* .modal-content .modal-header{border-bottom: 1px solid var(--clr-border) !important;} */
 

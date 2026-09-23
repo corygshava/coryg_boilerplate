@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>TrybXP testsite - API tester</title>
+
+	<link rel="stylesheet" type="text/css" href="_assets/css/w3.css">
+	<link rel="stylesheet" type="text/css" href="_assets/css/fonts.css">
+	<link rel="stylesheet" type="text/css" href="_assets/css/fa-all.css">
+	<link rel="stylesheet" type="text/css" href="_assets/css/coryG_base.css">
+	<link rel="stylesheet" type="text/css" href="_assets/css/coryG_UIOps.css">
+	<link rel="stylesheet" type="text/css" href="_assets/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="_assets/css/animate.css">
+	<link rel="stylesheet" type="text/css" href="_assets/css/mediaoptima.css">
+
+	<script src="_assets/js/SuperScript.js"></script>
+	<script src="_assets/js/toappend.js"></script>
+	<script src="_assets/js/customalerter.js"></script>
+	<script src="_assets/js/coryG_UIOps.js"></script>
+	<script src="_assets/js/app.js"></script>
+</head>
+<body>
+	<div class="overlay w3-animate-opacity" id="mobilemenu" style="display:none" data-shown="0" >
+		<button class="btn w3-display-topright closebtn w3-transparent w3-text-black" data-toggler="#mobilemenu" data-onshow="flex"><i class="fa fa-times"></i></button>
+		<div class="sidebar" data-copyme="#sitelinks" data-myparent="#mobilemenu">
+		</div>
+	</div>
+
+	<section class="section container" id="xtra">
+		<div class="w3-center">
+			<br>
+			<span class="hedtxt2 distance-md">Api <b>Tester</b></span>
+			<p>use this to test endpoints</p>
+		</div>
+	</section>
+
+	<section class="section flex-50-50 container gap-md" id="about">
+		<div class="request-panel contact-form">
+			<h2 class="panel-title">
+				<!-- <i class="fa fa-paper-plane"></i> -->
+				Request Configuration
+			</h2>
+
+			<div class="method-selector distance-sm">
+				<button class="mybtn method-btn outline active" data-method="GET">GET</button>
+				<button class="mybtn method-btn outline" data-method="POST">POST</button>
+				<button class="mybtn method-btn outline" data-method="PUT">PUT</button>
+				<button class="mybtn method-btn outline" data-method="DELETE">DELETE</button>
+			</div>
+
+			<div class="form-group">
+				<label for="url">Endpoint URL</label>
+				<input type="text" id="url" class="form-control" placeholder="https://api.example.com/users" value="https://httpbin.org/get" data-role="pathinput">
+			</div>
+
+			<div class="form-group slide-up" data-role="toggleTesters">
+				<button class="btn primary" data-role="savelinkbtn"><i class="fa fa-save"></i> save</button>
+				<button class="btn primary" data-toggler='[data-role="savedstuffmodal"]' data-onshow="flex"><i class="fa fa-folder"></i> saved paths</button>
+				<button class="btn primary" data-toggler="[data-role='testers'],[data-role='toggleTesters']">Test endpoints</button>
+			</div>
+
+			<div class="form-group slide-up" data-role="testers" style="display: none;" data-shown="0">
+				<label>Quick Test Endpoints</label>
+				<div class="quick-actions">
+					<button class="mybtn quick-btn" data-url="https://httpbin.org/get">Test GET</button>
+					<button class="mybtn quick-btn" data-url="https://httpbin.org/post">Test POST</button>
+					<button class="mybtn quick-btn" data-url="https://httpbin.org/json">JSON Data</button>
+					<button class="mybtn quick-btn" data-url="https://httpbin.org/delay/2">Delay Test</button>
+					<button class="mybtn quick-btn" data-url="https://httpbin.org/status/404">Error Test</button>
+					<button class="btn primary" data-toggler="[data-role='testers'],[data-role='toggleTesters']"><i class="fa fa-times" aria-hidden="true"></i></button>
+				</div>
+			</div>
+
+			<div class="headers-section distance-sm form-group">
+				<label>Headers</label>
+				<div id="headers-container">
+					<div class="header-item">
+						<input type="text" placeholder="Header name" class="form-control header-name" value="Content-Type">
+						<input type="text" placeholder="Header value" class="form-control header-value" value="application/json">
+						<button class="btn btn-secondary" onclick="removeHeader(this)">
+							<i class="fa fa-times"></i>
+						</button>
+					</div>
+				</div>
+				<button class="mybtn w3-text-black theme-hover" onclick="addHeader()">
+					<i class="fa fa-plus"></i> Add Header
+				</button>
+			</div>
+
+			<div class="form-group">
+				<label for="requestBody">Request Body (JSON)</label>
+				<textarea id="requestBody" class="form-control" rows="6" placeholder='{"key": "value", "name": "test"}'></textarea>
+			</div>
+
+			<button class="btn themegrad" onclick="sendRequest()">
+				Send Request <i class="fa fa-paper-plane"></i>
+			</button>
+		</div>
+		<div class="response-panel">
+			<h2 class="panel-title">
+				Responses
+			</h2>
+
+			<div class="loading slide-up" id="loading">
+				<div class="spinner"></div>
+				<p>Sending request...</p>
+			</div>
+
+			<div id="responseContent" style="display: none;" class="slide-up">
+				<div class="distance-md">
+					<span id="statusBadge" class="status-badge" style="display: none;"></span>
+				</div>
+				<div class="response-headers" id="responseHeaders"></div>
+				<div class="form-group">
+					<label>Response Body</label>
+					<div class="response-content" id="responseBody"></div>
+					<!-- <textarea class="response-content" id="responseBody"></textarea> -->
+				</div>
+			</div>
+
+			<div id="errorMessage" class="error-message" style="display: none;"></div>
+			<div id="successMessage" class="success-message" style="display: none;"></div>
+		</div>
+	</section>
+
+	<div class="modals">
+		<div class="mymodal" data-role="savedstuffmodal" data-shown="0" style="display: none;">
+			<div class="modal-content" style="max-width: 500px;">
+				<button class="w3-btn w3-right" data-toggler='[data-role="savedstuffmodal"]' data-special="yes"><i class="fa fa-times"></i></button>
+				<div>
+					<span class="h3">Saved links</span>
+					<div data-role="savedlinks">
+						<div class="flowline spread center" data-subrole='savedpath' data-path="localhost://" data-method="get">
+							<span>localhost://</span>
+							<button class="w3-btn w3-hover-text-red" data-role="deleter"><i class="fa fa-times"></i></button>
+						</div>
+					</div>
+					<div data-role="savedactions" class="w3-center spacy-sm">
+						<button class="btn w3-black w3-hover-red" data-role="deletesaved"><i class="fa fa-trash"></i> clear all</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="mymodal fade" style="display: none;" id="confirmerBox" data-shown="0">
+			<div class="modal-content modal-sm" role="document">
+				<button type="button" class="close w3-right w3-btn" data-dismiss="modal" aria-label="Close">
+					<i class="fa fa-times"></i>
+				</button>
+				<div class="flow gap-sm">
+					<div class="modal-header">
+						<h5 class="modal-title">Confirm Action</h5>
+					</div>
+					<div class="modal-body">
+						do you want to delete this
+					</div>
+					<div class="modal-footer w3-right-align">
+						<button type="button" class="btn btn-secondary except" data-dismiss="modal" data-subrole="cancel">cancel</button>
+						<button class="btn btn-primary except" data-subrole="continue">continue &raquo;</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		const loading = document.getElementById('loading');
+		const responseContent = document.getElementById('responseContent');
+		const statusBadge = document.getElementById('statusBadge');
+
+		let currentMethod = 'GET';
+		let allsaved = [];
+
+		// UI items
+		let npt_payload = document.getElementById('requestBody');
+		let npt_path = document.querySelector('[data-role="pathinput"]');
+		let ui_methodbtns = document.querySelectorAll('.method-btn');
+		let ui_quickbtns = document.querySelectorAll('.quick-btn');
+
+		// Method selector
+		ui_methodbtns.forEach(btn => {
+			btn.addEventListener('click', function() {
+				document.querySelectorAll('.method-btn').forEach(b => b.classList.remove('active'));
+				this.classList.add('active');
+				currentMethod = this.dataset.method;
+				updateUIForMethod();
+			});
+		});
+
+		// Quick action buttons
+		ui_quickbtns.forEach(btn => {
+			btn.addEventListener('click', function() {
+				document.getElementById('url').value = this.dataset.url;
+
+				let themeth = this.dataset.method || "get";
+				if (themeth.toLowerCase().includes('post')) {
+					getmethbtn('post')?.click();
+				}
+			});
+		});
+
+		function getmethbtn(m = 'get') {
+			// alert_info(m);
+
+			let out = null;
+
+			ui_methodbtns.forEach(b => {
+				if(b.dataset.method.toLowerCase() == m.toLowerCase()){
+					// alert_light('found');
+					out = b;
+				} else {
+					// alert_dark(b.dataset.method.toLowerCase() + ' <> ' + m.toLowerCase());
+				}
+			})
+
+			return out;
+		}
+
+		function updateUIForMethod() {
+			const bodySection = document.getElementById('requestBody').closest('.form-group');
+			if (currentMethod === 'GET' || currentMethod === 'DELETE') {
+				bodySection.style.display = 'none';
+			} else {
+				bodySection.style.display = 'block';
+			}
+		}
+
+		function addHeader() {
+			const container = document.getElementById('headers-container');
+			const headerItem = document.createElement('div');
+			headerItem.className = 'header-item';
+			headerItem.innerHTML = `
+				<input type="text" placeholder="Header name" class="form-control header-name">
+				<input type="text" placeholder="Header value" class="form-control header-value">
+				<button class="btn btn-secondary" onclick="removeHeader(this)">
+					<i class="fa fa-times"></i>
+				</button>
+			`;
+			container.appendChild(headerItem);
+		}
+
+		function removeHeader(button) {
+			button.parentElement.remove();
+		}
+
+		function getHeaders() {
+			const headers = {};
+			document.querySelectorAll('.header-item').forEach(item => {
+				const name = item.querySelector('.header-name').value.trim();
+				const value = item.querySelector('.header-value').value.trim();
+				if (name && value) {
+					headers[name] = value;
+				}
+			});
+			return headers;
+		}
+
+		function formatJSON(data) {
+			try {
+				if (typeof data === 'string') {
+					data = JSON.parse(data);
+				}
+				return JSON.stringify(data, null, 2);
+			} catch (e) {
+				return data;
+			}
+		}
+
+		function syntaxHighlight(json) {
+			if (typeof json === 'string') {
+				try {
+					json = JSON.parse(json);
+				} catch (e) {
+					return json;
+				}
+			}
+			
+			const jsonStr = JSON.stringify(json, null, 2);
+			return jsonStr.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+				let cls = 'json-number';
+				if (/^"/.test(match)) {
+					if (/:$/.test(match)) {
+						cls = 'json-key';
+					} else {
+						cls = 'json-string';
+					}
+				} else if (/true|false/.test(match)) {
+					cls = 'json-boolean';
+				} else if (/null/.test(match)) {
+					cls = 'json-boolean';
+				}
+				return `<span class="${cls}">${match}</span>`;
+			});
+		}
+
+		function showMessage(message, type) {
+			if (type === 'error') {
+				alert_danger(message);
+			} else {
+				alert_success(message);
+			}
+		}
+
+		async function sendRequest() {
+			const url = document.getElementById('url').value.trim();
+			const requestBody = document.getElementById('requestBody').value.trim();
+			
+			if (!url) {
+				showMessage('Please enter an endpoint URL', 'error');
+				return;
+			}
+
+			loading.classList.add('show');
+			responseContent.style.display = 'none';
+			statusBadge.style.display = 'none';
+
+			try {
+				const headers = getHeaders();
+				const options = {
+					method: currentMethod,
+					headers: headers,
+				};
+
+				// Add body for POST and PUT requests
+				if (currentMethod === 'POST' || currentMethod === 'PUT') {
+					if (requestBody) {
+						try {
+							// Validate JSON
+							JSON.parse(requestBody);
+							options.body = requestBody;
+						} catch (e) {
+							showMessage('Invalid JSON format in request body', 'error');
+							loading.classList.remove('show');
+							return;
+						}
+					}
+				}
+
+				const startTime = performance.now();
+				const response = await fetch(url, options);
+				const endTime = performance.now();
+				const responseTime = Math.round(endTime - startTime);
+
+				const responseData = await response.text();
+				const contentType = response.headers.get('content-type');
+				
+				// Update status badge
+				statusBadge.textContent = `${response.status} ${response.statusText} (${responseTime}ms)`;
+				statusBadge.className = `status-badge ${
+					response.ok ? 'status-success' : 'status-error'
+				}`;
+				statusBadge.style.display = 'inline-block';
+
+				// Display response headers
+				const responseHeaders = {};
+				response.headers.forEach((value, key) => {
+					responseHeaders[key] = value;
+				});
+
+				document.getElementById('responseHeaders').innerHTML = `
+					<strong>Response Headers:</strong><br>
+					${Object.entries(responseHeaders).map(([key, value]) => 
+						`${key}: ${value}`
+					).join('<br>')}
+				`;
+
+				// Format response body
+				let formattedResponse;
+				if (contentType && contentType.includes('application/json')) {
+					formattedResponse = syntaxHighlight(responseData);
+				} else {
+					formattedResponse = responseData;
+				}
+
+				document.getElementById('responseBody').innerHTML = formattedResponse;
+				responseContent.style.display = 'block';
+
+				showMessage(`Request completed successfully in ${responseTime}ms`, 'success');
+
+			} catch (error) {
+				console.error('Request failed:', error);
+				showMessage(`Request failed: ${error.message}`, 'error');
+				document.getElementById('responseBody').textContent = `Error: ${error.message}`;
+				document.getElementById('responseHeaders').innerHTML = '';
+				responseContent.style.display = 'block';
+			} finally {
+				loading.classList.remove('show');
+			}
+		}
+
+		// Initialize UI
+		updateUIForMethod();
+
+		// Add some example JSON for POST
+		npt_payload.value = JSON.stringify({
+			"name": "Test User",
+			"email": "test@example.com",
+			"message": "Hello from Backend Tester!"
+		}, null, 2);
+
+		// my code
+		const ui_savelinkbtn = document.querySelector('[data-role="savelinkbtn"]');
+		const ui_clearsavedbtn = document.querySelector('[data-role="deletesaved"]');
+
+		ui_savelinkbtn.addEventListener('click',() => {
+			const saveit = () => {
+				thepath = npt_path.value;
+
+				if(thepath == ''){
+					alert_info('enter a path first');
+					return;
+				}
+
+				savepath(thepath,currentMethod);
+			}
+
+			confirmAction('save path?','are you sure you want to save this path?',saveit);
+		})
+
+		ui_clearsavedbtn.addEventListener('click',() => {clearsaved();});
+
+		function savepath(p,meth) {
+			meth = meth == undefined ? currentMethod : meth;
+
+			loadsaved();
+
+			try{
+				// con = redring;
+				// console.log('saved paths: ',allsaved);
+				allsaved.push({path: p,method: meth});
+				updatesaved();
+				rendersaved();
+
+				alert_success('path saved successfully');
+			} catch(err){
+				alert_danger(err);
+			}
+		}
+
+		function updatesaved() {
+			localStorage.setItem(pref_paths,JSON.stringify(allsaved));
+		}
+
+		function loadsaved() {
+			allsaved = [];
+
+			let saved = localStorage.getItem(pref_paths);
+			allsaved = saved == undefined ? [] : JSON.parse(saved);
+		}
+
+		function clearsaved() {
+			allsaved = [];
+
+			const run = () => {
+				alert_danger('paths cleared');
+				updatesaved();
+				rendersaved();
+			};
+
+			confirmAction('Delete all paths?','this will permanently remove all saved paths. are you sure',run);
+		}
+
+		function rendersaved(){
+			let con = document.querySelectorAll('[data-role="savedlinks"]');
+
+			if(con.length == 0){
+				alert_warning('links display not found, add one');
+				return;
+			}
+
+			loadsaved();
+
+			con.forEach(el => {
+				el.innerHTML = "";
+
+				let finht = '';
+
+				allsaved.forEach((s,n_id) => {
+					let myht = `
+						<div class="flowline spread center" data-subrole='savedpath' data-path="${s.path}" data-method="${s.method}">
+							<span>${s.path}</span>
+							<button class="w3-btn w3-hover-text-red" data-subrole="deleter" data-myid="${n_id}"><i class="fa fa-times" style="pointer-events:none;"></i></button>
+						</div>
+					`;
+
+					finht+= myht;
+				})
+
+				if(allsaved.length == 0){
+					let myht = `
+						<div class="flowline centered spacy-md" style="border:none;" data-subrole='savedpath' data-path="./" data-method="get" data-standin="yes">
+							<i>no links saved yet</i>
+						</div>
+					`;
+
+					finht+= myht;
+				}
+
+				el.innerHTML = finht;
+			});
+
+			// setup events
+			con.forEach(el => {
+				let links = el.querySelectorAll(`[data-subrole='savedpath']`);
+
+				links.forEach(l => {
+					if(l.dataset.standin != "yes"){
+						l.addEventListener('click',e => {
+							console.log(e);
+
+							const t = e.target;
+
+							if(t.dataset.subrole == 'deleter'){
+								alert_warning('deleting path');
+
+								const delit = () => {
+									alert_danger('deleted, allegedly');
+									// return;
+									allsaved.splice(Number(t.dataset.myid),1);
+									updatesaved();
+									rendersaved();
+									return;
+								}
+
+								confirmAction('Delete path?','this will permanently remove the path. are you sure',delit);
+							} else {
+								alert_info('setting path');
+
+								npt_path.value = l.dataset.path;
+								const mbt = getmethbtn(l.dataset.method);
+
+								if(mbt != null){
+									mbt.click();
+								}
+
+								toggleShow('[data-role="savedstuffmodal"]');
+
+								console.log('meth btn: ',mbt);
+
+								alert_info('path set');
+							}
+						})
+					}
+				})
+			})
+
+			// alert_info('links rendered');
+		}
+
+		callOnLoad.push({act: rendersaved});
+		callOnDocLoad.push({act: initNav});
+	</script>
+</body>
+</html>
