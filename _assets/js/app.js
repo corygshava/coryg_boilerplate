@@ -3,9 +3,9 @@ const fetch_bypass_fyls = "f_bps_f_" + mekRandomString(5);
 const fetch_ui = "f_ui_" + mekRandomString(5);
 const simple_fetch = "s_fetch_" + mekRandomString(5);
 const fetch_bypass_blob = "fbp_blob_" + mekRandomString(16);
-const session_CSRF_token = "csrf_" + mekRandomString(12);
 const fetch_identifier = "viaFetch";
 let curfun = "rnvar_" + mekRandomString(3);
+let session_CSRF_token = "csrf_" + mekRandomString(12);
 
 let enableCache = true;
 let cache_lifetime_in_secs = 1200
