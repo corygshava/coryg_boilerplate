@@ -16,6 +16,7 @@
 	--clr-shadow: rgba(100,100,100,0.3);
 	--clr-modeglass: #d7d7d777;
 	--clr-panelbg: #fff;
+	--clr-panelbg2: #fff;
 	--clr-darkglass: #000000aa;
 	--clr-whiteglass: #efefef55;
 	--clr-alttext: #fff;
@@ -100,6 +101,7 @@ body[data-mode="dark"] {
 	--light-gray: #444;
 	--lighter-gray: #333;
 	--clr-modeglass: #1214259e;
+	--clr-panelbg2: #181511;
 }
 body.t1{
 	display: flex;
