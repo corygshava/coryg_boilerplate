@@ -12,6 +12,7 @@ let cache_lifetime_in_secs = 1200
 
 // localstorage stuff
 let app_prefix = 'coryg_app';
+let pref_prefix = app_prefix;
 let pref_auth = `${app_prefix}_authorizer_key`;
 
 // for the confirmer mech
