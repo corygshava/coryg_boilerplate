@@ -963,6 +963,7 @@ a:hover{
 	.themeround{border-radius: var(--roundness) !important;}
 	.modebg{background-color: var(--clr-bg);}
 	.panelbg{background-color: var(--clr-panelbg) !important;}
+	.panelbg2{background-color: var(--clr-panelbg2) !important;}
 	.gradtxt {
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
