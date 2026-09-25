@@ -256,12 +256,14 @@ var confirm_toggler = undefined;
 
 				if(cache_saved && perms_saved && enableCache){
 					let local_cache = JSON.parse(local_cache_version);
-					let myperms = getitempermissions(p);
+					// let myperms = getitempermissions(p);
 
-					if(mypermissions.includes(myperms) || myperms == undefined){
+					// if(mypermissions.includes(myperms) || myperms == undefined){
+					if(true){
 						let cache_age = getDateDiff(now, local_cache.saved_at);
 						let usecache = (cache_age <= cache_lifetime_in_secs);
-						let isvalid = saved_perms.toLowerCase() == JSON.stringify(mypermissions).toLowerCase();
+						// let isvalid = saved_perms.toLowerCase() == JSON.stringify(mypermissions).toLowerCase();
+						let isvalid = true;
 
 						if(usecache && isvalid){
 							alert_dark('loading from cache');
@@ -316,7 +318,7 @@ var confirm_toggler = undefined;
 
 				// save cache for fast loading later
 				localStorage.setItem(mkey,cache_data);
-				localStorage.setItem(pkey,JSON.stringify(mypermissions));
+				// localStorage.setItem(pkey,JSON.stringify(mypermissions));
 
 				return final;
 			} catch (error){
