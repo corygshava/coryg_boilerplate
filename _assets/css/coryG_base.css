@@ -232,7 +232,12 @@ a:hover{
 			border-radius: 100px;
 		}
 		.mybtn.sm {
-			padding: 8px 16px;
+			padding: 4px 16px;
+			font-size: 0.8rem;
+		}
+		.mybtn.tn{
+			padding: 4px 8px;
+			font-size: 0.6rem;
 		}
 
 		.mybtn.trans {
@@ -286,12 +291,20 @@ a:hover{
 		}
 
 		.mybtn2.sm{
-			padding: 8px 12px;
+			padding: 4px 12px;
 			font-size: 0.8rem;
 		}
 		.mybtn2.tn{
 			padding: 4px 8px;
 			font-size: 0.6rem;
+		}
+
+		.mybtn2.trans {
+		    background: none;
+		    color: var(--clr-text);
+		}
+		.mybtn2.trans:hover {
+			color: var(--themecolor);
 		}
 
 		.circle_btn{
