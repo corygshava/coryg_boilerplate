@@ -859,7 +859,8 @@ var confirm_toggler = undefined;
 				</select>
 			`;
 		} else if(typ == "textarea"){
-			inputht = `<textarea class="form-control-custom ${_inp_classes}" rows="3" name="${field}" id="${field}" placeholder="${placeholder}" ${_inp_props} ${_inp_req}>${val}</textarea>`
+			let x_rows = _inp_props.includes('rows=') ? '' : 'rows="3"';
+			inputht = `<textarea class="form-control-custom ${_inp_classes}" ${x_rows} name="${field}" id="${field}" placeholder="${placeholder}" ${_inp_props} ${_inp_req}>${val}</textarea>`
 		} else if(typ == "hidden"){
 			return inputht;
 		}
