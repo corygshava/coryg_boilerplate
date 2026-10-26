@@ -618,6 +618,52 @@ var confirm_toggler = undefined;
 		let del = count * delay;
 		return `animation-delay: ${del}ms;animation-fill-mode: forwards;opacity: 0;`;
 	}
+
+	function mekTag(tag='div',w='',classes='',props='') {
+		// makes tags
+
+		// simple setup
+		// return `<${tag} class="${classes}" ${props}>${w}</${tag}>`;
+
+		// advanced setup
+		// no innerhtml
+		const voidTags = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
+		// use a source, and not innerhtml
+		const srcTags = ['img', 'video', 'audio', 'source', 'iframe', 'embed', 'script'];
+		let finprops = `class="${classes}" ${props}`;
+
+		if(srcTags.includes(tag)){
+			finprops += ` src="${w}"`;
+		}
+
+		if(voidTags.includes(tag)){
+			return `<${tag} ${finprops}/>`;
+		} else {
+			return `<${tag} ${finprops}>${w}</${tag}>`;
+		}
+	}
+
+	function mekHeading(content = 'heading',type = 'h2',props=""){
+		// return `<span class="${type || 'h2'}">${content || 'heading'}</span>`;
+		return mekSpan(content,type,props);
+	}
+	function mekSpan(w, classes='',props='') {
+		return mekTag('span',w,classes,props);
+	}
+	function mekStrong(w, classes='',props='') {
+		return mekTag('Strong',w,classes,props);
+	}
+	function mekBold(w, classes='',props='') {
+		return mekStrong(w,classes,props);
+	}
+	function mekIcon(iconcode = "fas fa-question",classes="",props=""){
+		// return `<i class="${iconcode} ${classes}" ${props}></i>`;
+		return mekTag('i','',`${iconcode} ${classes}`,props);
+	}
+	function mekDiv(contents = "",classes="",props=""){
+		return mekTag('div',contents,classes,props);
+	}
+
 	function mekdisplay(what,startclasses = '',template='[val]') {
 		let out = '';
 		let trydate = new Date(what);
@@ -657,7 +703,6 @@ var confirm_toggler = undefined;
 
 		return out;
 	}
-
 	function mekError(hed= 'Error',demo='an error happened',serious = false){
 		let sertxt = serious ? `<button class="mybtn primary sm" onclick="window.location.reload()">reload page</button>` : '';
 
@@ -759,21 +804,6 @@ var confirm_toggler = undefined;
 				<div class="loader"></div>
 			</div>
 		`;
-	}
-	function mekHeading(content,type){
-		return `<span class="${type || 'h2'}">${content || 'heading'}</span>`;
-	}
-	function mekSpan(w, classes='',props='') {
-		return `<span class="${classes}" ${props}>${w}</span>`;
-	}
-	function mekStrong(w, classes='',props='') {
-		return `<strong class="${classes}" ${props}>${w}</strong>`;
-	}
-	function mekBold(w, classes='',props='') {
-		return mekStrong(w,classes,props);
-	}
-	function mekTag(tag='div',w='',classes='',props='') {
-		return `<${tag} class="${classes}" ${props}>${w}</${tag}>`;
 	}
 
 	function mekButton(pr = {caption: "",type: "button",icon:"",_props: "",_class:"",btype: "primary",act: undefined}) {
@@ -929,12 +959,6 @@ var confirm_toggler = undefined;
 		`;
 
 		return outht;
-	}
-	function mekIcon(iconcode = "fas fa-question",classes="",props=""){
-		return `<i class="${iconcode} ${classes}" ${props}></i>`;
-	}
-	function mekDiv(contents = "",classes="",props=""){
-		return `<div class="${classes}" ${props}>${contents}</div>`;
 	}
 	function mekModal(d){
 		alert_silent('making the modal');
