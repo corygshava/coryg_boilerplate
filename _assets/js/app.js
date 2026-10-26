@@ -772,6 +772,9 @@ var confirm_toggler = undefined;
 	function mekBold(w, classes='',props='') {
 		return mekStrong(w,classes,props);
 	}
+	function mekTag(tag='div',w='',classes='',props='') {
+		return `<${tag} class="${classes}" ${props}>${w}</${tag}>`;
+	}
 
 	function mekButton(pr = {caption: "",type: "button",icon:"",_props: "",_class:"",btype: "primary",act: undefined}) {
 		pr = {caption: "",type: "button",icon:"",_props: "",_class:"",btype: "x",act: undefined,...pr};
@@ -784,6 +787,7 @@ var confirm_toggler = undefined;
 		let _class = '';
 		let mytype = pr.btype || "x";
 		let act = pr.act || undefined;
+		let preicon = pr.pre_icon || false;
 
 		if(mytype != undefined){
 			_class += `mybtn ${mytype}`;
@@ -794,6 +798,7 @@ var confirm_toggler = undefined;
 		}
 
 		let mfun_code = undefined;
+		let conht = ``;
 		_class = `${og_class} ${_class}`;
 
 		if(typeof act == "function"){
@@ -811,7 +816,20 @@ var confirm_toggler = undefined;
 			}, 200);
 		}
 
-		return `<button type="${type}" class="${_class}" ${_props}>${caption} <i class="fa ${icon}"></i></button>`
+		if(icon !== ""){
+			let iconht = `<i class="fa ${icon}"></i>`;
+			let tmpar = [iconht, caption];
+
+			if(preicon){
+				tmpar.reverse();
+			}
+
+			conht = tmpar.join(" ");
+		} else {
+			conht = caption;
+		}
+
+		return `<button type="${type}" class="${_class}" ${_props}>${conht}</button>`
 	}
 	function mekInputholder(params) {
 		const dftdata = {
