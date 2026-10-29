@@ -13,10 +13,12 @@ function copytext1(txt) {
 
 		try{
 			let suc = document.execCommand('copy');
+			// console.log(suc);
 			console.log(suc ? "text copied" : "copying error occured!")
 			has_error = false;
-		} catch {
-			alert("there was an error copying your text, please try again")
+		} catch(err) {
+			console.error(err);
+			alert("there was an error copying your text, please try again");
 		}
 
 		document.body.removeChild(b);
