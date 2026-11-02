@@ -101,6 +101,7 @@ class _savehelper {
 			this.is_multiple = cfg.multiple;
 
 			this.config = cfg;
+			this.data = cfg.multiple ? [] : {};
 
 			if(cfg.autoload){
 				this.getData();
