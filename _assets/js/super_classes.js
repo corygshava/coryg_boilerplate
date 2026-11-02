@@ -139,7 +139,7 @@ class _savehelper {
 				data = _sh.getItem_Flash(cfg.pref,true)
 			}
 
-			this.data = data;
+			this.data = data == null ? (cfg.multiple ? [] : {}) : data;
 			return this;
 		}
 		setData = (dta) => {
