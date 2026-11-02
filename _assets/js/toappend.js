@@ -603,3 +603,17 @@ function gethexlerp(t) {
 
 	return value.toString(16).padStart(2, '0');
 }
+
+function is_empty(n) {
+	let is = true;
+
+	is = n == undefined;
+
+	if(!is){
+		let m = JSON.stringify(n);
+
+		is = m == "{}" || m == "[]";
+	}
+
+	return is;
+}
