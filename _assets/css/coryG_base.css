@@ -332,7 +332,10 @@ a:hover{
 		}
 		.form-group:has(input:focus) .form-label,
 		.form-group:has(select:focus) .form-label,
-		.form-group:has(textarea:focus) .form-label{
+		.form-group:has(textarea:focus) .form-label,
+		.inputholder:has(input:focus) .form-label,
+		.inputholder:has(select:focus) .form-label,
+		.inputholder:has(textarea:focus) .form-label{
 			color: var(--themecolor);
 		}
 		.form-label {
@@ -354,8 +357,8 @@ a:hover{
 		}
 		.form-control-custom:focus {
 			outline: none;
-			border-color: var(--primary);
-			box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+			border-color: var(--themecolor);
+			box-shadow: 0 0 0 3px var(--theme-glass);
 		}
 		.form-control-custom[readonly="true"],.form-control-custom[readonly="true"] label{
 			opacity: 0.3;

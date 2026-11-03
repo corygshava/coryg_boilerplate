@@ -147,6 +147,10 @@ class _savehelper {
 			let data = this.data;
 			let nowstring = (new Date()).toISOString();
 
+			if(is_empty(dta) && !cfg.multiple){
+				alert_danger('you cant set it to empty, delete instead');
+				return;
+			}
 			this.say('starting save process');
 			// console.log(`saving ${cfg.name}`,cfg);
 
@@ -154,7 +158,7 @@ class _savehelper {
 				// assumes you passed an object
 				// let dft = {};
 
-				if(data == undefined){
+				if(is_empty(data)){
 					dta.created_at = nowstring;
 				}
 
