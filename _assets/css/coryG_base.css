@@ -211,7 +211,7 @@ a:hover{
 		.banner a{
 			color: #fff;
 		}
-	
+
 	/* ---------- 1. Buttons ---------- */
 		.mybtn{
 			display:inline-flex;
@@ -1099,4 +1099,7 @@ a:hover{
 	.titletxt{
 		text-transform: uppercase;
 		letter-spacing: 2px;
+	}
+	.logotxt{
+		font-family: var(--logofont);
 	}

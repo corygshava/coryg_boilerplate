@@ -1,4 +1,4 @@
-./
+qwen_dirguy/
 │
 ├── .gitignore
 ├── _assets
@@ -30,6 +30,7 @@
 │   │       ├── html2canvas.min.js
 │   │       ├── jquery-3.6.0.min.js
 │   │       ├── jspdf.umd.min.js
+│   │       ├── marked.min.js
 │   │       ├── pdf.min.js
 │   │       ├── pdf.worker.min.js
 │   │       ├── popper.min.js
@@ -60,6 +61,7 @@
 │   │   ├── Inter_18pt-Regular.ttf
 │   │   ├── Inter_24pt-Regular.ttf
 │   │   ├── Inter_28pt-Regular.ttf
+│   │   ├── JetBrainsMono-Regular.ttf
 │   │   ├── Migha_Variable.ttf
 │   │   ├── Montserrat-SemiBold.otf
 │   │   ├── NunitoSans-Regular.ttf
@@ -74,10 +76,12 @@
 │   ├── img
 │   │   ├── demos
 │   │   │   ├── contact_pic.jpg
-│   │   │   ├── demoimg1.jpg
-│   │   │   ├── demoimg2.jpg
-│   │   │   ├── demoimg3.jpg
-│   │   │   └── image-127.jpeg
+│   │   │   ├── demo (1).jpeg
+│   │   │   ├── demo (1).jpg
+│   │   │   ├── demo (2).jpg
+│   │   │   ├── demo (3).jpg
+│   │   │   ├── demo (4).jpg
+│   │   │   └── demo (5).jpg
 │   │   └── templates
 │   │       ├── greenhouse.png
 │   │       ├── inventoryman.png
@@ -90,6 +94,7 @@
 │   │   ├── coryG_UIOps.js
 │   │   ├── customalerter.js
 │   │   ├── multimedia.js
+│   │   ├── super_classes.js
 │   │   ├── super_encryptor.js
 │   │   ├── SuperScript.js
 │   │   ├── toappend.js
@@ -111,6 +116,11 @@
 │       ├── fa-solid-900.ttf
 │       ├── fa-solid-900.woff
 │       └── fa-solid-900.woff2
+├── _for_clankers
+│   ├── coryg_boilerplate_structure.json
+│   └── coryg_boilerplate_structure.txr
+├── _help
+│   └── emmet.txr
 ├── _justin
 │   ├── index_reimagined.html
 │   └── index_reimagined_copy.html
@@ -118,7 +128,7 @@
 │   ├── js
 │   │   └── html2canvas.js
 │   └── new_items_tryout.html
-├── coryg_boilerplate_structure.txt
+├── api_tester.html
 ├── index.html
 ├── login.html
 ├── starter.html
